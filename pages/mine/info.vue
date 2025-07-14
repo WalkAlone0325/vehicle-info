@@ -4,6 +4,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import { useToast } from '@/uni_modules/wot-design-uni'
 import { getToken } from '@/utils'
 import { getInfoApi } from '@/api'
+import http from '@/utils/request'
 
 const toast = useToast()
 
@@ -23,7 +24,7 @@ onLoad(() => {
 
 const customUpload = (file, formData, options) => {
   const uploadTask = uni.uploadFile({
-    url: 'http://220.194.140.28:8086/oilenginemonitoringservice/system/user/profile/avatar',
+    url: http.config.baseURL + 'system/user/profile/avatar',
     // url: 'https://sxnmggz.com:8448/prod-api/system/oss/upload',
     header: {
       ...options.header,

@@ -44,7 +44,7 @@ const clickItem = (item) => {
   <view class="order-page">
     <wd-card title="用车工单">
       <wd-grid clickable border hover-class=" " :column="3">
-        <view class="" v-for="i in carOrder" :key="i.id" @itemclick="clickItem(i)">
+        <view class="" v-for="i in carOrder" :key="i.id" @click="clickItem(i)">
           <wd-grid-item use-icon-slot :text="i.text">
             <template #icon>
               <image class="slot-img" :src="`/static/order/${i.icon}.png`" />
