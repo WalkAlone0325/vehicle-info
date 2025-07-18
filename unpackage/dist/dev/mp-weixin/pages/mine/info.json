@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "个人信息",
+  "usingComponents": {
+    "wd-message-box": "../../uni_modules/wot-design-uni/components/wd-message-box/wd-message-box",
+    "wd-toast": "../../uni_modules/wot-design-uni/components/wd-toast/wd-toast",
+    "wd-upload": "../../uni_modules/wot-design-uni/components/wd-upload/wd-upload",
+    "wd-cell": "../../uni_modules/wot-design-uni/components/wd-cell/wd-cell",
+    "wd-input": "../../uni_modules/wot-design-uni/components/wd-input/wd-input",
+    "wd-cell-group": "../../uni_modules/wot-design-uni/components/wd-cell-group/wd-cell-group",
+    "wd-form": "../../uni_modules/wot-design-uni/components/wd-form/wd-form"
+  }
+}

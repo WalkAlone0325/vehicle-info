@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "wd-table-col": "../wd-table-col/wd-table-col",
+    "wd-sort-button": "../wd-sort-button/wd-sort-button"
+  }
+}

@@ -101,9 +101,21 @@
                 <view class="value">{{i.driverName}}</view>
               </view>
             </view>
-            <view class="content-item pd">
+            <view class="content-item">
               <view class="label">部门名称：</view>
-              <view class="value">{{i.deptName}}</view>
+              <view class="value">{{i.deptName}} {{`(${i.cityName}${i.countyName})`}}</view>
+            </view>
+            <view class="content-item">
+              <view class="label">车辆用途：</view>
+              <view class="value">{{i.vehicleApplicationNames}}</view>
+            </view>
+            <view class="content-item">
+              <view class="label">初次上线时间：</view>
+              <view class="value">{{i.terminalFirstOnlineTime}}</view>
+            </view>
+            <view class="content-item pd">
+              <view class="label">最近离线时间：</view>
+              <view class="value">{{i.terminalRecentOfflineTime}}</view>
             </view>
           </view>
         </wd-card>
@@ -132,6 +144,7 @@
       .content {
         .content-item {
           display: flex;
+          margin-bottom: 6rpx;
 
           .value {
             color: #333;
@@ -140,7 +153,7 @@
       }
 
       .pd {
-        padding: 12rpx 0;
+        padding-bottom: 12rpx;
       }
     }
   }

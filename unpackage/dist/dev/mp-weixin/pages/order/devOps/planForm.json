@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "运维计划信息",
+  "usingComponents": {
+    "wd-input": "../../../uni_modules/wot-design-uni/components/wd-input/wd-input",
+    "wd-datetime-picker": "../../../uni_modules/wot-design-uni/components/wd-datetime-picker/wd-datetime-picker",
+    "wd-cell-group": "../../../uni_modules/wot-design-uni/components/wd-cell-group/wd-cell-group",
+    "wd-button": "../../../uni_modules/wot-design-uni/components/wd-button/wd-button",
+    "wd-form": "../../../uni_modules/wot-design-uni/components/wd-form/wd-form",
+    "base-form": "../../../components/BaseForm"
+  }
+}

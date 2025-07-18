@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "工单信息",
+  "usingComponents": {
+    "wd-select-picker": "../../../uni_modules/wot-design-uni/components/wd-select-picker/wd-select-picker",
+    "base-upload": "../../../components/BaseUpload",
+    "wd-cell": "../../../uni_modules/wot-design-uni/components/wd-cell/wd-cell",
+    "wd-input": "../../../uni_modules/wot-design-uni/components/wd-input/wd-input",
+    "wd-datetime-picker": "../../../uni_modules/wot-design-uni/components/wd-datetime-picker/wd-datetime-picker",
+    "wd-picker": "../../../uni_modules/wot-design-uni/components/wd-picker/wd-picker",
+    "wd-cell-group": "../../../uni_modules/wot-design-uni/components/wd-cell-group/wd-cell-group",
+    "wd-button": "../../../uni_modules/wot-design-uni/components/wd-button/wd-button",
+    "wd-form": "../../../uni_modules/wot-design-uni/components/wd-form/wd-form",
+    "base-form": "../../../components/BaseForm"
+  }
+}

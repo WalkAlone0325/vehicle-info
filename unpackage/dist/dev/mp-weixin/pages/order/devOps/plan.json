@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "运维计划",
+  "usingComponents": {
+    "wd-message-box": "../../../uni_modules/wot-design-uni/components/wd-message-box/wd-message-box",
+    "base-loading": "../../../components/BaseLoading",
+    "wd-search": "../../../uni_modules/wot-design-uni/components/wd-search/wd-search",
+    "wd-sticky": "../../../uni_modules/wot-design-uni/components/wd-sticky/wd-sticky",
+    "wd-button": "../../../uni_modules/wot-design-uni/components/wd-button/wd-button",
+    "wd-card": "../../../uni_modules/wot-design-uni/components/wd-card/wd-card",
+    "wd-loadmore": "../../../uni_modules/wot-design-uni/components/wd-loadmore/wd-loadmore"
+  }
+}

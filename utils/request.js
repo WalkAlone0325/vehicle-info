@@ -16,14 +16,17 @@ http.interceptors.request.use(
   }
 )
 
+let flag = false
 // 响应拦截
 http.interceptors.response.use(
   response => {
     const data = response.data
-    if (data.code === 401) {
+    if (data.code === 401 && !flag) {
+      flag = true
       uni.showModal({
         title: '提示',
         content: '登录已过期，请重新登录',
+        showCancel: false,
         success: res => {
           if (res.confirm) {
             uni.navigateTo({

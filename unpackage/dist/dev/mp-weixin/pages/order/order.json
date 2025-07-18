@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "工单",
+  "usingComponents": {
+    "wd-grid-item": "../../uni_modules/wot-design-uni/components/wd-grid-item/wd-grid-item",
+    "wd-grid": "../../uni_modules/wot-design-uni/components/wd-grid/wd-grid",
+    "wd-card": "../../uni_modules/wot-design-uni/components/wd-card/wd-card"
+  }
+}

@@ -5,6 +5,9 @@ import { onShow } from '@dcloudio/uni-app'
 
 const carOrder = ref([])
 const carVehicle = ref([])
+const order = ref([
+  { id: 1, text: '用车工单', icon: 'apply', url: '/pages/order/cars/list' },
+])
 
 onShow(() => {
   const arr1 = [
@@ -42,9 +45,21 @@ const clickItem = (item) => {
 
 <template>
   <view class="order-page">
-    <wd-card title="用车工单">
+    <wd-card title="用车工单申请">
       <wd-grid clickable border hover-class=" " :column="3">
         <view class="" v-for="i in carOrder" :key="i.id" @click="clickItem(i)">
+          <wd-grid-item use-icon-slot :text="i.text">
+            <template #icon>
+              <image class="slot-img" :src="`/static/order/${i.icon}.png`" />
+            </template>
+          </wd-grid-item>
+        </view>
+      </wd-grid>
+    </wd-card>
+    
+    <wd-card title="用车工单">
+      <wd-grid clickable border hover-class=" " :column="3">
+        <view class="" v-for="i in order" :key="i.id" @click="clickItem(i)">
           <wd-grid-item use-icon-slot :text="i.text">
             <template #icon>
               <image class="slot-img" :src="`/static/order/${i.icon}.png`" />

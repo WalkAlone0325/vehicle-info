@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "登录",
+  "navigationStyle": "custom",
+  "disableScroll": true,
+  "usingComponents": {
+    "wd-button": "../../uni_modules/wot-design-uni/components/wd-button/wd-button",
+    "wd-input": "../../uni_modules/wot-design-uni/components/wd-input/wd-input",
+    "wd-cell-group": "../../uni_modules/wot-design-uni/components/wd-cell-group/wd-cell-group",
+    "wd-form": "../../uni_modules/wot-design-uni/components/wd-form/wd-form"
+  }
+}

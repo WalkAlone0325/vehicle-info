@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "wd-popup": "../wd-popup/wd-popup",
+    "wd-icon": "../wd-icon/wd-icon"
+  }
+}

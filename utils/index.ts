@@ -44,7 +44,7 @@ export function formatDate(cellValue) {
 
 export function checkRole(roleKey: string) {
   const token = uni.getStorageSync('token')
-  if(!token) return
+  if (!token) return
   const roles = uni.getStorageSync('user').roles
   const roleKeys = roles.map(i => i.roleKey)
 
@@ -52,10 +52,10 @@ export function checkRole(roleKey: string) {
 }
 
 export function randomRgbColor() {
-var r = Math.floor(Math.random() * 256);
-var g = Math.floor(Math.random() * 256);
-var b = Math.floor(Math.random() * 256);
-return `rgb(${r},${g},${b})`;
+  var r = Math.floor(Math.random() * 256)
+  var g = Math.floor(Math.random() * 256)
+  var b = Math.floor(Math.random() * 256)
+  return `rgb(${r},${g},${b})`
 }
 
 const PI = 3.1415926535897932384626
@@ -83,38 +83,38 @@ function transformlat(lng, lat) {
 //判断时候在国内还是国外
 function out_of_china(lon, lat) {
   if (lon < 72.004 || lon > 137.8347) {
-    return true;
+    return true
   }
   if (lat < 0.8293 || lat > 55.8271) {
-    return true;
+    return true
   }
-  return false;
+  return false
 }
 //wgs84 to gcj02   地球坐标系 转 火星坐标系
 export function wgs84togcj02(lng, lat) {
-  let dlat = transformlat(lng - 105.0, lat - 35.0);
-  let dlng = transformlng(lng - 105.0, lat - 35.0);
-  let radlat = (lat / 180.0) * PI;
-  let magic = Math.sin(radlat);
-  magic = 1 - ee * magic * magic;
-  let sqrtmagic = Math.sqrt(magic);
+  let dlat = transformlat(lng - 105.0, lat - 35.0)
+  let dlng = transformlng(lng - 105.0, lat - 35.0)
+  let radlat = (lat / 180.0) * PI
+  let magic = Math.sin(radlat)
+  magic = 1 - ee * magic * magic
+  let sqrtmagic = Math.sqrt(magic)
   dlat =
     (dlat * 180.0) /
-    (((a * (1 - ee)) / (magic * sqrtmagic)) * PI);
+    (((a * (1 - ee)) / (magic * sqrtmagic)) * PI)
   dlng =
-    (dlng * 180.0) / ((a / sqrtmagic) * Math.cos(radlat) * PI);
-  let mglat = lat + dlat;
-  let mglng = lng + dlng;
+    (dlng * 180.0) / ((a / sqrtmagic) * Math.cos(radlat) * PI)
+  let mglat = lat + dlat
+  let mglng = lng + dlng
 
-  return [mglng, mglat];
+  return [mglng, mglat]
 }
 
 //gcj02 to wgs84  火星坐标系 转 地球坐标系
 export function gcj02towgs84(lng, lat) {
-  const originalLngSign = Math.sign(lng);
-  const originalLatSign = Math.sign(lat);
-  lat = Math.abs(lat);
-  lng = Math.abs(lng);
+  const originalLngSign = Math.sign(lng)
+  const originalLatSign = Math.sign(lat)
+  lat = Math.abs(lat)
+  lng = Math.abs(lng)
   let dlat = transformlat(lng - 105.0, lat - 35.0)
   let dlng = transformlng(lng - 105.0, lat - 35.0)
   let radlat = lat / 180.0 * PI
@@ -127,49 +127,100 @@ export function gcj02towgs84(lng, lat) {
   let mglng = lng + dlng
   let lngs = lng * 2 - mglng
   let lats = lat * 2 - mglat
-  let finalLng = originalLngSign * lngs;
-  let finalLat = originalLatSign * lats;
+  let finalLng = originalLngSign * lngs
+  let finalLat = originalLatSign * lats
 
-  return [finalLng, finalLat];
+  return [finalLng, finalLat]
 }
 
 export function formatDateTime(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth()  + 1).padStart(2, '0'); // 月份从0开始，需加1并补零
-  const day = String(date.getDate()).padStart(2,  '0');
-  const hours = String(date.getHours()).padStart(2,  '0');
-  const minutes = String(date.getMinutes()).padStart(2,  '0');
-  const seconds = String(date.getSeconds()).padStart(2,  '0');
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0') // 月份从0开始，需加1并补零
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+  const seconds = String(date.getSeconds()).padStart(2, '0')
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
 }
 
- /** 
- * 计算目标日期是多少天前（或几天后）
- * @param {string|Date} targetDate - 目标日期（支持字符串如"2025-07-01"或Date对象）
- * @returns {string} 友好提示（如"9天前"、"今天"、"1天后"） 
- */ 
-export function getDaysAgo(targetDate) { 
-    // 1. 获取当前日期的日起点（00:00:00） 
-    const now = new Date(); 
-    const today = new Date(now.getFullYear(),  now.getMonth(),  now.getDate());  
- 
-    // 2. 解析目标日期（处理字符串或Date对象）
-    const target = new Date(targetDate); 
-    if (isNaN(target.getTime()))  { // 验证日期有效性 
-        return "无效的日期格式，请输入如'2025-07-01'的ISO格式"; 
-    } 
-    const targetDay = new Date(target.getFullYear(),  target.getMonth(),  target.getDate());  // 目标日期的日起点 
- 
-    // 3. 计算时间差（毫秒）并转换为天数 
-    const timeDiff = today.getTime()  - targetDay.getTime();  
-    const daysDiff = Math.floor(timeDiff  / 86400000); // 86400000 = 24×60×60×1000 
- 
-    // 4. 返回友好结果 
-    if (daysDiff > 0) { 
-        return `${daysDiff}天前`;
-    } else if (daysDiff === 0) { 
-        return "今天"; 
-    } else { 
-        return `${Math.abs(daysDiff)} 天后`; // 处理未来日期 
-    } 
-} 
+/**
+* 计算目标日期是多少天前（或几天后）
+* @param {string|Date} targetDate - 目标日期（支持字符串如"2025-07-01"或Date对象）
+* @returns {string} 友好提示（如"9天前"、"今天"、"1天后"）
+*/
+export function getDaysAgo(targetDate) {
+  // 1. 获取当前日期的日起点（00:00:00）
+  const now = new Date()
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+
+  // 2. 解析目标日期（处理字符串或Date对象）
+  const target = new Date(targetDate)
+  if (isNaN(target.getTime())) { // 验证日期有效性
+    return "无效的日期格式，请输入如'2025-07-01'的ISO格式"
+  }
+  const targetDay = new Date(target.getFullYear(), target.getMonth(), target.getDate())  // 目标日期的日起点
+
+  // 3. 计算时间差（毫秒）并转换为天数
+  const timeDiff = today.getTime() - targetDay.getTime()
+  const daysDiff = Math.floor(timeDiff / 86400000) // 86400000 = 24×60×60×1000
+
+  // 4. 返回友好结果
+  if (daysDiff > 0) {
+    return `${daysDiff}天前`
+  } else if (daysDiff === 0) {
+    return "今天"
+  } else {
+    return `${Math.abs(daysDiff)} 天后` // 处理未来日期
+  }
+}
+
+/**
+ * 计算距离
+ * @param lat1 纬度1
+ * @param lng1 经度1
+ * @param lat2 纬度2
+ * @param lng2 经度2
+ * @returns 距离（单位：米）
+ */
+function rad(d) {
+  return d * Math.PI / 180.0
+}
+
+
+// 根据经纬度计算距离，参数分别为第一点的纬度，经度；第二点的纬度，经度
+export function getDistance(lat1, lng1, lat2, lng2) {
+
+  var radLat1 = rad(lat1)
+  var radLat2 = rad(lat2)
+  var a = radLat1 - radLat2
+  var b = rad(lng1) - rad(lng2)
+  var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) +
+    Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)))
+  s = s * 6378.137 // EARTH_RADIUS;
+  // 输出为公里
+  s = Math.round(s * 10000) / 10000
+
+  var distance = s
+  var distance_str = ""
+
+  if (parseInt(distance) >= 1) {
+    // distance_str = distance.toFixed(1) + "km";
+    distance_str = distance.toFixed(2) + "km"
+  } else {
+    // distance_str = distance * 1000 + "m";
+    distance_str = (distance * 1000).toFixed(2) + "m"
+  }
+
+  //s=s.toFixed(4);
+
+  // console.info('距离是', s);
+  // console.info('距离是', distance_str);
+  // return s;
+
+  //小小修改，这里返回对象
+  let objData = {
+    distance: distance,
+    distance_str: distance_str
+  }
+  return objData.distance_str
+}

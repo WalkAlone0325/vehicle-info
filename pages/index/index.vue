@@ -32,7 +32,7 @@
       }
     }
   })
-  
+
   const getLineData = async () => {
     const res = await getCarCountApi({})
     if(res.code == 200) {
@@ -40,13 +40,13 @@
         ...res.data,
         categories: res.data.xaxisDataList
       }
-    } 
+    }
   }
   const getTableData = async () => {
     const res = await getCarTableApi({})
     if(res.code == 200) {
       list.value = res.data
-    } 
+    }
   }
 
   const clickItem = (type) => {
@@ -58,14 +58,16 @@
   // 油机数据统计
   const getOilTank = async () => {
     const res = await getOilTankApi({})
-    dataList.value = [
-      { lab1: '正在发电设备', val1: res.data.jobStatusGeneratingCount, lab2: '总设备', val2: res.data.deviceCount, unit: '台' },
-      { lab1: '空载设备统计', val1: res.data.jobStatusIdleCount, lab2: '总设备', val2: res.data.deviceCount, unit: '台' },
-      { lab1: '在线设备统计', val1: res.data.onoffStatusOnCount, lab2: '总设备', val2: res.data.deviceCount, unit: '台' },
-      { lab1: '离线设备统计', val1: res.data.onoffStatusOffCount, lab2: '总设备', val2: res.data.deviceCount, unit: '台' },
-      { lab1: '发电次数统计', val1: res.data.recordMonthNowCount, lab2: '总次数', val2: res.data.recordCount, unit: '本月' },
-      { lab1: '开机时长统计', val1: res.data.bootTimeMonthNowCount, lab2: '总时长', val2: res.data.bootTimeCount + ' 分钟', unit: '本月' },
-    ]
+    if(res.code == 200) {
+      dataList.value = [
+        { lab1: '正在发电设备', val1: res.data.jobStatusGeneratingCount, lab2: '总设备', val2: res.data.deviceCount, unit: '台' },
+        { lab1: '空载设备统计', val1: res.data.jobStatusIdleCount, lab2: '总设备', val2: res.data.deviceCount, unit: '台' },
+        { lab1: '在线设备统计', val1: res.data.onoffStatusOnCount, lab2: '总设备', val2: res.data.deviceCount, unit: '台' },
+        { lab1: '离线设备统计', val1: res.data.onoffStatusOffCount, lab2: '总设备', val2: res.data.deviceCount, unit: '台' },
+        { lab1: '发电次数统计', val1: res.data.recordMonthNowCount, lab2: '总次数', val2: res.data.recordCount, unit: '本月' },
+        { lab1: '开机时长统计', val1: res.data.bootTimeMonthNowCount, lab2: '总时长', val2: res.data.bootTimeCount + ' 分钟', unit: '本月' },
+      ]
+    }
   }
 
   onShow(() => {
@@ -134,7 +136,7 @@
     <view class="chart-box">
       <qiun-data-charts type="line" :opts="opts" :chartData="chartData" canvas2d canvasId="uid123" />
     </view>
-    
+
     <view class="table-con">
       <wd-table :data="list" :height="800" :rowHeight="40" :stripe="false">
         <wd-table-col prop="cityName" label="归属地市" width="105" align="center"></wd-table-col>
@@ -143,7 +145,7 @@
         <wd-table-col prop="logoutCount" label="离线车辆" width="90" align="center"></wd-table-col>
       </wd-table>
     </view>
-  </view> 
+  </view>
 </template>
 
 
@@ -247,7 +249,7 @@
       width: 100%;
       height: 400rpx;
     }
-    
+
     .table-con {
       padding: 20rpx;
       margin-left: -8rpx;

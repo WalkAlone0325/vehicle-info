@@ -1,0 +1,86 @@
+{
+  "pages": [
+    "pages/index/switch",
+    "pages/index/index",
+    "pages/index/map",
+    "pages/index/car",
+    "pages/index/driver",
+    "pages/order/order",
+    "pages/order/form",
+    "pages/order/list",
+    "pages/order/form-apply",
+    "pages/order/devOps/config",
+    "pages/order/devOps/configForm",
+    "pages/order/devOps/warning",
+    "pages/order/devOps/warningForm",
+    "pages/order/devOps/plan",
+    "pages/order/devOps/planForm",
+    "pages/order/devOps/record",
+    "pages/order/devOps/recordForm",
+    "pages/order/cars/list",
+    "pages/order/cars/form",
+    "pages/trace/trace",
+    "pages/mine/mine",
+    "pages/mine/notice",
+    "pages/mine/info",
+    "pages/mine/edit-password",
+    "pages/login/login",
+    "pages/login/form"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#f2f5ff",
+    "backgroundColor": "#f2f5ff"
+  },
+  "tabBar": {
+    "color": "#333333",
+    "borderStyle": "black",
+    "selectedColor": "#333333",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/static/tabs/home.png",
+        "selectedIconPath": "/static/tabs/home-a.png"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "text": "工单",
+        "iconPath": "/static/tabs/order.png",
+        "selectedIconPath": "/static/tabs/order-a.png"
+      },
+      {
+        "pagePath": "pages/trace/trace",
+        "text": "轨迹",
+        "iconPath": "/static/tabs/trace.png",
+        "selectedIconPath": "/static/tabs/trace-a.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "/static/tabs/mine.png",
+        "selectedIconPath": "/static/tabs/mine-a.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "需要获取地图信息"
+    },
+    "scope.userLocationBackgroud": {
+      "desc": "需要获取地图信息"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation",
+    "onLocationChange",
+    "startLocationUpdateBackground",
+    "startLocationUpdate",
+    "chooseLocation",
+    "chooseAddress",
+    "choosePoi"
+  ],
+  "usingComponents": {}
+}

@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "车辆信息",
+  "usingComponents": {
+    "wd-search": "../../uni_modules/wot-design-uni/components/wd-search/wd-search",
+    "wd-sticky": "../../uni_modules/wot-design-uni/components/wd-sticky/wd-sticky",
+    "wd-loading": "../../uni_modules/wot-design-uni/components/wd-loading/wd-loading",
+    "wd-tag": "../../uni_modules/wot-design-uni/components/wd-tag/wd-tag",
+    "wd-card": "../../uni_modules/wot-design-uni/components/wd-card/wd-card",
+    "wd-loadmore": "../../uni_modules/wot-design-uni/components/wd-loadmore/wd-loadmore"
+  }
+}

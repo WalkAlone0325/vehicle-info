@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "告警配置",
+  "usingComponents": {
+    "base-loading": "../../../components/BaseLoading",
+    "wd-card": "../../../uni_modules/wot-design-uni/components/wd-card/wd-card",
+    "wd-fab": "../../../uni_modules/wot-design-uni/components/wd-fab/wd-fab"
+  }
+}

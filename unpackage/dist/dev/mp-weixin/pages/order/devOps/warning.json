@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "运维告警",
+  "usingComponents": {
+    "base-loading": "../../../components/BaseLoading",
+    "wd-tag": "../../../uni_modules/wot-design-uni/components/wd-tag/wd-tag",
+    "wd-card": "../../../uni_modules/wot-design-uni/components/wd-card/wd-card",
+    "wd-loadmore": "../../../uni_modules/wot-design-uni/components/wd-loadmore/wd-loadmore",
+    "wd-fab": "../../../uni_modules/wot-design-uni/components/wd-fab/wd-fab"
+  }
+}

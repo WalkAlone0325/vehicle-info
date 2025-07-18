@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "轨迹",
+  "usingComponents": {
+    "wd-search": "../../uni_modules/wot-design-uni/components/wd-search/wd-search",
+    "wd-radio": "../../uni_modules/wot-design-uni/components/wd-radio/wd-radio",
+    "wd-radio-group": "../../uni_modules/wot-design-uni/components/wd-radio-group/wd-radio-group",
+    "wd-drop-menu-item": "../../uni_modules/wot-design-uni/components/wd-drop-menu-item/wd-drop-menu-item",
+    "wd-drop-menu": "../../uni_modules/wot-design-uni/components/wd-drop-menu/wd-drop-menu"
+  }
+}

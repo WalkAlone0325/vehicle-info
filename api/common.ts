@@ -11,6 +11,9 @@ export const getLocationApi = (params) => http.get('/car/vehicleInfo/map/locatio
 // 轨迹
 export const getTraceApi = (params) => http.get('/car/jt808RecordLocationInfo/map/locus', { params })
 
+// 一键登录
+export const oneLoginApi = (params) => http.post('/xcxLogin?xcxCode=' + params)
+
 // 登录
 export const loginApi = (params) => http.post('/login', params)
 

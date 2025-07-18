@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "我的",
+  "usingComponents": {
+    "wd-img": "../../uni_modules/wot-design-uni/components/wd-img/wd-img",
+    "wd-grid-item": "../../uni_modules/wot-design-uni/components/wd-grid-item/wd-grid-item",
+    "wd-grid": "../../uni_modules/wot-design-uni/components/wd-grid/wd-grid",
+    "wd-button": "../../uni_modules/wot-design-uni/components/wd-button/wd-button"
+  }
+}

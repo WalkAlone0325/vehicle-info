@@ -1,56 +1,106 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { encrypt } from '@/utils/jsencrypt'
-import { loginApi, getInfoApi } from '@/api'
+import { loginApi, getInfoApi, oneLoginApi } from '@/api'
 
 const model = reactive({
   username: '',
-  password: ''
+  password: '',
+  xcxCode: ''
 })
 
 const form = ref()
+const loading = ref(false)
+const oneLoading = ref(false)
+const oneLogin = ref(true)
 
 function handleSubmit() {
-  form.value
-    .validate()
-    .then(async ({
-      valid,
-      errors
-    }) => {
-      if (valid) {
-        const res = await loginApi(
-          {
-            username: model.username,
-            password: encrypt(model.password)
-          }
-          // { "username": "admin", "password": "PFZ37mn1+EB/3KV6P1zZt1usC0Ngckv2PZVkGEHf5YN+qSP+n4cXl00iCK1Q/zC1YAKAu4PFwTq0U4DVaq7FnCkHgdNJPFT1vOtOtcDWJgIKTcX1ga7bXSpRteJzdTMu/4EzFPfHrKyUw4KbqqwB/SospZsZquz7MQq9WuLTOO8=" }
-          // {"username":"wangyuan","password":"XaBloRSRNcxUCfG+Ffd9ryJmXTrXhSMNZxJ2GAQeyGCR6m1obpxZgZvdMNb/CpS4Oe2WVabJ0vOiCCUrykuawMRz7jWbtxoyhWQANshcNQCnhRnYgAGrbfx2n4iBYUC4rakVv/LVib+i12T4cp7EESQv0MWmA634qsIY8FNqH5A="}
-          // {"username":"tyjl01","password":"S65lxxcvyk7QrOvrdccrEKLiWUKI+pRJGLu1wvOQWcZyL5+BulcXothDLxKQwKHHLUp9WN6bKFRgFkgCQPXN1ANOTS+tlQ5xqKExzWaDugwQplbWzAvlEqOxGe71bjtJ9NYzIOWJ2jkgUzySbP+dzAkkfO8aYSinGWqfmH1+0Io="}
-          // {"username":"tydz01","password":"gLY100N2xa3mQno4LispsyEzFYtGW2DPHxQWNZpznsIVJ/oKyqXKzydxzzPvPR5Tln0fLu5yZTTSNhsxLuW5iBne/Va/vCb5aR0Wi2593plssbPP3KtzaJXvcdIOsAkZsIh9d+HZU0KQT/mKl3f3TMMVWPxX+ProCZOAGLXr3tA="}
-        )
-        if (res.code === 200) {
-          uni.setStorageSync('token', res.data.token)
-          const info = await getInfoApi()
-          uni.setStorageSync('user', info.data.user)
-          uni.switchTab({
-            url: '/pages/index/index'
-          })
-        }
+  form.value.validate().then(async ({
+    valid,
+    errors
+  }) => {
+    if (valid) {
+      loading.value = true
+      model.xcxCode = await getWxCode()
+      const data = {
+        username: model.username,
+        password: encrypt(model.password),
+        xcxCode: model.xcxCode
       }
-    })
+      console.log('🚀:>> data: ', data)
+      const res = await loginApi(data)
+      if (res.code === 200) {
+        uni.setStorageSync('token', res.data.token)
+        const info = await getInfoApi()
+        uni.setStorageSync('user', info.data.user)
+        uni.switchTab({
+          url: '/pages/index/index'
+        })
+      }
+      loading.value = false
+    }
+  })
     .catch((error) => {
       console.log(error, 'error')
+      loading.value = false
     })
+}
+
+const getWxCode = () => {
+  return new Promise((resolve, reject) => {
+    uni.login({
+      provider: 'weixin',
+      onlyAuthorize: true,
+      success: (res) => {
+        if (res.code) {
+          console.log('🚀:>> code: ', res.code)
+          resolve(res.code)
+        } else {
+          console.log('登录失败！' + res.errMsg)
+          reject(res.errMsg)
+        }
+      },
+      fail: (err) => {
+        console.log(err)
+        reject(err)
+      }
+    })
+  })
+}
+
+const handleOneLogin = async () => {
+  oneLoading.value = true
+  model.xcxCode = await getWxCode()
+  const resD = await oneLoginApi(model.xcxCode)
+  if (resD.code === 200) {
+    uni.setStorageSync('token', resD.data.token)
+    const info = await getInfoApi()
+    uni.setStorageSync('user', info.data.user)
+    uni.switchTab({
+      url: '/pages/index/index'
+    })
+    oneLoading.value = false
+  } else {
+    oneLogin.value = false
+    uni.showToast({
+      title: '微信授权失败',
+      icon: 'none'
+    })
+    oneLoading.value = false
+  }
 }
 </script>
 
 <template>
   <view class="login-page">
-    <view class="one-login" v-if="false">
-      <view class="one-login-btn" @click="handleSubmit">微信授权一键登录</view>
+    <image class="login-bg" src="/static/login1.jpg" />
+
+    <view class="one-login" v-if="oneLogin">
+      <wd-button :loading="oneLoading" custom-class="one-login-btn" @click="handleOneLogin">微信授权一键登录</wd-button>
+      <!-- <view class="one-login-btn" @click="handleOneLogin">微信授权一键登录</view> -->
     </view>
-    
-    <view class="login-con" v-if="true">
+
+    <view class="login-con" v-if="!oneLogin">
       <wd-form ref="form" :model="model" errorType="toast">
         <view class="title">自动绘图数据采集上报系统</view>
         <wd-cell-group border>
@@ -60,7 +110,7 @@ function handleSubmit() {
             placeholder="请输入密码" :rules="[{ required: true, message: '请填写密码' }]" />
         </wd-cell-group>
         <view class="footer">
-          <wd-button type="primary" @click="handleSubmit" block>登录</wd-button>
+          <wd-button type="primary" :loading="loading" @click="handleSubmit" block>登录</wd-button>
         </view>
       </wd-form>
     </view>
@@ -74,45 +124,64 @@ function handleSubmit() {
   max-height: 100vh;
   overflow-y: hidden;
   // background: linear-gradient(135deg, #3498db, #2c3e50);
-  
-  .one-login {
-    width: 100%;
+
+  .login-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: -14vh;
-    
-    .one-login-btn {
-      width: 440rpx;
-      line-height: 72rpx;
-      color: #fff;
-      font-size: 28rpx;
-      background-color: #597fe8;
-      text-align: center;
+    z-index: 2;
+    opacity: 0.8;
+  }
+
+  .one-login {
+    position: absolute;
+    width: 100%;
+    left: 20%;
+    right: 20%;
+    top: 45%;
+    opacity: 1;
+    z-index: 999;
+
+    :deep() {
+      .one-login-btn {
+        width: 440rpx;
+        line-height: 80rpx;
+        height: 80rpx;
+        color: #fff;
+        font-size: 30rpx;
+        background-color: #597fe8;
+        text-align: center;
+        border-radius: 0;
+      }
     }
   }
 
   .login-con {
-    height: 460rpx;
-    padding: 0 20rpx;
+    opacity: 1;
+    z-index: 999;
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    top: 35%;
+    padding: 10rpx 20rpx;
+    padding-top: 40rpx;
     background-color: #fff;
     border-radius: 20rpx;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    // align-items: center;
-    margin: 30rpx;
-    margin-top: 20vh;
 
     .title {
       padding-bottom: 40rpx;
       text-align: center;
+      font-size: 34rpx;
+      font-weight: 500;
+      color: #333;
     }
   }
 
   .footer {
     padding: 24rpx;
+    padding-bottom: 40rpx;
   }
 }
 </style>
