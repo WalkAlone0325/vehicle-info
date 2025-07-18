@@ -35,25 +35,34 @@
   top: 0;
   width: 100vw;
   height: 100vh;
+  object-fit: contain;
   z-index: 2;
   opacity: 0.8;
+}
+.login-page .login-bg-header.data-v-e4e4508d {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  z-index: 3;
+  opacity: 1;
 }
 .login-page .one-login.data-v-e4e4508d {
   position: absolute;
   width: 100%;
-  left: 20%;
-  right: 20%;
-  top: 45%;
+  left: 15%;
+  right: 15%;
+  top: 40%;
   opacity: 1;
   z-index: 999;
 }
 .login-page .one-login.data-v-e4e4508d  .one-login-btn {
-  width: 440rpx;
+  width: 540rpx;
   line-height: 80rpx;
   height: 80rpx;
   color: #fff;
   font-size: 30rpx;
-  background-color: #597fe8;
+  background-color: #3c689e;
   text-align: center;
   border-radius: 0;
 }
@@ -63,11 +72,19 @@
   position: absolute;
   left: 6%;
   right: 6%;
-  top: 35%;
-  padding: 10rpx 20rpx;
-  padding-top: 40rpx;
+  top: 25%;
   background-color: #fff;
   border-radius: 20rpx;
+}
+.login-page .login-con .log-header-img.data-v-e4e4508d {
+  border-radius: 20rpx 20rpx 0 0;
+  width: 100%;
+  height: 300rpx;
+  margin: 0 auto;
+}
+.login-page .login-con .login-form.data-v-e4e4508d {
+  padding: 10rpx 20rpx;
+  padding-top: 40rpx;
 }
 .login-page .login-con .title.data-v-e4e4508d {
   padding-bottom: 40rpx;
@@ -79,4 +96,18 @@
 .login-page .footer.data-v-e4e4508d {
   padding: 24rpx;
   padding-bottom: 40rpx;
+}
+.login-page.data-v-e4e4508d  .wd-navbar {
+  background: transparent;
+}
+.login-page .icon-con.data-v-e4e4508d {
+  padding: 12rpx;
+  background-color: #b6b6b6;
+  border-radius: 50%;
+}
+.login-page .lg-title.data-v-e4e4508d {
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #333;
+  opacity: 1;
 }

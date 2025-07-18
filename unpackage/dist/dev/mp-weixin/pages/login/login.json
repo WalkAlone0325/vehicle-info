@@ -3,6 +3,7 @@
   "navigationStyle": "custom",
   "disableScroll": true,
   "usingComponents": {
+    "wd-navbar": "../../uni_modules/wot-design-uni/components/wd-navbar/wd-navbar",
     "wd-button": "../../uni_modules/wot-design-uni/components/wd-button/wd-button",
     "wd-input": "../../uni_modules/wot-design-uni/components/wd-input/wd-input",
     "wd-cell-group": "../../uni_modules/wot-design-uni/components/wd-cell-group/wd-cell-group",

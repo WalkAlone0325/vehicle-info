@@ -5,18 +5,20 @@ const utils_jsencrypt = require("../../utils/jsencrypt.js");
 require("../../utils/request.js");
 const api_common = require("../../api/common.js");
 if (!Array) {
+  const _easycom_wd_navbar2 = common_vendor.resolveComponent("wd-navbar");
   const _easycom_wd_button2 = common_vendor.resolveComponent("wd-button");
   const _easycom_wd_input2 = common_vendor.resolveComponent("wd-input");
   const _easycom_wd_cell_group2 = common_vendor.resolveComponent("wd-cell-group");
   const _easycom_wd_form2 = common_vendor.resolveComponent("wd-form");
-  (_easycom_wd_button2 + _easycom_wd_input2 + _easycom_wd_cell_group2 + _easycom_wd_form2)();
+  (_easycom_wd_navbar2 + _easycom_wd_button2 + _easycom_wd_input2 + _easycom_wd_cell_group2 + _easycom_wd_form2)();
 }
+const _easycom_wd_navbar = () => "../../uni_modules/wot-design-uni/components/wd-navbar/wd-navbar.js";
 const _easycom_wd_button = () => "../../uni_modules/wot-design-uni/components/wd-button/wd-button.js";
 const _easycom_wd_input = () => "../../uni_modules/wot-design-uni/components/wd-input/wd-input.js";
 const _easycom_wd_cell_group = () => "../../uni_modules/wot-design-uni/components/wd-cell-group/wd-cell-group.js";
 const _easycom_wd_form = () => "../../uni_modules/wot-design-uni/components/wd-form/wd-form.js";
 if (!Math) {
-  (_easycom_wd_button + _easycom_wd_input + _easycom_wd_cell_group + _easycom_wd_form)();
+  (_easycom_wd_navbar + _easycom_wd_button + _easycom_wd_input + _easycom_wd_cell_group + _easycom_wd_form)();
 }
 const _sfc_main = {
   __name: "login",
@@ -105,18 +107,25 @@ const _sfc_main = {
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_assets._imports_0$2,
-        b: oneLogin.value
+        b: common_vendor.p({
+          bordered: false,
+          fixed: true,
+          placeholder: true,
+          safeAreaInsetTop: true
+        }),
+        c: oneLogin.value
       }, oneLogin.value ? {
-        c: common_vendor.o(handleOneLogin),
-        d: common_vendor.p({
+        d: common_vendor.o(handleOneLogin),
+        e: common_vendor.p({
           loading: oneLoading.value,
           ["custom-class"]: "one-login-btn"
         })
       } : {}, {
-        e: !oneLogin.value
+        f: !oneLogin.value
       }, !oneLogin.value ? {
-        f: common_vendor.o(($event) => model.username = $event),
-        g: common_vendor.p({
+        g: common_assets._imports_1$1,
+        h: common_vendor.o(($event) => model.username = $event),
+        i: common_vendor.p({
           label: "账号",
           ["label-width"]: "70px",
           prop: "username",
@@ -128,8 +137,8 @@ const _sfc_main = {
           }],
           modelValue: model.username
         }),
-        h: common_vendor.o(($event) => model.password = $event),
-        i: common_vendor.p({
+        j: common_vendor.o(($event) => model.password = $event),
+        k: common_vendor.p({
           label: "密码",
           ["label-width"]: "70px",
           prop: "password",
@@ -141,19 +150,19 @@ const _sfc_main = {
           }],
           modelValue: model.password
         }),
-        j: common_vendor.p({
+        l: common_vendor.p({
           border: true
         }),
-        k: common_vendor.o(handleSubmit),
-        l: common_vendor.p({
+        m: common_vendor.o(handleSubmit),
+        n: common_vendor.p({
           type: "primary",
           loading: loading.value,
           block: true
         }),
-        m: common_vendor.sr(form, "e4e4508d-1", {
+        o: common_vendor.sr(form, "e4e4508d-2", {
           "k": "form"
         }),
-        n: common_vendor.p({
+        p: common_vendor.p({
           model,
           errorType: "toast"
         })
