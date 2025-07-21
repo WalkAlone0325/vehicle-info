@@ -145,11 +145,12 @@ const handleOneLogin = async () => {
     position: absolute;
     left: 0;
     top: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: contain;
+    width: 120%;
+    height: 100%;
+    margin-left: -5%;
     z-index: 2;
     opacity: 0.8;
+    overflow-x: hidden;
   }
 
   .login-bg-header {
