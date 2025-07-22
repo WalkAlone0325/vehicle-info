@@ -2,6 +2,7 @@
 import { ref, toRaw } from 'vue'
 import { onShow, onUnload } from '@dcloudio/uni-app'
 import { randomRgbColor, getDistance } from '@/utils'
+import { checkPointOnPolyline } from '@/utils/map'
 
 const mapRef = ref(null)
 const map = ref(null)
@@ -18,10 +19,10 @@ const currentData = ref({})
 const minAccuracy = ref(0)
 
 const markOrPolylineId = ref(1) // id
-const curPolyline = ref({}) // 点击的线
 
 // map 点击
 const handleClickMap = async (e, type) => {
+  console.log(e, type, 'e,type')
   switch (type) {
     // 添加标点、线
     case 'addMark':
@@ -38,6 +39,18 @@ const handleClickMap = async (e, type) => {
           console.log(err, 'err')
         }
       })
+      break
+    // 点击线
+    case undefined:
+      const { latitude, longitude } = e.detail
+      const { isOnPolyline, index, view } = await checkPointOnPolyline(latitude, longitude, polyline.value, mapRef.value, initLocation.value.latitude)
+      console.log(isOnPolyline, view, 'isOnPolyline', index, polyline.value[index])
+      if (isOnPolyline) {
+        uni.showToast({
+          title: '点击了线',
+          icon: 'success'
+        })
+      }
       break
   }
 }
@@ -65,6 +78,7 @@ const addMarker = (latitude, longitude, id) => {
     clickable: true,
     arrowLine: true,
     color: randomRgbColor(),
+    segmentTexts: [{name: '测试一下', startIndex: 0, endIndex: 1}]
   })
 
   // 标点
@@ -88,14 +102,12 @@ const addMarker = (latitude, longitude, id) => {
 
 const o = ref(-1)
 // 点击控件
-const clickControl = async (type) => {
-  console.log('🚀:>> ', polyline.value)
-  const res = await getCurLocation()
+const clickControl = (type) => {
   // 更新定位
   if (type === 'local') {
-    console.log(res, 'current')
-    initLocation.value.latitude = res.latitude
-    initLocation.value.longitude = res.longitude
+    console.log(currentData.value, 'current')
+    initLocation.value.latitude = currentData.value.latitude
+    initLocation.value.longitude = currentData.value.longitude
   } else if (type === 'mark') {
     // 添加标记点、路线
     const arr = [
@@ -103,42 +115,11 @@ const clickControl = async (type) => {
       { latitude: 37.78304276611586, longitude: 112.5613987268813 },
       { latitude: 37.78167095013985, longitude: 112.55824860145844 }
     ]
-    // handleClickMap(res, 'addMark')
+    // handleClickMap(currentData.value, 'addMark')
     o.value = o.value + 1
     console.log('🚀:>> ', arr[o.value], o.value)
     handleClickMap(arr[o.value], 'addMark')
   }
-}
-
-// 获取定位
-const getCurLocation = () => {
-  return new Promise((resolve) => {
-    uni.getLocation({
-      type: 'gcj02',
-      isHighAccuracy: true,
-      success: (res) => {
-        currentData.value = res
-
-        if (!markers.value.length) {
-          initLocation.value.latitude = res.latitude
-          initLocation.value.longitude = res.longitude
-
-          markers.value = [
-            {
-              id: 1,
-              latitude: res.latitude,
-              longitude: res.longitude,
-              iconPath: '../../static/current.png',
-              width: 30,
-              height: 30
-            }
-          ]
-        }
-        resolve(res)
-      },
-      fail: (err) => console.log(err, 'err')
-    })
-  })
 }
 
 // 实时定位
@@ -172,64 +153,45 @@ const localChange = (res) => {
   }
 }
 
-// 点击线路
-const clickPolyline = (e) => {
-  const {latitude, longitude, polylineId} = e.detail
-  curPolyline.value = polyline.value.find(item => item.id === polylineId)
-  // 点线路创建隐藏式标点展示信息
-  createHiddenMarker(latitude, longitude, curPolyline.value)
-}
-
-// 创建隐藏式标点
-const hiddenMarkId = ref(1000)
-const createHiddenMarker = (latitude, longitude, curPolyline) => {
-  const arr = curPolyline.points
-  markers.value.push({
-    id: hiddenMarkId.value++,
-    latitude,
-    longitude,
-    iconPath: '',
-    width: 0,
-    height: 0,
-    title: getDistance(arr[0].latitude, arr[0].longitude, arr[1].latitude, arr[1].longitude)
-  })
-}
-
 // 点击标点
 const clickMarker = (e) => {
-
+  console.log(e, 'e')
 }
 
-onShow(async () => {
-  await getCurLocation()
-  // uni.startLocationUpdate({
-  //   success: () => {
-  //     console.log('开启应用接收位置消息成功')
-  //     uni.onLocationChange((res) => {
-  //       localChange(res)
-  //       // 精确度小于20米，关闭定位
-  //       // if (res.accuracy.toFixed(2) * 100 < 2000) {
-  //       //   uni.stopLocationUpdate({
-  //       //     success: () => console.log('关闭应用接收位置消息成功'),
-  //       //     fail: err => console.error('关闭应用接收位置消息失败：', err),
-  //       //     complete: msg => console.log('调用关闭应用接收位置消息 API 完成')
-  //       //   })
-  //       // }
-  //     })
-  //   },
-  //   fail: err => console.error('开启应用接收位置消息失败：', err),
-  //   complete: msg => console.log('调用开启应用接收位置消息 API 完成')
-  // })
+onShow(() => {
+  uni.startLocationUpdate({
+    success: () => {
+      console.log('开启应用接收位置消息成功')
+      uni.onLocationChange((res) => {
+        localChange(res)
+        // 精确度小于20米，关闭定位
+        // if (res.accuracy.toFixed(2) * 100 < 2000) {
+        //   uni.stopLocationUpdate({
+        //     success: () => console.log('关闭应用接收位置消息成功'),
+        //     fail: err => console.error('关闭应用接收位置消息失败：', err),
+        //     complete: msg => console.log('调用关闭应用接收位置消息 API 完成')
+        //   })
+        // }
+      })
+    },
+    fail: err => console.error('开启应用接收位置消息失败：', err),
+    complete: msg => console.log('调用开启应用接收位置消息 API 完成')
+  })
 })
 onUnload(() => {
   uni.stopLocationUpdate({})
 })
+
+const clickPolyline = (e) => {
+  console.log(e, 'e')
+}
 </script>
 
 <template>
   <view class="map-con">
-    <map id="map" ref="map" :enable-poi="false" show-location show-compass enable-zoom enable-scroll :scale="scale"
-      :longitude="initLocation.longitude" :latitude="initLocation.latitude" :markers="markers" :polyline="polyline" @tap="handleClickMap" @markertap="clickMarker" @polylinetap="clickPolyline">
+    <map id="map" ref="map" show-location show-compass enable-zoom enable-scroll :scale="scale"
+      :longitude="initLocation.longitude" :latitude="initLocation.latitude" :markers="markers" :polyline="polyline"
+      @tap="handleClickMap" @markertap="clickMarker" @polyline-tap="clickPolyline">
 
       <!-- 控件 -->
       <view class="control-con">
@@ -243,12 +205,12 @@ onUnload(() => {
       </view>
 
       <!-- 实时数据 -->
-      <!-- <view class="data-con">
+      <view class="data-con">
         <view class="data-item" v-for="i in data" :key="i.label">
           <view class="label">{{ i.label }}：</view>
           <view class="value">{{ i.value + i.unit }}</view>
         </view>
-      </view> -->
+      </view>
     </map>
 
   </view>
@@ -259,13 +221,6 @@ onUnload(() => {
 #map {
   width: 100%;
   height: 100%;
-}
-
-.info-con {
-  position: absolute;
-  padding: 12rpx;
-  background-color: #fff;
-  border-radius: 8rpx;
 }
 
 .control-con {
