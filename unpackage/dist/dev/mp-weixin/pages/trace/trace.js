@@ -10,16 +10,26 @@ if (!Array) {
   const _easycom_wd_radio2 = common_vendor.resolveComponent("wd-radio");
   const _easycom_wd_radio_group2 = common_vendor.resolveComponent("wd-radio-group");
   const _easycom_wd_drop_menu_item2 = common_vendor.resolveComponent("wd-drop-menu-item");
+  const _easycom_wd_input2 = common_vendor.resolveComponent("wd-input");
+  const _easycom_wd_datetime_picker2 = common_vendor.resolveComponent("wd-datetime-picker");
+  const _easycom_wd_cell_group2 = common_vendor.resolveComponent("wd-cell-group");
+  const _easycom_wd_button2 = common_vendor.resolveComponent("wd-button");
+  const _easycom_wd_form2 = common_vendor.resolveComponent("wd-form");
   const _easycom_wd_drop_menu2 = common_vendor.resolveComponent("wd-drop-menu");
-  (_easycom_wd_search2 + _easycom_wd_radio2 + _easycom_wd_radio_group2 + _easycom_wd_drop_menu_item2 + _easycom_wd_drop_menu2)();
+  (_easycom_wd_search2 + _easycom_wd_radio2 + _easycom_wd_radio_group2 + _easycom_wd_drop_menu_item2 + _easycom_wd_input2 + _easycom_wd_datetime_picker2 + _easycom_wd_cell_group2 + _easycom_wd_button2 + _easycom_wd_form2 + _easycom_wd_drop_menu2)();
 }
 const _easycom_wd_search = () => "../../uni_modules/wot-design-uni/components/wd-search/wd-search.js";
 const _easycom_wd_radio = () => "../../uni_modules/wot-design-uni/components/wd-radio/wd-radio.js";
 const _easycom_wd_radio_group = () => "../../uni_modules/wot-design-uni/components/wd-radio-group/wd-radio-group.js";
 const _easycom_wd_drop_menu_item = () => "../../uni_modules/wot-design-uni/components/wd-drop-menu-item/wd-drop-menu-item.js";
+const _easycom_wd_input = () => "../../uni_modules/wot-design-uni/components/wd-input/wd-input.js";
+const _easycom_wd_datetime_picker = () => "../../uni_modules/wot-design-uni/components/wd-datetime-picker/wd-datetime-picker.js";
+const _easycom_wd_cell_group = () => "../../uni_modules/wot-design-uni/components/wd-cell-group/wd-cell-group.js";
+const _easycom_wd_button = () => "../../uni_modules/wot-design-uni/components/wd-button/wd-button.js";
+const _easycom_wd_form = () => "../../uni_modules/wot-design-uni/components/wd-form/wd-form.js";
 const _easycom_wd_drop_menu = () => "../../uni_modules/wot-design-uni/components/wd-drop-menu/wd-drop-menu.js";
 if (!Math) {
-  (_easycom_wd_search + _easycom_wd_radio + _easycom_wd_radio_group + _easycom_wd_drop_menu_item + _easycom_wd_drop_menu)();
+  (_easycom_wd_search + _easycom_wd_radio + _easycom_wd_radio_group + _easycom_wd_drop_menu_item + _easycom_wd_input + _easycom_wd_datetime_picker + _easycom_wd_cell_group + _easycom_wd_button + _easycom_wd_form + _easycom_wd_drop_menu)();
 }
 const _sfc_main = {
   __name: "trace",
@@ -63,17 +73,20 @@ const _sfc_main = {
       }));
       markers.value = markerList.value;
     };
+    const handleConfirm = () => {
+    };
+    const model = common_vendor.ref({
+      plateNumber: "",
+      date: utils_index.getTodayTimestampRange()
+    });
     const traceData = common_vendor.ref({});
     const polyline = common_vendor.ref([]);
     const getTraceData = async () => {
-      const now = /* @__PURE__ */ new Date();
-      const twoHourAgo = new Date(now);
-      twoHourAgo.setHours((/* @__PURE__ */ new Date()).getHours() - 2);
       const res = await api_common.getTraceApi({
-        deptId: deptId.value,
-        plateNumber: plateNumber.value,
-        startDate: utils_index.formatDateTime(twoHourAgo),
-        endDate: utils_index.formatDateTime(/* @__PURE__ */ new Date())
+        // deptId: deptId.value,
+        plateNumber: model.value.plateNumber,
+        startDate: utils_index.formatDateTime(model.value.date[0]),
+        endDate: utils_index.formatDateTime(model.value.date[1])
       });
       if (res.code === 200) {
         traceData.value = res.data;
@@ -136,6 +149,11 @@ const _sfc_main = {
       }
       return res;
     };
+    const handleReset = () => {
+      model.value.date = utils_index.getTodayTimestampRange();
+      model.value.plateNumber = "";
+      search();
+    };
     const search = () => {
       if (curIdx.value === 0) {
         markerList.value = [];
@@ -178,7 +196,9 @@ const _sfc_main = {
       markers.value = [];
       traceData.value = {};
       polyline.value = [];
-      search();
+      if (curIdx.value !== 1) {
+        search();
+      }
     };
     common_vendor.onShow(() => {
       getData();
@@ -217,47 +237,55 @@ const _sfc_main = {
         j: common_vendor.p({
           title: "车辆位置"
         }),
-        k: common_vendor.o(reset),
-        l: common_vendor.o(search),
-        m: common_vendor.o(($event) => plateNumber.value = $event),
-        n: common_vendor.p({
-          ["placeholder-left"]: true,
-          ["cancel-txt"]: "重置",
-          placeholder: "请输入车牌号进行搜索",
-          modelValue: plateNumber.value
+        k: common_vendor.o(($event) => model.value.plateNumber = $event),
+        l: common_vendor.p({
+          label: "车牌号",
+          ["label-width"]: "80px",
+          prop: "plateNumber",
+          clearable: true,
+          placeholder: "请输入车牌号进行查询",
+          modelValue: model.value.plateNumber
         }),
-        o: common_vendor.f(deptOptions.value, (i, k0, i0) => {
-          return {
-            a: common_vendor.t(i.label),
-            b: "14c2661d-8-" + i0 + ",14c2661d-7",
-            c: common_vendor.p({
-              value: i.value
-            }),
-            d: i.value
-          };
+        m: common_vendor.o(handleConfirm),
+        n: common_vendor.o(($event) => model.value.date = $event),
+        o: common_vendor.p({
+          prop: "date",
+          ["label-width"]: "80px",
+          label: "日期选择",
+          placeholder: "请选择日期",
+          modelValue: model.value.date
         }),
-        p: common_vendor.o(search),
-        q: common_vendor.o(($event) => deptId.value = $event),
+        p: common_vendor.p({
+          border: true
+        }),
+        q: common_vendor.o(search),
         r: common_vendor.p({
-          shape: "button",
-          modelValue: deptId.value
+          type: "primary"
         }),
-        s: common_vendor.sr(dropRef2, "14c2661d-5,14c2661d-0", {
+        s: common_vendor.o(handleReset),
+        t: common_vendor.p({
+          type: "warning"
+        }),
+        v: common_vendor.sr("form", "14c2661d-6,14c2661d-5"),
+        w: common_vendor.p({
+          model: model.value
+        }),
+        x: common_vendor.sr(dropRef2, "14c2661d-5,14c2661d-0", {
           "k": "dropRef2"
         }),
-        t: common_vendor.p({
+        y: common_vendor.p({
           title: "车辆轨迹"
         }),
-        v: common_vendor.o(clickDrop),
-        w: common_vendor.p({
+        z: common_vendor.o(clickDrop),
+        A: common_vendor.p({
           idx: curIdx.value
         }),
-        x: common_vendor.o((...args) => common_vendor.unref(closeOutside) && common_vendor.unref(closeOutside)(...args)),
-        y: polyline.value,
-        z: scale.value,
-        A: data.value.longitude,
-        B: data.value.latitude,
-        C: markers.value
+        B: common_vendor.o((...args) => common_vendor.unref(closeOutside) && common_vendor.unref(closeOutside)(...args)),
+        C: polyline.value,
+        D: scale.value,
+        E: data.value.longitude,
+        F: data.value.latitude,
+        G: markers.value
       };
     };
   }

@@ -133,7 +133,8 @@ export function gcj02towgs84(lng, lat) {
   return [finalLng, finalLat]
 }
 
-export function formatDateTime(date) {
+export function formatDateTime(timestamp) {
+  let date = new Date(timestamp)
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0') // 月份从0开始，需加1并补零
   const day = String(date.getDate()).padStart(2, '0')
@@ -141,6 +142,17 @@ export function formatDateTime(date) {
   const minutes = String(date.getMinutes()).padStart(2, '0')
   const seconds = String(date.getSeconds()).padStart(2, '0')
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+}
+
+export function getTodayTimestampRange() {
+  const now = new Date();
+  const start = new Date(now);
+  start.setHours(0,  0, 0, 0);
+  
+  const end = new Date(now);
+  end.setHours(23,  59, 59, 999);
+  
+  return [start.getTime(), end.getTime()]
 }
 
 /**

@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/index/switch",
     "pages/index/index",
     "pages/index/map",
     "pages/index/car",

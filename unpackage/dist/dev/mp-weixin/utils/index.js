@@ -57,7 +57,8 @@ function wgs84togcj02(lng, lat) {
   let mglng = lng + dlng;
   return [mglng, mglat];
 }
-function formatDateTime(date) {
+function formatDateTime(timestamp) {
+  let date = new Date(timestamp);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
@@ -65,6 +66,14 @@ function formatDateTime(date) {
   const minutes = String(date.getMinutes()).padStart(2, "0");
   const seconds = String(date.getSeconds()).padStart(2, "0");
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+function getTodayTimestampRange() {
+  const now = /* @__PURE__ */ new Date();
+  const start = new Date(now);
+  start.setHours(0, 0, 0, 0);
+  const end = new Date(now);
+  end.setHours(23, 59, 59, 999);
+  return [start.getTime(), end.getTime()];
 }
 function getDaysAgo(targetDate) {
   const now = /* @__PURE__ */ new Date();
@@ -113,6 +122,7 @@ exports.formatDate = formatDate;
 exports.formatDateTime = formatDateTime;
 exports.getDaysAgo = getDaysAgo;
 exports.getDistance = getDistance;
+exports.getTodayTimestampRange = getTodayTimestampRange;
 exports.getToken = getToken;
 exports.randomRgbColor = randomRgbColor;
 exports.wgs84togcj02 = wgs84togcj02;

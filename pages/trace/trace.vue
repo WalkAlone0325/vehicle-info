@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { getLocationApi, getDeptApi, getTraceApi } from '@/api'
 import { useQueue } from '@/uni_modules/wot-design-uni'
 import { onShow } from '@dcloudio/uni-app'
-import { randomRgbColor, wgs84togcj02, formatDateTime } from '@/utils'
+import { randomRgbColor, wgs84togcj02, formatDateTime, getTodayTimestampRange } from '@/utils'
 
 const { closeOutside } = useQueue()
 
@@ -49,17 +49,20 @@ const getData = async () => {
   markers.value = markerList.value
 }
 
+const handleConfirm = () => {}
+
+const model = ref({
+  plateNumber: '',
+  date: getTodayTimestampRange()
+})
 const traceData = ref({})
 const polyline = ref([]) // 路线
 const getTraceData = async () => {
-  const now = new Date()
-  const twoHourAgo = new Date(now)
-  twoHourAgo.setHours(new Date().getHours() - 2)
   const res = await getTraceApi({
-    deptId: deptId.value,
-    plateNumber: plateNumber.value,
-    startDate: formatDateTime(twoHourAgo),
-    endDate: formatDateTime(new Date())
+    // deptId: deptId.value,
+    plateNumber: model.value.plateNumber,
+    startDate: formatDateTime(model.value.date[0]),
+    endDate: formatDateTime(model.value.date[1])
   })
   if(res.code === 200) {
     traceData.value = res.data
@@ -130,6 +133,12 @@ const handlePoints = (i, idx) => {
   return res
 }
 
+const handleReset = () => {
+  model.value.date = getTodayTimestampRange()
+  model.value.plateNumber = ''
+  search()
+}
+
 const search = () => {
   if(curIdx.value === 0) {
     markerList.value = []
@@ -174,7 +183,9 @@ const clickDrop = (item, idx) => {
 
   traceData.value = {}
   polyline.value = []
-  search()
+  if(curIdx.value !== 1) {
+    search()
+  }
 }
 
 onShow(() => {
@@ -202,15 +213,24 @@ onShow(() => {
         </wd-drop-menu-item>
         <wd-drop-menu-item title="车辆轨迹" ref="dropRef2">
           <view class="drop-con">
-            <wd-search v-model="plateNumber" placeholder-left cancel-txt="重置" @cancel="reset" placeholder="请输入车牌号进行搜索"
-              @search="search" />
-            <wd-radio-group v-model="deptId" shape="button" @change="search">
-              <view class="radio-con">
-                <view class="radio-item" v-for="i in deptOptions" :key="i.value">
-                  <wd-radio :value="i.value">{{ i.label }}</wd-radio>
-                </view>
+            <wd-form ref="form" :model="model">
+              <wd-cell-group border>
+                <wd-input
+                  label="车牌号"
+                  label-width="80px"
+                  prop="plateNumber"
+                  clearable
+                  v-model="model.plateNumber"
+                  placeholder="请输入车牌号进行查询"
+                />
+                <wd-datetime-picker prop="date" label-width="80px" label="日期选择" placeholder="请选择日期" v-model="model.date" @confirm="handleConfirm" />
+              </wd-cell-group>
+              <view style="display: flex;justify-content: center; padding: 20rpx 30rpx;">
+                <wd-button type="primary" @click="search">搜索</wd-button>
+                <view style="margin-right: 30rpx;"></view>
+                <wd-button type="warning" @click="handleReset">重置</wd-button>
               </view>
-            </wd-radio-group>
+            </wd-form>
           </view>
         </wd-drop-menu-item>
       </wd-drop-menu>

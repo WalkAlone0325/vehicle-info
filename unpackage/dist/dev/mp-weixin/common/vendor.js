@@ -7157,9 +7157,9 @@ function isConsoleWritable() {
   return isWritable;
 }
 function initRuntimeSocketService() {
-  const hosts = "127.0.0.1,192.168.0.197";
+  const hosts = "127.0.0.1,192.168.0.144";
   const port = "8090";
-  const id = "mp-weixin_t080ZY";
+  const id = "mp-weixin_XA1kic";
   const lazy = typeof swan !== "undefined";
   let restoreError = lazy ? () => {
   } : initOnError();
@@ -8135,12 +8135,6 @@ const easycom = {
   }
 };
 const pages = [
-  {
-    path: "pages/index/switch",
-    style: {
-      navigationBarTitleText: "切换"
-    }
-  },
   {
     path: "pages/index/index",
     style: {
