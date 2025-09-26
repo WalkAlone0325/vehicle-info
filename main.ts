@@ -1,3 +1,7 @@
+// AppID：wx149f20316757855f
+// AppSecret：3f00be04ef019968293c5505588012b4
+
+
 import App from './App'
 
 // #ifndef VUE3
