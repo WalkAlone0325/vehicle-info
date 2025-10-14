@@ -1,1 +1,0 @@
-{"version":3,"file":"list.js","sources":["pages/order/devOps/list.vue?type=page"],"sourcesContent":["import MiniProgramPage from '/Users/jing/Code/mini/vehicle-info/pages/order/devOps/list.vue'\nwx.createPage(MiniProgramPage)"],"names":[],"mappings":";;;;;;;AACA,GAAG,WAAW,eAAe;"}
