@@ -144,6 +144,9 @@ function isPromise(value) {
   }
   return false;
 }
+function isBoolean(value) {
+  return typeof value === "boolean";
+}
 function isUndefined(value) {
   return typeof value === "undefined";
 }
@@ -317,6 +320,7 @@ exports.getRect = getRect;
 exports.getType = getType;
 exports.gradient = gradient;
 exports.isArray = isArray;
+exports.isBoolean = isBoolean;
 exports.isDate = isDate;
 exports.isDef = isDef;
 exports.isEqual = isEqual;

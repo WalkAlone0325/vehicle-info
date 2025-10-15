@@ -43,6 +43,11 @@ const _sfc_main = {
         url: `/pages/order/form?id=${i.useCarApplicationOrderId}&type=${curType.value}`
       });
     };
+    const clickRecord = (i) => {
+      common_vendor.index.navigateTo({
+        url: `/pages/order/record?id=${i.useCarApplicationOrderId}&type=${curType.value}`
+      });
+    };
     const clickApply = (i) => {
       common_vendor.index.navigateTo({
         url: `/pages/order/form-apply?id=${i.useCarApplicationOrderId}`
@@ -91,31 +96,43 @@ const _sfc_main = {
             c: common_vendor.t(i.orderStatusName),
             d: getColor(i)
           } : {}, {
-            e: common_vendor.t(i.expectedPlateNumber),
-            f: common_vendor.t(i.expectedDriverName),
-            g: common_vendor.t(i.destination),
-            h: common_vendor.t(i.vehicleTypeName),
-            i: "456ecf67-2-" + i0 + "," + ("456ecf67-1-" + i0)
-          }, curType.value === "pass" ? {
-            j: common_vendor.o(($event) => clickApply(i), i.expectedVehicleId),
-            k: "456ecf67-3-" + i0 + "," + ("456ecf67-1-" + i0),
-            l: common_vendor.p({
+            e: common_vendor.t(i.applicantUserName),
+            f: common_vendor.t(i.applicantNickName),
+            g: common_vendor.t(i.applicantDeptName),
+            h: common_vendor.t(i.applicantCompanyDeptName),
+            i: common_vendor.t(i.applicantIsIntermarketCityName),
+            j: common_vendor.t(i.applicantPassengersNumber),
+            k: common_vendor.t(i.applicantContent),
+            l: i.vehicleTypeName
+          }, i.vehicleTypeName ? {
+            m: common_vendor.t(i.vehicleTypeName),
+            n: "456ecf67-2-" + i0 + "," + ("456ecf67-1-" + i0),
+            o: common_vendor.p({
+              type: "primary",
+              mark: true
+            })
+          } : {}, curType.value === "pass" ? {
+            p: common_vendor.o(($event) => clickApply(i), i.expectedVehicleId),
+            q: "456ecf67-3-" + i0 + "," + ("456ecf67-1-" + i0),
+            r: common_vendor.p({
               size: "small",
               plain: true,
               type: "success"
             })
           } : {}, {
-            m: common_vendor.o(($event) => clickDetail(i), i.expectedVehicleId),
-            n: "456ecf67-4-" + i0 + "," + ("456ecf67-1-" + i0),
-            o: i.expectedVehicleId,
-            p: "456ecf67-1-" + i0
+            s: common_vendor.o(($event) => clickRecord(i), i.expectedVehicleId),
+            t: "456ecf67-4-" + i0 + "," + ("456ecf67-1-" + i0),
+            v: common_vendor.o(($event) => clickDetail(i), i.expectedVehicleId),
+            w: "456ecf67-5-" + i0 + "," + ("456ecf67-1-" + i0),
+            x: i.expectedVehicleId,
+            y: "456ecf67-1-" + i0
           });
         }),
-        c: common_vendor.p({
-          type: "primary",
-          mark: true
+        c: curType.value === "pass",
+        d: common_vendor.p({
+          size: "small",
+          plain: true
         }),
-        d: curType.value === "pass",
         e: common_vendor.p({
           size: "small",
           plain: true

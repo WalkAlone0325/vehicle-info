@@ -2172,6 +2172,9 @@ If this is a native custom element, make sure to exclude it from component resol
 function resolve(registry, name) {
   return registry && (registry[name] || registry[camelize(name)] || registry[capitalize(camelize(name))]);
 }
+function watchEffect(effect2, options) {
+  return doWatch(effect2, null, options);
+}
 const INITIAL_WATCHER_VALUE = {};
 function watch(source, cb, options) {
   if (!isFunction(cb)) {
@@ -8178,6 +8181,12 @@ const pages = [
     }
   },
   {
+    path: "pages/order/record",
+    style: {
+      navigationBarTitleText: "审批记录"
+    }
+  },
+  {
     path: "pages/order/form-apply",
     style: {
       navigationBarTitleText: "费用申请"
@@ -11217,4 +11226,5 @@ exports.unref = unref;
 exports.useSlots = useSlots;
 exports.w = w$1;
 exports.watch = watch;
+exports.watchEffect = watchEffect;
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map

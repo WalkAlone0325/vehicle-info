@@ -55,6 +55,12 @@
     		"navigationBarTitleText": ""
     	}
     },
+		{
+    	"path": "pages/order/record",
+    	"style": {
+    		"navigationBarTitleText": "审批记录"
+    	}
+    },
     {
     	"path": "pages/order/form-apply",
     	"style": {

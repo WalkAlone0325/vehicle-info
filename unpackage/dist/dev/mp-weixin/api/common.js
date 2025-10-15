@@ -7,7 +7,7 @@ const getTraceApi = (params) => utils_request.http.get("/car/jt808RecordLocation
 const oneLoginApi = (params) => utils_request.http.post("/xcxLogin?xcxCode=" + params);
 const loginApi = (params) => utils_request.http.post("/login", params);
 const getInfoApi = () => utils_request.http.get("/getInfo");
-const logoutApi = () => utils_request.http.post("/logout");
+const logoutApi = () => utils_request.http.post("/unbind/logout");
 const updatePwd = (params) => utils_request.http.put("/system/user/profile/updatePwd", params);
 const getNoticeApi = (params) => utils_request.http.get("/car/vehicleMaintenanceWarning/list/page", { params });
 exports.getDeptApi = getDeptApi;

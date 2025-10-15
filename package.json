@@ -16,6 +16,7 @@
         ]
     },
     "dependencies": {
-        "@uni-helper/uni-network": "^0.21.1"
+        "@uni-helper/uni-network": "^0.21.1",
+        "@vant/area-data": "^2.1.0"
     }
 }

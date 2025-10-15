@@ -21,7 +21,7 @@ export const loginApi = (params) => http.post('/login', params)
 export const getInfoApi = () => http.get('/getInfo')
 
 // 退出登录
-export const logoutApi = () => http.post('/logout')
+export const logoutApi = () => http.post('/unbind/logout')
 
 // 修改密码
 export const updatePwd = (params) => http.put('/system/user/profile/updatePwd', params)

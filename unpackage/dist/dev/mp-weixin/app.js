@@ -9,6 +9,7 @@ if (!Math) {
   "./pages/order/order.js";
   "./pages/order/form.js";
   "./pages/order/list.js";
+  "./pages/order/record.js";
   "./pages/order/form-apply.js";
   "./pages/order/devOps/config.js";
   "./pages/order/devOps/configForm.js";

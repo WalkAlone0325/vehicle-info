@@ -13,13 +13,14 @@ const _easycom_wd_card = () => "../../uni_modules/wot-design-uni/components/wd-c
 if (!Math) {
   (_easycom_wd_grid_item + _easycom_wd_grid + _easycom_wd_card)();
 }
-const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
+const _sfc_main = {
   __name: "order",
   setup(__props) {
     const carOrder = common_vendor.ref([]);
     const carVehicle = common_vendor.ref([]);
     const order = common_vendor.ref([
-      { id: 1, text: "用车工单", icon: "apply", url: "/pages/order/cars/list" }
+      { id: 1, text: "用车工单", icon: "apply", url: "/pages/order/cars/list" },
+      { id: 2, text: "加油工单", icon: "apply", url: "/pages/order/cars/list" }
     ]);
     common_vendor.onShow(() => {
       const arr1 = [
@@ -40,7 +41,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         { id: 1, text: "告警配置", icon: "setting", url: "/pages/order/devOps/config" },
         { id: 2, text: "运维计划", icon: "plan", url: "/pages/order/devOps/plan" },
         { id: 3, text: "运维记录", icon: "record", url: "/pages/order/devOps/record" },
-        { id: 4, text: "运维告警", icon: "gaojin", url: "/pages/order/devOps/warning" }
+        { id: 4, text: "运维告警", icon: "gaojin", url: "/pages/order/devOps/warning" },
+        { id: 5, text: "保养记录", icon: "maintain", url: "/pages/order/devOps/maintain" }
       ];
       const v2 = [];
       carOrder.value = utils_index.checkRole("driver") ? arr1 : arr2;
@@ -93,7 +95,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           column: 3
         }),
         f: common_vendor.p({
-          title: "用车工单"
+          title: "工单"
         }),
         g: carVehicle.value.length
       }, carVehicle.value.length ? {
@@ -120,7 +122,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       } : {});
     };
   }
-});
+};
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-93207a4f"]]);
 wx.createPage(MiniProgramPage);
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/order/order.js.map

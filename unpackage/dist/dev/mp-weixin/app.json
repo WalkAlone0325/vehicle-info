@@ -7,6 +7,7 @@
     "pages/order/order",
     "pages/order/form",
     "pages/order/list",
+    "pages/order/record",
     "pages/order/form-apply",
     "pages/order/devOps/config",
     "pages/order/devOps/configForm",

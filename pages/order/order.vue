@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import { checkRole } from '@/utils'
 import { onShow } from '@dcloudio/uni-app'
@@ -7,6 +7,7 @@ const carOrder = ref([])
 const carVehicle = ref([])
 const order = ref([
   { id: 1, text: '用车工单', icon: 'apply', url: '/pages/order/cars/list' },
+  { id: 2, text: '加油工单', icon: 'apply', url: '/pages/order/cars/list' },
 ])
 
 onShow(() => {
@@ -24,12 +25,13 @@ onShow(() => {
     // { id: 5, text: '已驳回', icon: 'reject', url: '/pages/order/list?type=reject' },
     { id: 6, text: '审批', icon: 'pending', url: '/pages/order/list?type=approve', needRole: true },
   ]
-  
+
   const v1 = [
     { id: 1, text: '告警配置', icon: 'setting', url: '/pages/order/devOps/config' },
     { id: 2, text: '运维计划', icon: 'plan', url: '/pages/order/devOps/plan' },
     { id: 3, text: '运维记录', icon: 'record', url: '/pages/order/devOps/record' },
     { id: 4, text: '运维告警', icon: 'gaojin', url: '/pages/order/devOps/warning' },
+    { id: 5, text: '保养记录', icon: 'maintain', url: '/pages/order/devOps/maintain' },
   ]
   const v2 = []
   carOrder.value = checkRole('driver') ? arr1 : arr2
@@ -56,8 +58,8 @@ const clickItem = (item) => {
         </view>
       </wd-grid>
     </wd-card>
-    
-    <wd-card title="用车工单">
+
+    <wd-card title="工单">
       <wd-grid clickable border hover-class=" " :column="3">
         <view class="" v-for="i in order" :key="i.id" @click="clickItem(i)">
           <wd-grid-item use-icon-slot :text="i.text">

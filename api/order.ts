@@ -89,3 +89,22 @@ export const getEndOrderList = (params) => http.get('/car/vehicleUseCarApplicati
 
 // 申请人
 export const getUserListApi = (params) => http.get('/car/driverInfo/user/list/page', { params })
+
+
+// 申请信息
+export const getApplyInfoApi = (params) => http.get('/login/user', params)
+
+// 岗位
+export const getPostApi = (params) => http.get('/login/post', { params })
+
+// 地点
+export const getRegionApi = (params) => http.get('/system/dict/region/list/tree/parent', { params })
+
+// 车辆
+export const getCarApi = (params) => http.get('/car/vehicleInfo/list/all/page', { params })
+
+// 司机
+export const getDriverApi = (params) => http.get('/car/driverInfo/list/page', { params })
+
+// 审批记录
+export const getApproveRecordApi = (params) => http.get('/car/vehicleUseCarApplicationOrderRecord/list', { params })

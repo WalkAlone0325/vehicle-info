@@ -28,6 +28,12 @@ const clickDetail = (i) => {
     url: `/pages/order/form?id=${i.useCarApplicationOrderId}&type=${curType.value}`
   })
 }
+const clickRecord = (i) => {
+  uni.navigateTo({
+    url: `/pages/order/record?id=${i.useCarApplicationOrderId}&type=${curType.value}`
+  })
+}
+
 const clickApply = (i) => {
   uni.navigateTo({
     url: `/pages/order/form-apply?id=${i.useCarApplicationOrderId}`
@@ -85,27 +91,53 @@ const getColor = ({orderStatusCode}) => {
 
         <view style="display: flex; justify-content: space-between;">
           <view style="display: flex">
-            <view class="label">申请车辆：</view>
-            <view class="value">{{ i.expectedPlateNumber }}</view>
+            <view class="label">申请人账号：</view>
+            <view class="value">{{ i.applicantUserName }}</view>
           </view>
           <view style="display: flex">
-            <view class="label">申请司机：</view>
-            <view class="value">{{ i.expectedDriverName }}</view>
+            <view class="label">申请人姓名：</view>
+            <view class="value">{{ i.applicantNickName }}</view>
           </view>
         </view>
 
         <view style="display: flex; margin-top: 10rpx;">
-          <view class="label">申请信息：</view>
-          <view class="value">{{ i.destination }}</view>
+          <view class="label">申请人公司：</view>
+          <view class="value">{{ i.applicantDeptName }}</view>
+        </view>
+
+        <view style="display: flex; margin-top: 10rpx;">
+          <view class="label">申请人部门：</view>
+            <view class="value">{{ i.applicantCompanyDeptName }}</view>
+        </view>
+
+
+        <view style="display: flex; justify-content: space-between; margin-top: 10rpx;">
+          <view style="display: flex">
+            <view class="label">是否跨市：</view>
+            <view class="value">{{ i.applicantIsIntermarketCityName }}</view>
+          </view>
+          <view style="display: flex">
+            <view class="label">乘车人数：</view>
+            <view class="value">{{ i.applicantPassengersNumber }}</view>
+          </view>
+        </view>
+
+        <view style="display: flex; margin-top: 10rpx;">
+          <view class="label">申请内容：</view>
+          <view class="value">{{ i.applicantContent }}</view>
         </view>
         <template #footer>
           <view class="footer">
             <view style="display: flex">
-              <wd-tag type="primary" mark>{{ i.vehicleTypeName }}</wd-tag>
+              <wd-tag type="primary" mark v-if="i.vehicleTypeName">{{ i.vehicleTypeName }}</wd-tag>
             </view>
             <view style="display: flex;">
               <wd-button v-if="curType === 'pass'" size="small" plain type="success"
                 @click="clickApply(i)">申请费用</wd-button>
+              <view style="margin-right: 20rpx;"></view>
+              <!-- <wd-button size="small" plain @click="clickImg(i)">流程图</wd-button>
+              <view style="margin-right: 20rpx;"></view> -->
+              <wd-button size="small" plain @click="clickRecord(i)">审批记录</wd-button>
               <view style="margin-right: 20rpx;"></view>
               <wd-button size="small" plain @click="clickDetail(i)">查看详情</wd-button>
             </view>
