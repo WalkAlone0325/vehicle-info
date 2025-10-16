@@ -108,3 +108,16 @@ export const getDriverApi = (params) => http.get('/car/driverInfo/list/page', { 
 
 // 审批记录
 export const getApproveRecordApi = (params) => http.get('/car/vehicleUseCarApplicationOrderRecord/list', { params })
+
+
+// 加油记录
+// 列表
+export const getOilListApi = (params) => http.get('/car/vehicleRefuelWorkOrder/list/page', { params })
+// 删除
+export const deleteOil = (params) => http.delete('/car/vehicleRefuelWorkOrder/' + params)
+// 详情
+export const getOilDetail = (params) => http.get('/car/vehicleRefuelWorkOrder/' + params)
+// 编辑
+export const putOil = (params) => http.put('/car/vehicleRefuelWorkOrder', params)
+// 新增
+export const postOil = (params) => http.post('/car/vehicleRefuelWorkOrder', params)

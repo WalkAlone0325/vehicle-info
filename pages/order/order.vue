@@ -7,7 +7,7 @@ const carOrder = ref([])
 const carVehicle = ref([])
 const order = ref([
   { id: 1, text: '用车工单', icon: 'apply', url: '/pages/order/cars/list' },
-  { id: 2, text: '加油工单', icon: 'apply', url: '/pages/order/cars/list' },
+  { id: 2, text: '加油工单', icon: 'oil', max: true, url: '/pages/order/oil/list' },
 ])
 
 onShow(() => {
@@ -31,7 +31,7 @@ onShow(() => {
     { id: 2, text: '运维计划', icon: 'plan', url: '/pages/order/devOps/plan' },
     { id: 3, text: '运维记录', icon: 'record', url: '/pages/order/devOps/record' },
     { id: 4, text: '运维告警', icon: 'gaojin', url: '/pages/order/devOps/warning' },
-    { id: 5, text: '保养记录', icon: 'maintain', url: '/pages/order/devOps/maintain' },
+    // { id: 5, text: '保养记录', icon: 'maintain', url: '/pages/order/devOps/maintain' },
   ]
   const v2 = []
   carOrder.value = checkRole('driver') ? arr1 : arr2
@@ -64,7 +64,7 @@ const clickItem = (item) => {
         <view class="" v-for="i in order" :key="i.id" @click="clickItem(i)">
           <wd-grid-item use-icon-slot :text="i.text">
             <template #icon>
-              <image class="slot-img" :src="`/static/order/${i.icon}.png`" />
+              <image class="slot-img" :style="{width: i.max ? '60rpx' : '50rpx', height: i.max ? '60rpx' : '50rpx'}" :src="`/static/order/${i.icon}.png`" />
             </template>
           </wd-grid-item>
         </view>

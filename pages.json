@@ -127,6 +127,18 @@
     		"navigationBarTitleText": "工单信息"
     	}
     },
+		{
+    	"path": "pages/order/oil/list",
+    	"style": {
+    		"navigationBarTitleText": "加油记录"
+    	}
+    },
+    {
+    	"path": "pages/order/oil/form",
+    	"style": {
+    		"navigationBarTitleText": "加油记录信息"
+    	}
+    },
     {
     	"path": "pages/trace/trace",
     	"style": {

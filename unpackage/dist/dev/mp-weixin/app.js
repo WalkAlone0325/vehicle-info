@@ -21,6 +21,8 @@ if (!Math) {
   "./pages/order/devOps/recordForm.js";
   "./pages/order/cars/list.js";
   "./pages/order/cars/form.js";
+  "./pages/order/oil/list.js";
+  "./pages/order/oil/form.js";
   "./pages/trace/trace.js";
   "./pages/mine/mine.js";
   "./pages/mine/notice.js";

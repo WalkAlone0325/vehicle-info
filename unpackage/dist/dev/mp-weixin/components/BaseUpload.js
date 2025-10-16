@@ -20,10 +20,13 @@ const _sfc_main = {
       default: () => []
     }
   },
-  emits: ["update:fileList"],
+  emits: ["update:fileList", "remove"],
   setup(__props, { emit: __emit }) {
     const toast = uni_modules_wotDesignUni_components_wdToast_index.useToast();
     const emit = __emit;
+    const removeUpload = (file) => {
+      emit("remove", file);
+    };
     const customUpload = (file, formData, options) => {
       const uploadTask = common_vendor.index.uploadFile({
         url: utils_request.http.config.baseURL + "system/local/file/upload",
@@ -58,7 +61,8 @@ const _sfc_main = {
     };
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.p({
+        a: common_vendor.o(removeUpload),
+        b: common_vendor.p({
           ["file-list"]: __props.fileList,
           limit: 1,
           ["upload-method"]: customUpload

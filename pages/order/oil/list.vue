@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive } from 'vue'
-import { getOrderApi, deleteOrder } from '@/api'
+import { getOilListApi, deleteOil } from '@/api'
 import { onShow, onReachBottom } from '@dcloudio/uni-app'
 import { useMessage } from '@/uni_modules/wot-design-uni'
 const message = useMessage()
@@ -12,7 +12,7 @@ const queryParams = reactive({
   pageNum: 1,
   pageSize: 10,
   order: 'asc',
-  plateNumber: ''
+  refuelPlateNumber: ''
 })
 
 const state = ref('loading')
@@ -29,7 +29,7 @@ onReachBottom(() => {
 
 onShow(() => {
   state.value = 'loading'
-  queryParams.plateNumber = ''
+  queryParams.refuelPlateNumber = ''
   queryParams.pageNum = 1
   queryParams.order = 'asc'
   list.value = []
@@ -45,7 +45,7 @@ function loadmore() {
 
 const getData = async () => {
   loading.value = true
-  const res = await getOrderApi(queryParams)
+  const res = await getOilListApi(queryParams)
   list.value = [...list.value, ...res.rows]
   total.value = res.total
   loading.value = false
@@ -59,7 +59,7 @@ const getData = async () => {
 // 详情
 const clickToDetail = (id) => {
   uni.navigateTo({
-    url: `/pages/order/cars/form${id ? `?id=${id}` : ''}`
+    url: `/pages/order/oil/form${id ? `?id=${id}` : ''}`
   })
 }
 
@@ -69,16 +69,14 @@ const resetPlan = (i) => {
     title: '提示信息',
     msg: '是否确认删除此项记录信息？'
   }).then(async () => {
-    const res = await deleteOrder(i.useCarWorkOrderId)
+    const res = await deleteOil(i.refuelWorkOrderId)
     if(res.code == 200) {
-      queryParams.pageNum = 1
-      getData()
       uni.showToast({
         title: '删除成功',
         icon: 'success'
       })
       state.value = 'loading'
-      queryParams.plateNumber = ''
+      queryParams.refuelPlateNumber = ''
       queryParams.pageNum = 1
       queryParams.order = 'asc'
       list.value = []
@@ -92,7 +90,7 @@ const resetPlan = (i) => {
 
 // 搜索
 const search = () => {
-  if(queryParams.plateNumber) {
+  if(queryParams.refuelPlateNumber) {
     state.value = 'loading'
     queryParams.pageNum = 1
     queryParams.order = 'asc'
@@ -103,9 +101,9 @@ const search = () => {
 }
 // 取消搜索
 const cancel = () => {
-  if(queryParams.plateNumber) {
+  if(queryParams.refuelPlateNumber) {
     state.value = 'loading'
-    queryParams.plateNumber = ''
+    queryParams.refuelPlateNumber = ''
     queryParams.pageNum = 1
     queryParams.order = 'asc'
     list.value = []
@@ -124,48 +122,64 @@ const cancel = () => {
 
       <wd-sticky>
         <view style="margin-bottom: 30rpx; width: 100vw;">
-          <wd-search v-model.trim="queryParams.plateNumber" @search="search" @cancel="cancel" />
+          <wd-search v-model.trim="queryParams.refuelPlateNumber" @search="search" @cancel="cancel" />
         </view>
       </wd-sticky>
 
-      <view class="list-item" v-for="i in list" :key="i.useCarWorkOrderId" @click.stop="clickToDetail(i.useCarWorkOrderId)">
-        <wd-card>
+      <view class="list-item" v-for="i in list" :key="i.refuelWorkOrderId" @click.stop="clickToDetail(i.refuelWorkOrderId)">
+          <wd-card>
           <template #title>
             <view style="display: flex; justify-content: space-between; align-items: center">
               <view class="flex-col-c">
-                <view class="plate-number" v-if="i.collectPlateNumber">{{ i.collectPlateNumber }}</view>
+                <view class="plate-number" v-if="i.refuelPlateNumber">{{ i.refuelPlateNumber }}</view>
               </view>
               <view class="right">
-                <view class="label">工单状态：</view>
-                <view class="value">{{ i.workOrdeStatusName }}</view>
+                <view class="label">支付方式：</view>
+                <view class="value">{{ i.refuelPaymentMethodName }}</view>
               </view>
             </view>
           </template>
           <view class="main">
             <view class="content">
               <view class="content-item pd">
-                <view class="label">归属部门：</view>
-                <view class="value">{{ i.deptName }}</view>
+                <view class="label">加油用户：</view>
+                <view class="value">{{ i.refuelNickName }}</view>
               </view>
               <view class="content-item pd">
-                <view class="label">申请人名称：</view>
-                <view class="value">{{ i.applicantUserName}}</view>
+                <view class="label">加油时间：</view>
+                <view class="value">{{ i.refuelDate}}</view>
+              </view>
+              <view style="display: flex; justify-content: space-between; align-items: center;">
+                <view class="content-item">
+                  <view class="label">车辆公里数：</view>
+                  <view class="value">{{i.vehicleMileage}}</view>
+                </view>
+                <view class="content-item">
+                  <view class="label">车辆加油量：</view>
+                  <view class="value">{{i.refuelFuelQuantity}}</view>
+                </view>
+              </view>
+              <view style="display: flex; justify-content: space-between; align-items: center;">
+                <view class="content-item">
+                  <view class="label">油站单价：</view>
+                  <view class="value">{{i.refuelFuelPrice}}</view>
+                </view>
+                <view class="content-item">
+                  <view class="label">加油总价：</view>
+                  <view class="value">{{i.refuelTotalPrice}}</view>
+                </view>
               </view>
               <view class="content-item pd">
-                <view class="label">领车司机：</view>
-                <view class="value">{{i.collectDriverName}}</view>
+                <view class="label">公司名称：</view>
+                <view class="value">{{i.companyDeptName}}</view>
               </view>
-              <view class="content-item pd" v-if="i.workOrdeStatusCode === 'returned'">
-                <view class="label">还车司机：</view>
-                <view class="value">{{i.returnedDriverName}}</view>
-              </view>
-              <view class="content-item pd" v-if="i.workOrdeStatusCode === 'returned'">
-                <view class="label">还车时间：</view>
-                <view class="value">{{i.returnedTime}}</view>
+              <view class="content-item pd" style="margin-bottom: 20rpx;">
+                <view class="label">部门名称：</view>
+                <view class="value">{{i.deptName}}</view>
               </view>
             </view>
 
-            <view style="display: flex; align-items: center; margin-top: 80rpx;">
+            <view style="display: flex; align-items: center; margin-bottom: 20rpx;">
               <view @click.stop="resetPlan(i)">
                 <wd-button size="small" type="error">删除</wd-button>
               </view>
@@ -201,6 +215,7 @@ const cancel = () => {
 
     .main {
       display: flex;
+      align-items: flex-end;
     }
 
     .content {
@@ -209,9 +224,9 @@ const cancel = () => {
         display: flex;
         margin-bottom: 8rpx;
 
-        &:last-child {
-          padding-bottom: 12rpx;
-        }
+        // &:last-child {
+        //   padding-bottom: 12rpx;
+        // }
 
         .value {
           color: #333;

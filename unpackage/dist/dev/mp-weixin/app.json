@@ -19,6 +19,8 @@
     "pages/order/devOps/recordForm",
     "pages/order/cars/list",
     "pages/order/cars/form",
+    "pages/order/oil/list",
+    "pages/order/oil/form",
     "pages/trace/trace",
     "pages/mine/mine",
     "pages/mine/notice",

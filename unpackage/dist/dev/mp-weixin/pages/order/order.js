@@ -20,7 +20,7 @@ const _sfc_main = {
     const carVehicle = common_vendor.ref([]);
     const order = common_vendor.ref([
       { id: 1, text: "用车工单", icon: "apply", url: "/pages/order/cars/list" },
-      { id: 2, text: "加油工单", icon: "apply", url: "/pages/order/cars/list" }
+      { id: 2, text: "加油工单", icon: "oil", max: true, url: "/pages/order/oil/list" }
     ]);
     common_vendor.onShow(() => {
       const arr1 = [
@@ -41,8 +41,8 @@ const _sfc_main = {
         { id: 1, text: "告警配置", icon: "setting", url: "/pages/order/devOps/config" },
         { id: 2, text: "运维计划", icon: "plan", url: "/pages/order/devOps/plan" },
         { id: 3, text: "运维记录", icon: "record", url: "/pages/order/devOps/record" },
-        { id: 4, text: "运维告警", icon: "gaojin", url: "/pages/order/devOps/warning" },
-        { id: 5, text: "保养记录", icon: "maintain", url: "/pages/order/devOps/maintain" }
+        { id: 4, text: "运维告警", icon: "gaojin", url: "/pages/order/devOps/warning" }
+        // { id: 5, text: '保养记录', icon: 'maintain', url: '/pages/order/devOps/maintain' },
       ];
       const v2 = [];
       carOrder.value = utils_index.checkRole("driver") ? arr1 : arr2;
@@ -78,14 +78,16 @@ const _sfc_main = {
         }),
         d: common_vendor.f(order.value, (i, k0, i0) => {
           return {
-            a: `/static/order/${i.icon}.png`,
-            b: "93207a4f-5-" + i0 + ",93207a4f-4",
-            c: common_vendor.p({
+            a: i.max ? "60rpx" : "50rpx",
+            b: i.max ? "60rpx" : "50rpx",
+            c: `/static/order/${i.icon}.png`,
+            d: "93207a4f-5-" + i0 + ",93207a4f-4",
+            e: common_vendor.p({
               ["use-icon-slot"]: true,
               text: i.text
             }),
-            d: i.id,
-            e: common_vendor.o(($event) => clickItem(i), i.id)
+            f: i.id,
+            g: common_vendor.o(($event) => clickItem(i), i.id)
           };
         }),
         e: common_vendor.p({

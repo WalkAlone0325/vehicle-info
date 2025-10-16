@@ -7162,7 +7162,7 @@ function isConsoleWritable() {
 function initRuntimeSocketService() {
   const hosts = "127.0.0.1,192.168.0.208";
   const port = "8090";
-  const id = "mp-weixin_MDgjsM";
+  const id = "mp-weixin_CaPUGS";
   const lazy = typeof swan !== "undefined";
   let restoreError = lazy ? () => {
   } : initOnError();
@@ -8250,6 +8250,18 @@ const pages = [
     path: "pages/order/cars/form",
     style: {
       navigationBarTitleText: "工单信息"
+    }
+  },
+  {
+    path: "pages/order/oil/list",
+    style: {
+      navigationBarTitleText: "加油记录"
+    }
+  },
+  {
+    path: "pages/order/oil/form",
+    style: {
+      navigationBarTitleText: "加油记录信息"
     }
   },
   {

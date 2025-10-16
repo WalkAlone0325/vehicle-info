@@ -179,6 +179,11 @@ const _sfc_main = {
         k: common_vendor.o(clickToDetail),
         l: common_vendor.p({
           activeIcon: "add",
+          draggable: true,
+          gap: {
+            right: 30,
+            bottom: 30
+          },
           expandable: false
         })
       });

@@ -1,6 +1,6 @@
 <template>
   <view>
-    <wd-upload :file-list="fileList" :limit="1" :upload-method="customUpload"></wd-upload>
+    <wd-upload @remove="removeUpload" :file-list="fileList" :limit="1" :upload-method="customUpload"></wd-upload>
   </view>
 </template>
 
@@ -17,7 +17,11 @@ const props = defineProps({
     default: () => []
   }
 })
-const emit = defineEmits(['update:fileList'])
+const emit = defineEmits(['update:fileList', 'remove'])
+
+const removeUpload = (file) => {
+  emit('remove',file)
+}
 
 const customUpload = (file, formData, options) => {
   const uploadTask = uni.uploadFile({
