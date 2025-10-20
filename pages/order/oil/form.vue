@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { getOilDetail, getDictApi, putOil, postOil, getEndOrderList, getCarListApi, getUserListApi } from '@/api'
 import { onLoad } from '@dcloudio/uni-app'
 
+const info = uni.getStorageSync('user')
 const options = ref([])
 const loading = ref(false)
 const form = ref(null)
@@ -10,9 +11,9 @@ const defaultValueDate = ref(Date.now())
 const model = ref({
   refuelVehicleId: '',
   refuelPlateNumber: '',
-  refuelUserId: '',
-  refuelUserName: '',
-  refuelDate: '',
+  refuelUserId: info.userId ||'',
+  refuelUserName: info.userName || '',
+  refuelDate: Date.now(),
   vehicleMileage: '',
   refuelFuelQuantity: '',
   refuelFuelPrice: '',
@@ -66,6 +67,7 @@ const getUser = async () => {
 const getDict = async (code) => {
   const res = await getDictApi(code)
   options.value = res.data
+  model.value.refuelPaymentMethodCode = model.value.refuelPaymentMethodCode || options.value[0].dictValue
 }
 
 const handleSubmit = (type) => {
@@ -131,11 +133,11 @@ const openDatePicker = () => {
   model.value.refuelDate = new Date(model.value.refuelDate || Date.now())
 }
 
-onLoad((param) => {
+onLoad(async (param) => {
   if (param.id) {
     getDetail(param.id)
   }
-  getDict('refuel_payment_method')
+  await getDict('refuel_payment_method')
   getCar()
   getUser()
 })
