@@ -18,6 +18,10 @@ const _sfc_main = {
     fileList: {
       type: Array,
       default: () => []
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ["update:fileList", "remove"],
@@ -63,6 +67,7 @@ const _sfc_main = {
       return {
         a: common_vendor.o(removeUpload),
         b: common_vendor.p({
+          disabled: __props.disabled,
           ["file-list"]: __props.fileList,
           limit: 1,
           ["upload-method"]: customUpload

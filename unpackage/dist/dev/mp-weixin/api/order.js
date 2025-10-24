@@ -43,6 +43,8 @@ const deleteOil = (params) => utils_request.http.delete("/car/vehicleRefuelWorkO
 const getOilDetail = (params) => utils_request.http.get("/car/vehicleRefuelWorkOrder/" + params);
 const putOil = (params) => utils_request.http.put("/car/vehicleRefuelWorkOrder", params);
 const postOil = (params) => utils_request.http.post("/car/vehicleRefuelWorkOrder", params);
+const approveOilApi = (params) => utils_request.http.put("/car/vehicleRefuelWorkOrder/approve/", params);
+exports.approveOilApi = approveOilApi;
 exports.deleteOil = deleteOil;
 exports.deleteOrder = deleteOrder;
 exports.deleteRecord = deleteRecord;

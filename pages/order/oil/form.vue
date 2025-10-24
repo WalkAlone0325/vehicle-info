@@ -1,13 +1,12 @@
 <script setup>
 import { ref } from 'vue'
-import { getOilDetail, getDictApi, putOil, postOil, getEndOrderList, getCarListApi, getUserListApi } from '@/api'
+import { getOilDetail, getDictApi, putOil, postOil, approveOilApi, getCarListApi, getUserListApi } from '@/api'
 import { onLoad } from '@dcloudio/uni-app'
 
 const info = uni.getStorageSync('user')
 const options = ref([])
 const loading = ref(false)
 const form = ref(null)
-const defaultValueDate = ref(Date.now())
 const model = ref({
   refuelVehicleId: '',
   refuelPlateNumber: '',
@@ -133,7 +132,10 @@ const openDatePicker = () => {
   model.value.refuelDate = new Date(model.value.refuelDate || Date.now())
 }
 
+const type = ref('')
 onLoad(async (param) => {
+  type.value = param.type || ''
+  console.log(type.value, 'type.value')
   if (param.id) {
     getDetail(param.id)
   }
@@ -141,51 +143,103 @@ onLoad(async (param) => {
   getCar()
   getUser()
 })
+
+const approveForm = ref(null)
+const approveModel = ref({
+  approveCause: '',
+})
+const approveRules = {
+  approveCause: [{ required: true, message: '请输入审批原因' }],
+}
+const handleApprove = async (statusCode) => {
+  approveForm.value.validate().then(async ({ valid, errors }) => {
+    if (valid) {
+      loading.value = true
+      const res = await approveOilApi({
+        refuelWorkOrderId: model.value.refuelWorkOrderId,
+        statusCode,
+        ...approveModel.value,
+      })
+      if (res.code == 200) {
+        uni.showToast({
+          title: statusCode == 'pass' ? '审批通过' : '审批拒绝',
+          icon: statusCode == 'pass' ? 'success' : 'error',
+          duration: 1000,
+          success: () => {
+            setTimeout(() => {
+              loading.value = false
+              uni.navigateBack({
+                delta: 1
+              })
+            }, 1000)
+          }
+        })
+      }
+      loading.value = false
+    }
+  })
+}
 </script>
 
 <template>
   <view class="info-page">
-    <BaseForm>
+    <BaseForm group>
       <view class="form-con">
         <wd-form ref="form" :model="model" :rules="rules" errorType="toast">
           <wd-cell-group border>
-            <wd-select-picker type="radio" value-key="vehicleId" label-key="label" label-width="100px"
+            <wd-select-picker :disabled="type == 'apply'" type="radio" value-key="vehicleId" label-key="label" label-width="100px"
               prop="refuelVehicleId" label="加油车辆" placeholder="请选择加油车辆"
               v-model="model.refuelVehicleId" :columns="carOptions" filterable :show-confirm="false" />
-            <wd-select-picker type="radio" value-key="userId" label-key="label" label-width="100px" prop="refuelUserId"
+            <wd-select-picker :disabled="type == 'apply'" type="radio" value-key="userId" label-key="label" label-width="100px" prop="refuelUserId"
               label="加油用户" placeholder="请选择加油用户" v-model="model.refuelUserId" :columns="userOptions" filterable
               :show-confirm="false" />
-            <wd-datetime-picker label="加油时间" label-width="100px" placeholder="请选择加油时间" prop="refuelDate"
+            <wd-datetime-picker :disabled="type == 'apply'" label="加油时间" label-width="100px" placeholder="请选择加油时间" prop="refuelDate"
               v-model="model.refuelDate" @open="openDatePicker" />
-            <wd-input type="number" label="车辆公里数" label-width="100px" prop="vehicleMileage"
+            <wd-input :disabled="type == 'apply'" type="number" label="车辆公里数" label-width="100px" prop="vehicleMileage"
               v-model="model.vehicleMileage" placeholder="请输入车辆公里数" />
-            <wd-input type="number" label="车辆加油量（升）" label-width="100px" prop="refuelFuelQuantity"
+            <wd-input :disabled="type == 'apply'" type="number" label="车辆加油量（升）" label-width="100px" prop="refuelFuelQuantity"
               v-model="model.refuelFuelQuantity" placeholder="请输入车辆加油量（升）" />
-            <wd-input type="number" label="油站单价（元）" label-width="100px" prop="refuelFuelPrice"
+            <wd-input :disabled="type == 'apply'" type="number" label="油站单价（元）" label-width="100px" prop="refuelFuelPrice"
               v-model="model.refuelFuelPrice" placeholder="请输入油站单价（元）" />
-            <wd-input type="number" label="加油总价（元）" label-width="100px" prop="refuelTotalPrice"
+            <wd-input :disabled="type == 'apply'" type="number" label="加油总价（元）" label-width="100px" prop="refuelTotalPrice"
               v-model="model.refuelTotalPrice" placeholder="请输入加油总价（元）" />
-            <wd-picker label="支付方式" placeholder="请选择支付方式" value-key="dictValue" label-key="dictLabel"
+            <wd-picker :disabled="type == 'apply'" label="支付方式" placeholder="请选择支付方式" value-key="dictValue" label-key="dictLabel"
               label-width="100px" prop="refuelPaymentMethodCode" v-model="model.refuelPaymentMethodCode"
               :columns="options" />
             <wd-cell title="加油车辆图片" title-width="100px" prop="fileList">
-              <BaseUpload :file-list="model.files1"
+              <BaseUpload :file-list="model.files1" :disabled="type == 'apply'"
                 @remove="removeUpload('refuelPlateNumberPictureId')"
                 @update:fileList="(...args) => changeUpload(...args, 'refuelPlateNumberPictureId')" />
             </wd-cell>
             <wd-cell title="车辆公里数图片" title-width="100px" prop="fileList">
-              <BaseUpload :file-list="model.files2"
+              <BaseUpload :file-list="model.files2" :disabled="type == 'apply'"
                 @remove="removeUpload('vehicleMileagePictureId')"
                 @update:fileList="(...args) => changeUpload(...args, 'vehicleMileagePictureId')" />
             </wd-cell>
             <wd-cell title="加油机图片" title-width="100px" prop="fileList">
-              <BaseUpload :file-list="model.files3"
+              <BaseUpload :file-list="model.files3" :disabled="type == 'apply'"
                 @remove="removeUpload('refuelMachinePictureId')"
                 @update:fileList="(...args) => changeUpload(...args, 'refuelMachinePictureId')" />
             </wd-cell>
           </wd-cell-group>
-          <view class="footer">
-            <wd-button type="primary" :loading="loading" @click="handleSubmit">保存</wd-button>
+          <view class="footer" style="padding-top: 10rpx;">
+            <wd-button v-if="type != 'apply'" type="primary" :loading="loading" @click="handleSubmit">保存</wd-button>
+          </view>
+        </wd-form>
+
+        <wd-form v-if="type === 'apply'" ref="approveForm" :model="approveModel" :rules="approveRules" errorType="toast">
+          <view class="group-con">
+            <wd-cell-group title="审批信息" border use-slot>
+              <wd-textarea label="审批原因" label-width="100px" prop="approveCause"
+                clearable v-model="approveModel.approveCause" placeholder="请输入审批原因" :maxlength="200" auto-height
+                show-word-limit type="textarea" />
+            </wd-cell-group>
+
+            <view class="footer">
+              <wd-button type="warning" @click="handleApprove('pass')">通过</wd-button>
+              <view class="mg"></view>
+              <wd-button type="primary" @click="handleApprove('refuse')">拒绝</wd-button>
+            </view>
           </view>
         </wd-form>
       </view>
@@ -203,6 +257,10 @@ onLoad(async (param) => {
 
     margin-top: 10rpx;
     justify-content: center;
+
+    .mg {
+      width: 40rpx;
+    }
   }
 
   .form-con {

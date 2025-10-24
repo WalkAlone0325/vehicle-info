@@ -1,6 +1,6 @@
 <template>
   <view>
-    <wd-upload @remove="removeUpload" :file-list="fileList" :limit="1" :upload-method="customUpload"></wd-upload>
+    <wd-upload :disabled="disabled" @remove="removeUpload" :file-list="fileList" :limit="1" :upload-method="customUpload"></wd-upload>
   </view>
 </template>
 
@@ -15,6 +15,10 @@ const props = defineProps({
   fileList: {
     type: Array,
     default: () => []
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 const emit = defineEmits(['update:fileList', 'remove'])

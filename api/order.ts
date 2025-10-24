@@ -121,3 +121,7 @@ export const getOilDetail = (params) => http.get('/car/vehicleRefuelWorkOrder/' 
 export const putOil = (params) => http.put('/car/vehicleRefuelWorkOrder', params)
 // 新增
 export const postOil = (params) => http.post('/car/vehicleRefuelWorkOrder', params)
+
+
+// 加油审批
+export const approveOilApi = (params) => http.put('/car/vehicleRefuelWorkOrder/approve/', params)

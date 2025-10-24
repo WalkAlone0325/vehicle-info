@@ -57,9 +57,14 @@ const getData = async () => {
 }
 
 // 详情
-const clickToDetail = (id) => {
+const clickToDetail = (i) => {
+  if(i.statusCode !== 'pending') {
+    return
+  }
+  const type = i.statusCode == 'pending' ? 'apply' : ''
+  const queryStr = i.refuelWorkOrderId ? `?id=${i.refuelWorkOrderId}&type=${type}` : ''
   uni.navigateTo({
-    url: `/pages/order/oil/form${id ? `?id=${id}` : ''}`
+    url: `/pages/order/oil/form${queryStr}`
   })
 }
 
@@ -126,7 +131,7 @@ const cancel = () => {
         </view>
       </wd-sticky>
 
-      <view class="list-item" v-for="i in list" :key="i.refuelWorkOrderId" @click.stop="clickToDetail(i.refuelWorkOrderId)">
+      <view class="list-item" v-for="i in list" :key="i.refuelWorkOrderId" @click.stop="clickToDetail(i)">
           <wd-card>
           <template #title>
             <view style="display: flex; justify-content: space-between; align-items: center">
@@ -134,8 +139,14 @@ const cancel = () => {
                 <view class="plate-number" v-if="i.refuelPlateNumber">{{ i.refuelPlateNumber }}</view>
               </view>
               <view class="right">
-                <view class="label">支付方式：</view>
-                <view class="value">{{ i.refuelPaymentMethodName }}</view>
+                <view>
+                  <view class="label">支付方式：</view>
+                  <view class="value">{{ i.refuelPaymentMethodName }}</view>
+                </view>
+                <view>
+                  <view class="label"></view>
+                  <view class="value" :class="{'status-pending': i.statusCode == 'pending', 'status-pass': i.statusCode == 'pass', 'status-error': i.statusCode == 'error'}">{{ i.statusCode == 'pending' ? '待审批' : (i.statusCode == 'pass' ? '已通过' : '已拒绝') }}</view>
+                </view>
               </view>
             </view>
           </template>
@@ -179,8 +190,11 @@ const cancel = () => {
               </view>
             </view>
 
-            <view style="display: flex; align-items: center; margin-bottom: 20rpx;">
-              <view @click.stop="resetPlan(i)">
+            <view style="display: flex; align-items: center; margin-bottom: 4rpx;">
+              <view @click.stop="clickToDetail(i)" v-if="i.statusCode == 'pending'">
+                <wd-button size="small" type="warning">审批</wd-button>
+              </view>
+              <view @click.stop="resetPlan(i)" v-else>
                 <wd-button size="small" type="error">删除</wd-button>
               </view>
             </view>
@@ -246,5 +260,17 @@ image {
 
 .right {
   display: flex;
+}
+
+.status-pending {
+  color: #ff9900;
+}
+
+.status-pass {
+  color: #009933;
+}
+
+.status-error {
+  color: #cc0000;
 }
 </style>
