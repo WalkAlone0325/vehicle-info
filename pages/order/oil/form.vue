@@ -223,7 +223,7 @@ const handleApprove = async (statusCode) => {
             </wd-cell>
           </wd-cell-group>
           <view class="footer" style="padding-top: 10rpx;">
-            <wd-button v-if="type != 'apply'" type="primary" :loading="loading" @click="handleSubmit">保存</wd-button>
+            <wd-button v-if="type != 'apply' && type != 'view'" type="primary" :loading="loading" @click="handleSubmit">保存</wd-button>
           </view>
         </wd-form>
 

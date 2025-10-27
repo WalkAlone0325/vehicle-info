@@ -58,7 +58,7 @@ const getData = async () => {
 
 // 详情
 const clickToDetail = (i, isApply = false) => {
-  const type = isApply ? 'apply' : ''
+  const type = i.statusCode === 'pending' ? 'apply' : 'view'
   const queryStr = i.refuelWorkOrderId ? `?id=${i.refuelWorkOrderId}&type=${type}` : ''
   uni.navigateTo({
     url: `/pages/order/oil/form${queryStr}`
@@ -191,6 +191,9 @@ const cancel = () => {
             </view>
 
             <view style="display: flex; align-items: center; margin-bottom: 4rpx;">
+              <view @click.stop="clickToDetail(i, true)" v-if="i.statusCode == 'pending'">
+                <wd-button size="small" type="warning">审批</wd-button>
+              </view>
               <view @click.stop="resetPlan(i)" v-if="i.statusCode == 'refuse'">
                 <wd-button size="small" type="error">删除</wd-button>
               </view>
@@ -201,7 +204,7 @@ const cancel = () => {
       <wd-loadmore :state="state" @reload="loadmore" />
     </view>
 
-    <wd-fab activeIcon="add" draggable :gap="{right: 30, bottom: 30}" :expandable="false" @click="clickToDetail" />
+    <!-- <wd-fab activeIcon="add" draggable :gap="{right: 30, bottom: 30}" :expandable="false" @click="clickToDetail" /> -->
   </view>
 </template>
 

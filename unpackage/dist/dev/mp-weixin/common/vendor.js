@@ -7162,7 +7162,7 @@ function isConsoleWritable() {
 function initRuntimeSocketService() {
   const hosts = "127.0.0.1,192.168.0.240";
   const port = "8090";
-  const id = "mp-weixin_CaPUGS";
+  const id = "mp-weixin_zFd_Gs";
   const lazy = typeof swan !== "undefined";
   let restoreError = lazy ? () => {
   } : initOnError();
@@ -8259,9 +8259,33 @@ const pages = [
     }
   },
   {
+    path: "pages/order/oil/listApply",
+    style: {
+      navigationBarTitleText: "加油审批"
+    }
+  },
+  {
     path: "pages/order/oil/form",
     style: {
       navigationBarTitleText: "加油记录信息"
+    }
+  },
+  {
+    path: "pages/order/devOps/maintain",
+    style: {
+      navigationBarTitleText: "保养记录"
+    }
+  },
+  {
+    path: "pages/order/devOps/maintainForm",
+    style: {
+      navigationBarTitleText: "保养记录信息"
+    }
+  },
+  {
+    path: "pages/order/devOps/maintainApply",
+    style: {
+      navigationBarTitleText: "保养审批"
     }
   },
   {

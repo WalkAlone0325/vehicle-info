@@ -22,7 +22,11 @@ if (!Math) {
   "./pages/order/cars/list.js";
   "./pages/order/cars/form.js";
   "./pages/order/oil/list.js";
+  "./pages/order/oil/listApply.js";
   "./pages/order/oil/form.js";
+  "./pages/order/devOps/maintain.js";
+  "./pages/order/devOps/maintainForm.js";
+  "./pages/order/devOps/maintainApply.js";
   "./pages/trace/trace.js";
   "./pages/mine/mine.js";
   "./pages/mine/notice.js";

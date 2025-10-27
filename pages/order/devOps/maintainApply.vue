@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive } from 'vue'
-import { getOilListApi, deleteOil } from '@/api'
+import { getMaintainListApi, deleteMaintain } from '@/api'
 import { onShow, onReachBottom } from '@dcloudio/uni-app'
 import { useMessage } from '@/uni_modules/wot-design-uni'
 const message = useMessage()
@@ -12,24 +12,24 @@ const queryParams = reactive({
   pageNum: 1,
   pageSize: 10,
   order: 'asc',
-  refuelPlateNumber: ''
+  upkeepPlateNumber: ''
 })
 
 const state = ref('loading')
 
 onReachBottom(() => {
-  if (!list.value.length) {
+  if (list.value.length === total.value) {
+    state.value = 'finished'
+  } else if (!list.value.length) {
     state.value = 'error'
   } else if (list.value.length < total.value) {
     loadmore()
-  } else if (list.value.length === total.value) {
-    state.value = 'finished'
   }
 })
 
 onShow(() => {
   state.value = 'loading'
-  queryParams.refuelPlateNumber = ''
+  queryParams.upkeepPlateNumber = ''
   queryParams.pageNum = 1
   queryParams.order = 'asc'
   list.value = []
@@ -45,23 +45,23 @@ function loadmore() {
 
 const getData = async () => {
   loading.value = true
-  const res = await getOilListApi(queryParams)
+  const res = await getMaintainListApi(queryParams)
   list.value = [...list.value, ...res.rows]
   total.value = res.total
   loading.value = false
-  if (!list.value.length) {
-    state.value = 'error'
-  } else if (list.value.length === total.value) {
+  if (list.value.length === total.value) {
     state.value = 'finished'
+  } else if (!list.value.length) {
+    state.value = 'error'
   }
 }
 
 // 详情
-const clickToDetail = (i, isApply = false) => {
-  const type = isApply ? 'apply' : ''
-  const queryStr = i.refuelWorkOrderId ? `?id=${i.refuelWorkOrderId}&type=${type}` : ''
+const clickToDetail = (i) => {
+  const type = i.statusCode === 'pending' ? 'apply' : 'view'
+  const queryStr = i.upkeepWorkOrderId ? `?id=${i.upkeepWorkOrderId}&type=${type}&disabled=disabled` : ''
   uni.navigateTo({
-    url: `/pages/order/oil/form${queryStr}`
+    url: `/pages/order/devOps/maintainForm${queryStr}`
   })
 }
 
@@ -71,7 +71,7 @@ const resetPlan = (i) => {
     title: '提示信息',
     msg: '是否确认删除此项记录信息？'
   }).then(async () => {
-    const res = await deleteOil(i.refuelWorkOrderId)
+    const res = await deleteMaintain(i.upkeepWorkOrderId)
     if(res.code == 200) {
       uni.showToast({
         title: '删除成功',
@@ -92,7 +92,7 @@ const resetPlan = (i) => {
 
 // 搜索
 const search = () => {
-  if(queryParams.refuelPlateNumber) {
+  if(queryParams.upkeepPlateNumber) {
     state.value = 'loading'
     queryParams.pageNum = 1
     queryParams.order = 'asc'
@@ -103,9 +103,9 @@ const search = () => {
 }
 // 取消搜索
 const cancel = () => {
-  if(queryParams.refuelPlateNumber) {
+  if(queryParams.upkeepPlateNumber) {
     state.value = 'loading'
-    queryParams.refuelPlateNumber = ''
+    queryParams.upkeepPlateNumber = ''
     queryParams.pageNum = 1
     queryParams.order = 'asc'
     list.value = []
@@ -124,19 +124,19 @@ const cancel = () => {
 
       <wd-sticky>
         <view style="margin-bottom: 30rpx; width: 100vw;">
-          <wd-search v-model.trim="queryParams.refuelPlateNumber" @search="search" @cancel="cancel" />
+          <wd-search v-model.trim="queryParams.upkeepPlateNumber" @search="search" @cancel="cancel" />
         </view>
       </wd-sticky>
 
-      <view class="list-item" v-for="i in list" :key="i.refuelWorkOrderId" @click.stop="clickToDetail(i)">
+      <view class="list-item" v-for="i in list" :key="i.upkeepWorkOrderId" @click.stop="clickToDetail(i)">
           <wd-card>
           <template #title>
             <view style="display: flex; justify-content: space-between; align-items: center">
               <view class="flex-col-c">
-                <view class="plate-number" v-if="i.refuelPlateNumber">{{ i.refuelPlateNumber }}</view>
+                <view class="plate-number" v-if="i.upkeepPlateNumber">{{ i.upkeepPlateNumber }}</view>
               </view>
               <view class="right">
-                <view class="value" :class="{'status-pending': i.statusCode == 'pending', 'status-pass': i.statusCode == 'pass', 'status-error': i.statusCode == 'refuse'}">{{ i.statusCode == 'pending' ? '待审批' : (i.statusCode == 'pass' ? '已通过' : '已拒绝') }}</view>
+                <view class="value" :class="{'status-pending': i.statusCode == 'pending', 'status-pass': i.statusCode == 'pass', 'status-error': i.statusCode == 'refuse'}">{{ i.statusName }}</view>
               </view>
             </view>
           </template>
@@ -144,36 +144,26 @@ const cancel = () => {
             <view class="content">
                <view style="display: flex; justify-content: space-between; align-items: center;">
                 <view class="content-item">
-                  <view class="label">加油用户：</view>
-                  <view class="value">{{ i.refuelNickName }}</view>
+                  <view class="label">保养用户：</view>
+                  <view class="value">{{ i.upkeepNickName }}</view>
                 </view>
                 <view class="content-item">
                   <view class="label">支付方式：</view>
-                  <view class="value">{{i.refuelPaymentMethodName}}</view>
+                  <view class="value">{{i.paymentMethodName}}</view>
                 </view>
               </view>
               <view class="content-item pd">
-                <view class="label">加油时间：</view>
-                <view class="value">{{ i.refuelDate}}</view>
+                <view class="label">保养时间：</view>
+                <view class="value">{{ i.upkeepDate}}</view>
               </view>
               <view style="display: flex; justify-content: space-between; align-items: center;">
+                <view class="content-item">
+                  <view class="label">保养总价：</view>
+                  <view class="value">{{i.upkeepTotalPrice}}</view>
+                </view>
                 <view class="content-item">
                   <view class="label">车辆公里数：</view>
-                  <view class="value">{{i.vehicleMileage}}</view>
-                </view>
-                <view class="content-item">
-                  <view class="label">车辆加油量：</view>
-                  <view class="value">{{i.refuelFuelQuantity}}</view>
-                </view>
-              </view>
-              <view style="display: flex; justify-content: space-between; align-items: center;">
-                <view class="content-item">
-                  <view class="label">油站单价：</view>
-                  <view class="value">{{i.refuelFuelPrice}}</view>
-                </view>
-                <view class="content-item">
-                  <view class="label">加油总价：</view>
-                  <view class="value">{{i.refuelTotalPrice}}</view>
+                  <view class="value">{{i.upkeepMileage}}</view>
                 </view>
               </view>
               <view class="content-item pd">
@@ -191,8 +181,8 @@ const cancel = () => {
             </view>
 
             <view style="display: flex; align-items: center; margin-bottom: 4rpx;">
-              <view @click.stop="resetPlan(i)" v-if="i.statusCode == 'refuse'">
-                <wd-button size="small" type="error">删除</wd-button>
+              <view @click.stop="clickToDetail(i, true)" v-if="i.statusCode == 'pending'">
+                <wd-button size="small" type="warning">审批</wd-button>
               </view>
             </view>
           </view>
@@ -201,7 +191,7 @@ const cancel = () => {
       <wd-loadmore :state="state" @reload="loadmore" />
     </view>
 
-    <wd-fab activeIcon="add" draggable :gap="{right: 30, bottom: 30}" :expandable="false" @click="clickToDetail" />
+    <!-- <wd-fab activeIcon="add" draggable :gap="{right: 30, bottom: 30}" :expandable="false" @click="clickToDetail" /> -->
   </view>
 </template>
 

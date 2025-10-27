@@ -7,7 +7,8 @@ const carOrder = ref([])
 const carVehicle = ref([])
 const order = ref([
   { id: 1, text: '用车工单', icon: 'apply', url: '/pages/order/cars/list' },
-  { id: 2, text: '加油工单', icon: 'oil', max: true, url: '/pages/order/oil/list' },
+  { id: 2, text: '加油申报', icon: 'oil', max: true, url: '/pages/order/oil/list' },
+  { id: 2, text: '加油审批', icon: 'pending', url: '/pages/order/oil/listApply' },
 ])
 
 onShow(() => {
@@ -31,7 +32,8 @@ onShow(() => {
     { id: 2, text: '运维计划', icon: 'plan', url: '/pages/order/devOps/plan' },
     { id: 3, text: '运维记录', icon: 'record', url: '/pages/order/devOps/record' },
     { id: 4, text: '运维告警', icon: 'gaojin', url: '/pages/order/devOps/warning' },
-    // { id: 5, text: '保养记录', icon: 'maintain', url: '/pages/order/devOps/maintain' },
+    { id: 5, text: '保养申报', icon: 'maintain', url: '/pages/order/devOps/maintain' },
+    { id: 5, text: '保养审批', icon: 'pending', url: '/pages/order/devOps/maintainApply' },
   ]
   const v2 = []
   carOrder.value = checkRole('driver') ? arr1 : arr2

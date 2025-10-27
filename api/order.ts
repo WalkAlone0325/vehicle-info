@@ -125,3 +125,17 @@ export const postOil = (params) => http.post('/car/vehicleRefuelWorkOrder', para
 
 // 加油审批
 export const approveOilApi = (params) => http.put('/car/vehicleRefuelWorkOrder/approve/', params)
+
+// 保养
+// 列表
+export const getMaintainListApi = (params) => http.get('/car/vehicleUpkeepWorkOrder/personal/list/page', { params })
+// 删除
+export const deleteMaintain = (params) => http.delete('/car/vehicleUpkeepWorkOrder/' + params)
+// 详情
+export const getMaintainDetail = (params) => http.get('/car/vehicleUpkeepWorkOrder/' + params)
+// 编辑
+export const putMaintain = (params) => http.put('/car/vehicleUpkeepWorkOrder', params)
+// 新增
+export const postMaintain = (params) => http.post('/car/vehicleUpkeepWorkOrder', params)
+// 审批
+export const approveMaintainApi = (params) => http.put('/car/vehicleUpkeepWorkOrder/approve/', params)

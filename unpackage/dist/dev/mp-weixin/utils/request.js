@@ -20,28 +20,13 @@ http.interceptors.response.use(
     const data = response.data;
     if (data.code === 401 && !flag) {
       flag = true;
-      common_vendor.index.showModal({
-        title: "提示",
-        content: "登录已过期，请重新登录",
-        showCancel: false,
-        success: (res) => {
-          if (res.confirm) {
-            common_vendor.index.navigateTo({
-              url: "/pages/login/login"
-            });
-          } else if (res.cancel) {
-            common_vendor.index.__f__("log", "at utils/request.js:36", "用户点击取消");
-            common_vendor.index.switchTab({
-              url: "/pages/index/index"
-            });
-          }
-        },
-        fail: (err) => {
-          common_vendor.index.__f__("log", "at utils/request.js:43", err);
-        }
+      common_vendor.index.removeStorageSync("token");
+      common_vendor.index.removeStorageSync("user");
+      common_vendor.index.reLaunch({
+        url: "/pages/login/login"
       });
     }
-    if (data.code !== 200) {
+    if (data.code !== 200 && data.code != 401) {
       common_vendor.index.showToast({ title: data.msg, icon: "none" });
     }
     return data;
