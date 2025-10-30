@@ -42,13 +42,21 @@ export function formatDate(cellValue) {
   return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
 }
 
-export function checkRole(roleKey: string) {
+export function checkRole(data: []) {
+  let result = []
   const token = uni.getStorageSync('token')
   if (!token) return
-  const roles = uni.getStorageSync('user').roles
-  const roleKeys = roles.map(i => i.roleKey)
-
-  return !!roleKeys.includes(roleKey)
+  const roles = uni.getStorageSync('roles')
+  data.forEach(i => {
+    if(i.role) {
+      if(roles.includes(i.role)){
+        result.push(i)
+      }
+    } else {
+      result.push(i)
+    }
+  })
+  return result
 }
 
 export function randomRgbColor() {
@@ -148,10 +156,10 @@ export function getTodayTimestampRange() {
   const now = new Date();
   const start = new Date(now);
   start.setHours(0,  0, 0, 0);
-  
+
   const end = new Date(now);
   end.setHours(23,  59, 59, 999);
-  
+
   return [start.getTime(), end.getTime()]
 }
 

@@ -55,6 +55,7 @@ const logout = () => {
           })
           uni.removeStorageSync('token')
           uni.removeStorageSync('user')
+          uni.removeStorageSync('roles')
           uni.reLaunch({
             // url: '/pages/index/index'
             url: '/pages/login/login'

@@ -13,13 +13,22 @@ function formatDate(cellValue) {
   var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
   return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 }
-function checkRole(roleKey) {
+function checkRole(data) {
+  let result = [];
   const token = common_vendor.index.getStorageSync("token");
   if (!token)
     return;
-  const roles = common_vendor.index.getStorageSync("user").roles;
-  const roleKeys = roles.map((i) => i.roleKey);
-  return !!roleKeys.includes(roleKey);
+  const roles = common_vendor.index.getStorageSync("roles");
+  data.forEach((i) => {
+    if (i.role) {
+      if (roles.includes(i.role)) {
+        result.push(i);
+      }
+    } else {
+      result.push(i);
+    }
+  });
+  return result;
 }
 function randomRgbColor() {
   var r = Math.floor(Math.random() * 256);

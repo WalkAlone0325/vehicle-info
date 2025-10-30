@@ -57,9 +57,10 @@ const getData = async () => {
 }
 
 // 详情
-const clickToDetail = (id) => {
+const clickToDetail = (id, workOrdeStatusCode) => {
+  const queryStr = `?id=${id}&type=${workOrdeStatusCode}`
   uni.navigateTo({
-    url: `/pages/order/cars/form${id ? `?id=${id}` : ''}`
+    url: `/pages/order/cars/form${id && workOrdeStatusCode ? queryStr : ''}`
   })
 }
 
@@ -90,17 +91,13 @@ const resetPlan = (i) => {
     })
 }
 
-// 搜索
-const search = () => {
-  if(queryParams.plateNumber) {
-    state.value = 'loading'
-    queryParams.pageNum = 1
-    queryParams.order = 'asc'
-    list.value = []
-    total.value = 0
-    getData()
-  }
+// 提交
+const handleSubmit = (id, type) => {
+  uni.navigateTo({
+    url: `/pages/order/cars/formCollect?id=${id}&type=${type}`
+  })
 }
+
 // 取消搜索
 const cancel = () => {
   if(queryParams.plateNumber) {
@@ -128,7 +125,7 @@ const cancel = () => {
         </view>
       </wd-sticky>
 
-      <view class="list-item" v-for="i in list" :key="i.useCarWorkOrderId" @click.stop="clickToDetail(i.useCarWorkOrderId)">
+      <view class="list-item" v-for="i in list" :key="i.useCarWorkOrderId" @click.stop="clickToDetail(i.useCarWorkOrderId, i.workOrdeStatusCode)">
         <wd-card>
           <template #title>
             <view style="display: flex; justify-content: space-between; align-items: center">
@@ -165,9 +162,12 @@ const cancel = () => {
               </view>
             </view>
 
-            <view style="display: flex; align-items: center; margin-top: 80rpx;">
-              <view @click.stop="resetPlan(i)">
-                <wd-button size="small" type="error">删除</wd-button>
+            <view style="display: flex; align-items: flex-end;">
+              <view @click.stop="handleSubmit(i.useCarWorkOrderId, 'returned')" v-if="i.workOrdeStatusCode === 'collect'">
+                <wd-button size="small" type="success">还车</wd-button>
+              </view>
+              <view @click.stop="handleSubmit(i.useCarWorkOrderId, 'collect')" v-if="i.workOrdeStatusCode === 'waiting_collect'">
+                <wd-button size="small" type="warning">领车</wd-button>
               </view>
             </view>
           </view>

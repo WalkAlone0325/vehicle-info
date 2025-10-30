@@ -42,16 +42,19 @@ const customUpload = (file, formData, options) => {
     filePath: file.url,
     success: async (res) => {
       const e = JSON.parse(res.data)
+      console.log(e)
       if (e.code == 200) {
         // 设置上传成功
         options.onSuccess(e, file, formData)
         // props.fileList = [{ url: e.data.imgUrl }]
         emit('update:fileList', [e.data])
         toast.show('上传成功')
+        uni.showToast({ title: e.msg || '', icon: 'none' })
       } else {
         // 设置上传失败
-        options.onError({ ...e, errMsg: e.errMsg || '' }, file, formData)
+        options.onError({ ...e, errMsg: e.msg || '' }, file, formData)
         toast.show('上传失败')
+        uni.showToast({ title: e.msg || '', icon: 'none' })
       }
     },
     fail(err) {

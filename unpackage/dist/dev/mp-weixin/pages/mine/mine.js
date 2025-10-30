@@ -66,6 +66,7 @@ const _sfc_main = {
               });
               common_vendor.index.removeStorageSync("token");
               common_vendor.index.removeStorageSync("user");
+              common_vendor.index.removeStorageSync("roles");
               common_vendor.index.reLaunch({
                 // url: '/pages/index/index'
                 url: "/pages/login/login"
@@ -74,7 +75,7 @@ const _sfc_main = {
           }
         },
         fail: (err) => {
-          common_vendor.index.__f__("log", "at pages/mine/mine.vue:66", err, "err");
+          common_vendor.index.__f__("log", "at pages/mine/mine.vue:67", err, "err");
         }
       });
     };

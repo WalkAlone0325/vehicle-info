@@ -1,14 +1,14 @@
 <script setup>
 import { ref } from 'vue'
 import { onLoad, onShow } from '@dcloudio/uni-app'
-import { getApproveApi, getHistoryApi, getApproveListApi } from '@/api'
+import { getApproveApi, getHistoryApi, getApproveListApi, getDoneListApi } from '@/api'
 
 const MAP_TITLE = {
-  draft: '草稿',
+  done: '已审批',
   pending: '待审批',
   // pass: '已通过',
   // reject: '已驳回',
-  history: '审批历史',
+  history: '审批记录',
   approve: '审批'
 }
 const curType = ref('')
@@ -46,7 +46,7 @@ const MAP_TYPE = {
   // 审批
   approve: () => getApproveApi(),
   // 列表
-  draft: (query) => getApproveListApi({...query, orderStatusCode: curType.value}),
+  done: (query) => getDoneListApi({...query, orderStatusCode: curType.value}),
   pending: (query) => getApproveListApi({...query, orderStatusCode: curType.value})
 }
 const loading = ref(false)
@@ -137,15 +137,15 @@ const getColor = ({orderStatusCode}) => {
               <view style="margin-right: 20rpx;"></view>
               <!-- <wd-button size="small" plain @click="clickImg(i)">流程图</wd-button>
               <view style="margin-right: 20rpx;"></view> -->
-              <wd-button size="small" plain @click="clickRecord(i)">审批记录</wd-button>
+              <wd-button size="small" plain @click="clickDetail(i)">审批</wd-button>
               <view style="margin-right: 20rpx;"></view>
-              <wd-button size="small" plain @click="clickDetail(i)">查看详情</wd-button>
+              <wd-button size="small" plain @click="clickRecord(i)">审批记录</wd-button>
             </view>
           </view>
         </template>
       </wd-card>
     </view>
-    <wd-status-tip v-if="!loading && !total" image="/static/content.png" tip="暂无列表" />
+    <wd-status-tip v-if="!loading && total == 0" image="/static/content.png" tip="暂无列表" />
   </view>
 </template>
 

@@ -46,13 +46,16 @@ const _sfc_main = {
         filePath: file.url,
         success: async (res) => {
           const e = JSON.parse(res.data);
+          common_vendor.index.__f__("log", "at components/BaseUpload.vue:45", e);
           if (e.code == 200) {
             options.onSuccess(e, file, formData);
             emit("update:fileList", [e.data]);
             toast.show("上传成功");
+            common_vendor.index.showToast({ title: e.msg || "", icon: "none" });
           } else {
-            options.onError({ ...e, errMsg: e.errMsg || "" }, file, formData);
+            options.onError({ ...e, errMsg: e.msg || "" }, file, formData);
             toast.show("上传失败");
+            common_vendor.index.showToast({ title: e.msg || "", icon: "none" });
           }
         },
         fail(err) {

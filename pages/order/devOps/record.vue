@@ -12,24 +12,26 @@ const queryParams = reactive({
   pageNum: 1,
   pageSize: 10,
   order: 'asc',
-  plateNumber: ''
+  plateNumber: undefined,
+  offset: 0,
+  limit: 10
 })
 
 const state = ref('loading')
 
 onReachBottom(() => {
-  if (!list.value.length) {
+  if (list.value.length === total.value) {
+    state.value = 'finished'
+  } else if (!list.value.length) {
     state.value = 'error'
   } else if (list.value.length < total.value) {
     loadmore()
-  } else if (list.value.length === total.value) {
-    state.value = 'finished'
   }
 })
 
 onShow(() => {
   state.value = 'loading'
-  queryParams.plateNumber = ''
+  queryParams.plateNumber = undefined
   queryParams.pageNum = 1
   queryParams.order = 'asc'
   list.value = []
@@ -49,10 +51,10 @@ const getData = async () => {
   list.value = [...list.value, ...res.rows]
   total.value = res.total
   loading.value = false
-  if (!list.value.length) {
-    state.value = 'error'
-  } else if (list.value.length === total.value) {
+  if (list.value.length === total.value) {
     state.value = 'finished'
+  } else if (!list.value.length) {
+    state.value = 'error'
   }
 }
 
@@ -78,7 +80,7 @@ const resetPlan = (i) => {
         icon: 'success'
       })
       state.value = 'loading'
-      queryParams.plateNumber = ''
+      queryParams.plateNumber = undefined
       queryParams.pageNum = 1
       queryParams.order = 'asc'
       list.value = []
@@ -105,7 +107,7 @@ const search = () => {
 const cancel = () => {
   if(queryParams.plateNumber) {
     state.value = 'loading'
-    queryParams.plateNumber = ''
+    queryParams.plateNumber = undefined
     queryParams.pageNum = 1
     queryParams.order = 'asc'
     list.value = []

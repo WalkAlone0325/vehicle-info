@@ -33,6 +33,7 @@ if (!Math) {
 const _sfc_main = {
   __name: "form",
   setup(__props) {
+    const user = common_vendor.index.getStorageSync("user");
     const options = common_vendor.ref([]);
     const loading = common_vendor.ref(false);
     const form = common_vendor.ref(null);
@@ -45,8 +46,8 @@ const _sfc_main = {
       returnedDriverName: "",
       workOrdeStatusCode: "waiting_collect",
       useCarApplicationOrderId: "",
-      applicantUserId: "",
-      applicantUserName: "",
+      applicantUserId: user.userId,
+      applicantUserName: user.userName,
       collectMileage: "",
       returnedMileage: "",
       returnedTime: "",
@@ -68,15 +69,16 @@ const _sfc_main = {
         files2: res.data.collectMileagePictureId ? [{ ossId: res.data.collectMileagePictureId, url: res.data.collectMileagePictureUrl }] : [],
         files3: res.data.returnedMileagePictureId ? [{ ossId: res.data.returnedMileagePictureId, url: res.data.returnedMileagePictureUrl }] : []
       };
+      handleCode({ value: model.value.useCarApplicationOrderId });
     };
     const list = common_vendor.ref([]);
     const getList = async () => {
-      const res = await api_order.getEndOrderList();
+      const res = await api_order.getEndOrderList({ pageNum: 1, pageSize: 9999, order: "asc" });
       list.value = res.rows.map((i) => ({ ...i, str: `${i.expectedPlateNumber} ${i.expectedDriverName} / ${i.approvePlateNumber || ""} ${i.approveDriverName || ""}` }));
     };
     const handleCode = ({ value }) => {
       const find = list.value.find((item) => item.useCarApplicationOrderId == value);
-      common_vendor.index.__f__("log", "at pages/order/cars/form.vue:52", "🚀:>> ", find);
+      common_vendor.index.__f__("log", "at pages/order/cars/form.vue:54", "🚀:>> ", list.value, find);
       model.value.collectDriverId = find.expectedDriverId;
       model.value.collectDriverName = find.expectedDriverName;
       model.value.collectVehicleId = find.expectedVehicleId;
@@ -105,15 +107,15 @@ const _sfc_main = {
       const res = await api_common.getDictApi(code);
       options.value = res.data;
     };
-    const handleSubmit = (type) => {
+    const handleSubmit = (type2) => {
       form.value.validate().then(async ({ valid, errors }) => {
         if (valid) {
           loading.value = true;
           let res;
           if (model.value.useCarWorkOrderId) {
-            if (type === "collect") {
+            if (type2 === "collect") {
               model.value.workOrdeStatusCode = "collect";
-            } else if (type === "returned") {
+            } else if (type2 === "returned") {
               model.value.workOrdeStatusCode = "returned";
             }
             res = await api_order.putOrder({
@@ -156,18 +158,20 @@ const _sfc_main = {
           loading.value = false;
         }
       }).catch((error) => {
-        common_vendor.index.__f__("log", "at pages/order/cars/form.vue:145", error, "error");
+        common_vendor.index.__f__("log", "at pages/order/cars/form.vue:147", error, "error");
       });
     };
     const changeUpload = (fileList, key) => {
       model.value[key] = fileList[0].ossId;
     };
-    common_vendor.onLoad((param) => {
+    const type = common_vendor.ref("");
+    common_vendor.onLoad(async (param) => {
+      await getList();
+      type.value = param.type;
       if (param.id) {
         getDetail(param.id);
       }
       getDict("work_orde_status");
-      getList();
       getCar();
       getDriver();
       getUser();
@@ -177,6 +181,7 @@ const _sfc_main = {
         a: common_vendor.o(handleCode),
         b: common_vendor.o(($event) => model.value.useCarApplicationOrderId = $event),
         c: common_vendor.p({
+          clearable: true,
           type: "radio",
           ["value-key"]: "useCarApplicationOrderId",
           ["label-key"]: "str",
@@ -191,6 +196,7 @@ const _sfc_main = {
         }),
         d: common_vendor.o(($event) => model.value.collectVehicleId = $event),
         e: common_vendor.p({
+          clearable: true,
           type: "radio",
           ["value-key"]: "vehicleId",
           ["label-key"]: "plateNumber",
@@ -214,6 +220,7 @@ const _sfc_main = {
         }),
         i: common_vendor.o(($event) => model.value.collectDriverId = $event),
         j: common_vendor.p({
+          clearable: true,
           type: "radio",
           ["value-key"]: "driverId",
           ["label-key"]: "driverName",
@@ -228,6 +235,7 @@ const _sfc_main = {
         }),
         k: common_vendor.o(($event) => model.value.collectMileage = $event),
         l: common_vendor.p({
+          clearable: true,
           type: "number",
           label: "实际起始里程",
           ["label-width"]: "100px",
@@ -246,6 +254,7 @@ const _sfc_main = {
         }),
         p: common_vendor.o(($event) => model.value.returnedDriverId = $event),
         q: common_vendor.p({
+          clearable: true,
           type: "radio",
           ["value-key"]: "driverId",
           ["label-key"]: "driverName",
@@ -260,6 +269,7 @@ const _sfc_main = {
         }),
         r: common_vendor.o(($event) => model.value.returnedMileage = $event),
         s: common_vendor.p({
+          clearable: true,
           type: "number",
           label: "实际结束里程",
           ["label-width"]: "100px",
@@ -269,6 +279,7 @@ const _sfc_main = {
         }),
         t: common_vendor.o(($event) => model.value.returnedTime = $event),
         v: common_vendor.p({
+          clearable: true,
           label: "还车时间",
           ["label-width"]: "100px",
           placeholder: "请选择还车时间",
@@ -286,6 +297,7 @@ const _sfc_main = {
         }),
         z: common_vendor.o(($event) => model.value.workOrdeStatusCode = $event),
         A: common_vendor.p({
+          clearable: true,
           label: "工单状态",
           placeholder: "请选择工单状态",
           ["value-key"]: "dictValue",
@@ -297,6 +309,7 @@ const _sfc_main = {
         }),
         B: common_vendor.o(($event) => model.value.applicantUserId = $event),
         C: common_vendor.p({
+          clearable: true,
           type: "radio",
           ["value-key"]: "userId",
           ["label-key"]: "userName",
@@ -321,35 +334,18 @@ const _sfc_main = {
         F: common_vendor.p({
           border: true
         }),
-        G: common_vendor.o(handleSubmit),
-        H: common_vendor.p({
+        G: type.value !== "returned"
+      }, type.value !== "returned" ? {
+        H: common_vendor.o(handleSubmit),
+        I: common_vendor.p({
           type: "primary",
           loading: loading.value
-        }),
-        I: model.value.workOrdeStatusCode == "waiting_collect"
-      }, model.value.workOrdeStatusCode == "waiting_collect" ? {} : {}, {
-        J: model.value.workOrdeStatusCode == "waiting_collect"
-      }, model.value.workOrdeStatusCode == "waiting_collect" ? {
-        K: common_vendor.o(($event) => handleSubmit("collect")),
-        L: common_vendor.p({
-          type: "success",
-          loading: loading.value
         })
       } : {}, {
-        M: model.value.workOrdeStatusCode == "collect"
-      }, model.value.workOrdeStatusCode == "collect" ? {} : {}, {
-        N: model.value.workOrdeStatusCode == "collect"
-      }, model.value.workOrdeStatusCode == "collect" ? {
-        O: common_vendor.o(($event) => handleSubmit("returned")),
-        P: common_vendor.p({
-          type: "success",
-          loading: loading.value
-        })
-      } : {}, {
-        Q: common_vendor.sr(form, "1260d45c-1,1260d45c-0", {
+        J: common_vendor.sr(form, "1260d45c-1,1260d45c-0", {
           "k": "form"
         }),
-        R: common_vendor.p({
+        K: common_vendor.p({
           model: model.value,
           rules: rules.value,
           errorType: "toast"

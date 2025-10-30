@@ -33,6 +33,7 @@ function handleSubmit() {
         uni.setStorageSync('token', res.data.token)
         const info = await getInfoApi()
         uni.setStorageSync('user', info.data.user)
+        uni.setStorageSync('roles', info.data.permissions)
         uni.switchTab({
           url: '/pages/index/index'
         })

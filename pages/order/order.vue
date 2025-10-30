@@ -5,39 +5,37 @@ import { onShow } from '@dcloudio/uni-app'
 
 const carOrder = ref([])
 const carVehicle = ref([])
-const order = ref([
-  { id: 1, text: '用车工单', icon: 'apply', url: '/pages/order/cars/list' },
-  { id: 2, text: '加油申报', icon: 'oil', max: true, url: '/pages/order/oil/list' },
-  { id: 2, text: '加油审批', icon: 'pending', url: '/pages/order/oil/listApply' },
-])
+const order = ref([])
 
 onShow(() => {
-  const arr1 = [
+  const v1 = [
     { id: 1, text: '申请', icon: 'apply', url: '/pages/order/form' },
-    { id: 2, text: '草稿', icon: 'draft', url: '/pages/order/list?type=draft' },
     { id: 3, text: '待审批', icon: 'wait', url: '/pages/order/list?type=pending' },
-  ]
-  const arr2 = [
-    { id: 1, text: '申请', icon: 'apply', url: '/pages/order/form' },
-    { id: 2, text: '草稿', icon: 'draft', url: '/pages/order/list?type=draft' },
-    { id: 3, text: '待审批', icon: 'wait', url: '/pages/order/list?type=pending' },
-    { id: 4, text: '审批历史', icon: 'pass', url: '/pages/order/list?type=history', needRole: true },
+    { id: 2, text: '已审批', icon: 'draft', url: '/pages/order/list?type=done' },
     // { id: 4, text: '已通过', icon: 'pass', url: '/pages/order/list?type=pass' },
     // { id: 5, text: '已驳回', icon: 'reject', url: '/pages/order/list?type=reject' },
-    { id: 6, text: '审批', icon: 'pending', url: '/pages/order/list?type=approve', needRole: true },
+    { id: 6, text: '审批', icon: 'pending', url: '/pages/order/list?type=approve', role: 'car:vehicleUseCarApplicationOrder' },
+    { id: 4, text: '审批记录', icon: 'pass', url: '/pages/order/list?type=history', role: 'car:vehicleUseCarApplicationOrder' },
   ]
 
-  const v1 = [
-    { id: 1, text: '告警配置', icon: 'setting', url: '/pages/order/devOps/config' },
-    { id: 2, text: '运维计划', icon: 'plan', url: '/pages/order/devOps/plan' },
-    { id: 3, text: '运维记录', icon: 'record', url: '/pages/order/devOps/record' },
-    { id: 4, text: '运维告警', icon: 'gaojin', url: '/pages/order/devOps/warning' },
+  const v2 = [
+    { id: 1, text: '告警配置', icon: 'setting', url: '/pages/order/devOps/config', role: 'car:vehicleMaintenanceWarningCycle:list' },
+    { id: 2, text: '运维计划', icon: 'plan', url: '/pages/order/devOps/plan', role: 'car:vehicleMaintenancePlan:list' },
+    { id: 3, text: '运维记录', icon: 'record', url: '/pages/order/devOps/record', role: 'car:vehicleMaintenanceRecord:list' },
+    { id: 4, text: '运维告警', icon: 'gaojin', url: '/pages/order/devOps/warning', role: 'car:vehicleMaintenanceWarningCycle:list' },
     { id: 5, text: '保养申报', icon: 'maintain', url: '/pages/order/devOps/maintain' },
-    { id: 5, text: '保养审批', icon: 'pending', url: '/pages/order/devOps/maintainApply' },
+    { id: 5, text: '保养审批', icon: 'pending', url: '/pages/order/devOps/maintainApply', role: 'car:vehicleUpkeepWorkOrder:approve' },
   ]
-  const v2 = []
-  carOrder.value = checkRole('driver') ? arr1 : arr2
-  carVehicle.value = checkRole('driver') ? v2 : v1
+
+  const v3 = [
+    { id: 1, text: '用车工单', icon: 'apply', url: '/pages/order/cars/list' },
+    { id: 2, text: '加油申报', icon: 'oil', max: true, url: '/pages/order/oil/list' },
+    { id: 3, text: '加油审批', icon: 'pending', url: '/pages/order/oil/listApply', role: 'car:vehicleRefuelWorkOrder:approve' },
+  ]
+  carOrder.value = checkRole(v1)
+  carVehicle.value = checkRole(v2)
+  order.value = checkRole(v3)
+  console.log(order.value)
 })
 
 const clickItem = (item) => {

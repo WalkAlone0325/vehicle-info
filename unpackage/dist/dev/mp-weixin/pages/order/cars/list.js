@@ -29,7 +29,7 @@ if (!Math) {
 const _sfc_main = {
   __name: "list",
   setup(__props) {
-    const message = uni_modules_wotDesignUni_components_wdMessageBox_index.useMessage();
+    uni_modules_wotDesignUni_components_wdMessageBox_index.useMessage();
     const loading = common_vendor.ref(false);
     const list = common_vendor.ref([]);
     const total = common_vendor.ref(0);
@@ -75,45 +75,16 @@ const _sfc_main = {
         state.value = "finished";
       }
     };
-    const clickToDetail = (id) => {
+    const clickToDetail = (id, workOrdeStatusCode) => {
+      const queryStr = `?id=${id}&type=${workOrdeStatusCode}`;
       common_vendor.index.navigateTo({
-        url: `/pages/order/cars/form${id ? `?id=${id}` : ""}`
+        url: `/pages/order/cars/form${id && workOrdeStatusCode ? queryStr : ""}`
       });
     };
-    const resetPlan = (i) => {
-      message.confirm({
-        title: "提示信息",
-        msg: "是否确认删除此项记录信息？"
-      }).then(async () => {
-        const res = await api_order.deleteOrder(i.useCarWorkOrderId);
-        if (res.code == 200) {
-          queryParams.pageNum = 1;
-          getData();
-          common_vendor.index.showToast({
-            title: "删除成功",
-            icon: "success"
-          });
-          state.value = "loading";
-          queryParams.plateNumber = "";
-          queryParams.pageNum = 1;
-          queryParams.order = "asc";
-          list.value = [];
-          total.value = 0;
-          getData();
-        }
-      }).catch(() => {
-        common_vendor.index.__f__("log", "at pages/order/cars/list.vue:89", "点击了取消按钮");
+    const handleSubmit = (id, type) => {
+      common_vendor.index.navigateTo({
+        url: `/pages/order/cars/formCollect?id=${id}&type=${type}`
       });
-    };
-    const search = () => {
-      if (queryParams.plateNumber) {
-        state.value = "loading";
-        queryParams.pageNum = 1;
-        queryParams.order = "asc";
-        list.value = [];
-        total.value = 0;
-        getData();
-      }
     };
     const cancel = () => {
       if (queryParams.plateNumber) {
@@ -134,7 +105,7 @@ const _sfc_main = {
           loading: loading.value
         })
       } : {
-        c: common_vendor.o(search),
+        c: common_vendor.o(_ctx.search),
         d: common_vendor.o(cancel),
         e: common_vendor.o(common_vendor.m(($event) => queryParams.plateNumber = $event, {
           trim: true
@@ -160,24 +131,36 @@ const _sfc_main = {
           }, i.workOrdeStatusCode === "returned" ? {
             j: common_vendor.t(i.returnedTime)
           } : {}, {
-            k: "1400ea86-5-" + i0 + "," + ("1400ea86-4-" + i0),
-            l: common_vendor.o(($event) => resetPlan(i), i.useCarWorkOrderId),
-            m: "1400ea86-4-" + i0,
-            n: i.useCarWorkOrderId,
-            o: common_vendor.o(($event) => clickToDetail(i.useCarWorkOrderId), i.useCarWorkOrderId)
+            k: i.workOrdeStatusCode === "collect"
+          }, i.workOrdeStatusCode === "collect" ? {
+            l: "1400ea86-5-" + i0 + "," + ("1400ea86-4-" + i0),
+            m: common_vendor.p({
+              size: "small",
+              type: "success"
+            }),
+            n: common_vendor.o(($event) => handleSubmit(i.useCarWorkOrderId, "returned"), i.useCarWorkOrderId)
+          } : {}, {
+            o: i.workOrdeStatusCode === "waiting_collect"
+          }, i.workOrdeStatusCode === "waiting_collect" ? {
+            p: "1400ea86-6-" + i0 + "," + ("1400ea86-4-" + i0),
+            q: common_vendor.p({
+              size: "small",
+              type: "warning"
+            }),
+            r: common_vendor.o(($event) => handleSubmit(i.useCarWorkOrderId, "collect"), i.useCarWorkOrderId)
+          } : {}, {
+            s: "1400ea86-4-" + i0,
+            t: i.useCarWorkOrderId,
+            v: common_vendor.o(($event) => clickToDetail(i.useCarWorkOrderId, i.workOrdeStatusCode), i.useCarWorkOrderId)
           });
         }),
-        h: common_vendor.p({
-          size: "small",
-          type: "error"
-        }),
-        i: common_vendor.o(loadmore),
-        j: common_vendor.p({
+        h: common_vendor.o(loadmore),
+        i: common_vendor.p({
           state: state.value
         })
       }, {
-        k: common_vendor.o(clickToDetail),
-        l: common_vendor.p({
+        j: common_vendor.o(clickToDetail),
+        k: common_vendor.p({
           activeIcon: "add",
           draggable: true,
           gap: {

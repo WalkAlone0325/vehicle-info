@@ -58,8 +58,11 @@ const getData = async () => {
 
 // 详情
 const clickToDetail = (i) => {
-  const disabled = i.statusCode == 'pass' ? 'disabled' : ''
-  const queryStr = i.upkeepWorkOrderId ? `?id=${i.upkeepWorkOrderId}&disabled=${disabled}` : ''
+  let queryStr = ''
+  if(i) {
+    const disabled = i.statusCode == 'pass' ? 'disabled' : ''
+    queryStr = i.upkeepWorkOrderId ? `?id=${i.upkeepWorkOrderId}&disabled=${disabled}` : ''
+  }
   uni.navigateTo({
     url: `/pages/order/devOps/maintainForm${queryStr}`
   })
@@ -190,6 +193,7 @@ const cancel = () => {
       </view>
       <wd-loadmore :state="state" @reload="loadmore" />
     </view>
+    <wd-status-tip v-if="!loading && total == 0" image="/static/content.png" tip="暂无列表" />
 
     <wd-fab activeIcon="add" draggable :gap="{right: 30, bottom: 30}" :expandable="false" @click="clickToDetail" />
   </view>

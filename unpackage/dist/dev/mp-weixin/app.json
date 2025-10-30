@@ -19,6 +19,7 @@
     "pages/order/devOps/recordForm",
     "pages/order/cars/list",
     "pages/order/cars/form",
+    "pages/order/cars/formCollect",
     "pages/order/oil/list",
     "pages/order/oil/listApply",
     "pages/order/oil/form",

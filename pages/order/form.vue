@@ -373,10 +373,10 @@ const clickImg = (i) => {
             <wd-picker :readonly="canEdit" label="申请人岗位" placeholder="请选择申请人岗位" value-key="postId" label-key="postName"
               label-width="100px" prop="applicantPostId" v-model="model.applicantPostId" :columns="postOptions" />
 
-            <wd-col-picker auto-complete label-width="100px" label="开始地点" prop="applicantStartRegionCode"
+            <wd-col-picker clearable auto-complete label-width="100px" label="开始地点" prop="applicantStartRegionCode"
               v-model="model.code1" :columns="area" :column-change="columnChange" :readonly="canEdit"
               @confirm="handleConfirm" value-key="code" label-key="name" />
-            <wd-col-picker auto-complete label-width="100px" label="目标地点" prop="applicantEndRegionCode"
+            <wd-col-picker clearable auto-complete label-width="100px" label="目标地点" prop="applicantEndRegionCode"
               v-model="model.code2" :columns="area2" :column-change="columnChange2" :readonly="canEdit"
               @confirm="handleConfirm2" value-key="code" label-key="name" />
             <wd-picker :readonly="canEdit" label="是否跨市" placeholder="请选择是否跨市" value-key="dictValue"
@@ -398,8 +398,8 @@ const clickImg = (i) => {
         </view>
 
         <view class="footer" v-if="curType === 'draft' || !curType">
-          <wd-button type="warning" v-if="curType !== 'draft'" @click="handleDraft">保存草稿</wd-button>
-          <view class="mg"></view>
+          <!-- <wd-button type="warning" v-if="curType !== 'draft'" @click="handleDraft">保存草稿</wd-button> -->
+          <!-- <view class="mg"></view> -->
           <wd-button type="primary" @click="handlePublish">保存发布</wd-button>
         </view>
       </wd-form>
@@ -411,20 +411,20 @@ const clickImg = (i) => {
               <view class="btn" @click="clickImg">流程图</view>
               <!-- <wd-button size="small" plain @click="clickImg">流程图</wd-button> -->
             </template>
-            <wd-input v-if="model.taskName" label="任务节点" label-width="100px" prop="taskName" clearable
+            <wd-input v-if="model.taskName" label="任务节点" label-width="80px" prop="taskName" clearable
               v-model="model.taskName" placeholder="请输入任务节点" readonly />
-            <wd-select-picker :readonly="curType === 'history'" type="radio" value-key="vehicleId"
-              label-key="label" label-width="100px" prop="approveVehicleId" label="派发车辆" placeholder="请选择派发车辆"
+            <wd-select-picker clearable :readonly="curType === 'history'" type="radio" value-key="vehicleId"
+              label-key="label" label-width="80px" prop="approveVehicleId" label="派发车辆" placeholder="请选择派发车辆"
               v-model="approveModel.approveVehicleId" :columns="carOptions" @change="handleApproveCarChange" filterable :show-confirm="false" />
-            <wd-select-picker :readonly="curType === 'history'" type="radio" value-key="driverId" label-key="label"
-              label-width="100px" prop="approveDriverId" label="车辆司机" placeholder="请选择车辆司机"
+            <wd-select-picker clearable :readonly="curType === 'history'" type="radio" value-key="driverId" label-key="label"
+              label-width="80px" prop="approveDriverId" label="车辆司机" placeholder="请选择车辆司机"
               v-model="approveModel.approveDriverId" :columns="driverOptions" @change="handleApproveDriverChange" filterable :show-confirm="false" />
-            <wd-input label="联系电话" type="tel" label-width="100px" prop="approveDriverMobile" clearable
-              v-model="approveModel.approveDriverMobile" placeholder="请输入联系电话" :readonly="curType === 'history'" />
-            <wd-textarea v-if="curType !== 'history'"  :readonly="curType === 'history'" label="审批原因" label-width="100px" prop="approvalCause"
+            <!-- <wd-input label="联系电话" type="tel" label-width="80px" prop="approveDriverMobile" clearable
+              v-model="approveModel.approveDriverMobile" placeholder="请输入联系电话" :readonly="curType === 'history'" /> -->
+            <wd-textarea v-if="curType !== 'history'"  :readonly="curType === 'history'" label="审批原因" label-width="80px" prop="approvalCause"
               clearable v-model="approveModel.approvalCause" placeholder="请输入审批原因" :maxlength="200" auto-height
               show-word-limit type="textarea" />
-            <wd-input v-if="curType === 'history'" label="审核状态" :readonly="true" label-width="100px"
+            <wd-input v-if="curType === 'history'" label="审核状态" :readonly="true" label-width="80px"
               prop="orderStatusName" clearable v-model="model.orderStatusName" placeholder="" />
           </wd-cell-group>
 

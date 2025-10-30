@@ -187,23 +187,23 @@ const handleApprove = async (statusCode) => {
       <view class="form-con">
         <wd-form ref="form" :model="model" :rules="rules" errorType="toast">
           <wd-cell-group border>
-            <wd-select-picker :disabled="type == 'apply'" type="radio" value-key="vehicleId" label-key="label" label-width="100px"
+            <wd-select-picker clearable :disabled="type == 'apply'" type="radio" value-key="vehicleId" label-key="label" label-width="100px"
               prop="refuelVehicleId" label="加油车辆" placeholder="请选择加油车辆"
               v-model="model.refuelVehicleId" :columns="carOptions" filterable :show-confirm="false" />
-            <wd-select-picker :disabled="type == 'apply'" type="radio" value-key="userId" label-key="label" label-width="100px" prop="refuelUserId"
+            <wd-select-picker clearable :disabled="type == 'apply'" type="radio" value-key="userId" label-key="label" label-width="100px" prop="refuelUserId"
               label="加油用户" placeholder="请选择加油用户" v-model="model.refuelUserId" :columns="userOptions" filterable
               :show-confirm="false" />
-            <wd-datetime-picker :disabled="type == 'apply'" label="加油时间" label-width="100px" placeholder="请选择加油时间" prop="refuelDate"
+            <wd-datetime-picker clearable :disabled="type == 'apply'" label="加油时间" label-width="100px" placeholder="请选择加油时间" prop="refuelDate"
               v-model="model.refuelDate" @open="openDatePicker" />
-            <wd-input :disabled="type == 'apply'" type="number" label="车辆公里数" label-width="100px" prop="vehicleMileage"
+            <wd-input clearable :disabled="type == 'apply'" type="number" label="车辆公里数" label-width="100px" prop="vehicleMileage"
               v-model="model.vehicleMileage" placeholder="请输入车辆公里数" />
-            <wd-input :disabled="type == 'apply'" type="number" label="车辆加油量（升）" label-width="100px" prop="refuelFuelQuantity"
+            <wd-input clearable :disabled="type == 'apply'" type="number" label="车辆加油量（升）" label-width="100px" prop="refuelFuelQuantity"
               v-model="model.refuelFuelQuantity" placeholder="请输入车辆加油量（升）" />
-            <wd-input :disabled="type == 'apply'" type="number" label="油站单价（元）" label-width="100px" prop="refuelFuelPrice"
+            <wd-input clearable :disabled="type == 'apply'" type="number" label="油站单价（元）" label-width="100px" prop="refuelFuelPrice"
               v-model="model.refuelFuelPrice" placeholder="请输入油站单价（元）" />
-            <wd-input :disabled="type == 'apply'" type="number" label="加油总价（元）" label-width="100px" prop="refuelTotalPrice"
+            <wd-input clearable :disabled="type == 'apply'" type="number" label="加油总价（元）" label-width="100px" prop="refuelTotalPrice"
               v-model="model.refuelTotalPrice" placeholder="请输入加油总价（元）" />
-            <wd-picker :disabled="type == 'apply'" label="支付方式" placeholder="请选择支付方式" value-key="dictValue" label-key="dictLabel"
+            <wd-picker clearable :disabled="type == 'apply'" label="支付方式" placeholder="请选择支付方式" value-key="dictValue" label-key="dictLabel"
               label-width="100px" prop="refuelPaymentMethodCode" v-model="model.refuelPaymentMethodCode"
               :columns="options" />
             <wd-cell title="加油车辆图片" title-width="100px" prop="fileList">

@@ -22,11 +22,11 @@ const _sfc_main = {
   __name: "list",
   setup(__props) {
     const MAP_TITLE = {
-      draft: "草稿",
+      done: "已审批",
       pending: "待审批",
       // pass: '已通过',
       // reject: '已驳回',
-      history: "审批历史",
+      history: "审批记录",
       approve: "审批"
     };
     const curType = common_vendor.ref("");
@@ -59,7 +59,7 @@ const _sfc_main = {
       // 审批
       approve: () => api_order.getApproveApi(),
       // 列表
-      draft: (query) => api_order.getApproveListApi({ ...query, orderStatusCode: curType.value }),
+      done: (query) => api_order.getDoneListApi({ ...query, orderStatusCode: curType.value }),
       pending: (query) => api_order.getApproveListApi({ ...query, orderStatusCode: curType.value })
     };
     const loading = common_vendor.ref(false);
@@ -120,9 +120,9 @@ const _sfc_main = {
               type: "success"
             })
           } : {}, {
-            s: common_vendor.o(($event) => clickRecord(i), i.expectedVehicleId),
+            s: common_vendor.o(($event) => clickDetail(i), i.expectedVehicleId),
             t: "456ecf67-4-" + i0 + "," + ("456ecf67-1-" + i0),
-            v: common_vendor.o(($event) => clickDetail(i), i.expectedVehicleId),
+            v: common_vendor.o(($event) => clickRecord(i), i.expectedVehicleId),
             w: "456ecf67-5-" + i0 + "," + ("456ecf67-1-" + i0),
             x: i.expectedVehicleId,
             y: "456ecf67-1-" + i0
@@ -138,8 +138,8 @@ const _sfc_main = {
           plain: true
         })
       }, {
-        f: !loading.value && !total.value
-      }, !loading.value && !total.value ? {
+        f: !loading.value && total.value == 0
+      }, !loading.value && total.value == 0 ? {
         g: common_vendor.p({
           image: "/static/content.png",
           tip: "暂无列表"

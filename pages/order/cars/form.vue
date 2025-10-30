@@ -5,6 +5,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import http from '@/utils/request'
 import { getToken } from '@/utils'
 
+const user = uni.getStorageSync('user')
 const options = ref([])
 const loading = ref(false)
 const form = ref(null)
@@ -17,8 +18,8 @@ const model = ref({
   returnedDriverName: '',
   workOrdeStatusCode: 'waiting_collect',
   useCarApplicationOrderId: '',
-  applicantUserId: '',
-  applicantUserName: '',
+  applicantUserId: user.userId,
+  applicantUserName: user.userName,
   collectMileage: '',
   returnedMileage: '',
   returnedTime: '',
@@ -40,16 +41,17 @@ const getDetail = async (id) => {
     files2: res.data.collectMileagePictureId ? [{ossId: res.data.collectMileagePictureId, url: res.data.collectMileagePictureUrl}] : [],
     files3: res.data.returnedMileagePictureId ? [{ossId: res.data.returnedMileagePictureId, url: res.data.returnedMileagePictureUrl}] : [],
   }
+  handleCode({ value: model.value.useCarApplicationOrderId })
 }
 
 const list = ref([])
 const getList = async () => {
-  const res = await getEndOrderList()
+  const res = await getEndOrderList({pageNum: 1, pageSize: 9999, order: 'asc'})
   list.value = res.rows.map(i => ({...i, str: `${i.expectedPlateNumber} ${i.expectedDriverName} / ${i.approvePlateNumber || ''} ${i.approveDriverName || ''}`}))
 }
 const handleCode = ({ value }) => {
   const find = list.value.find(item => item.useCarApplicationOrderId == value)
-  console.log('🚀:>> ', find)
+  console.log('🚀:>> ',list.value, find)
   model.value.collectDriverId = find.expectedDriverId
   model.value.collectDriverName = find.expectedDriverName
   model.value.collectVehicleId = find.expectedVehicleId
@@ -188,12 +190,14 @@ const customUpload = (file, formData, options) => {
   })
 }
 
-onLoad((param) => {
+const type = ref('')
+onLoad(async (param) => {
+  await getList()
+  type.value = param.type
   if (param.id) {
     getDetail(param.id)
   }
   getDict('work_orde_status')
-  getList()
   getCar()
   getDriver()
   getUser()
@@ -206,11 +210,11 @@ onLoad((param) => {
       <view class="form-con">
         <wd-form ref="form" :model="model" :rules="rules" errorType="toast">
           <wd-cell-group border>
-            <wd-select-picker type="radio" value-key="useCarApplicationOrderId" label-key="str"
+            <wd-select-picker clearable type="radio" value-key="useCarApplicationOrderId" label-key="str"
               label-width="100px" prop="useCarApplicationOrderId" label="申请工单编号" placeholder="请选择用车申请工单编号"
               v-model="model.useCarApplicationOrderId" :columns="list" filterable @change="handleCode" :show-confirm="false" />
 
-            <wd-select-picker type="radio" value-key="vehicleId" label-key="plateNumber"
+            <wd-select-picker clearable type="radio" value-key="vehicleId" label-key="plateNumber"
               label-width="100px" prop="collectVehicleId" label="领取车辆" placeholder="请选择领取车辆"
               v-model="model.collectVehicleId" :columns="carOptions" filterable :show-confirm="false" />
 
@@ -218,43 +222,43 @@ onLoad((param) => {
                <BaseUpload :file-list="model.files1" @update:fileList="(...args) => changeUpload(...args, 'collectPlateNumberPictureId')" />
             </wd-cell>
 
-            <wd-select-picker type="radio" value-key="driverId" label-key="driverName" label-width="100px"
+            <wd-select-picker clearable type="radio" value-key="driverId" label-key="driverName" label-width="100px"
               prop="collectDriverId" label="领车司机" placeholder="请选择领车司机" v-model="model.collectDriverId"
               :columns="driverOptions" filterable :show-confirm="false" />
-            <wd-input type="number" label="实际起始里程" label-width="100px" prop="collectMileage"
+            <wd-input clearable type="number" label="实际起始里程" label-width="100px" prop="collectMileage"
               v-model="model.collectMileage" placeholder="请输入实际起始里程" />
 
             <wd-cell title="实际起始里程照片" title-width="100px" prop="fileList">
                <BaseUpload :file-list="model.files2" @update:fileList="(...args) => changeUpload(...args, 'collectMileagePictureId')" />
             </wd-cell>
 
-            <wd-select-picker type="radio" value-key="driverId" label-key="driverName" label-width="100px"
+            <wd-select-picker clearable type="radio" value-key="driverId" label-key="driverName" label-width="100px"
               prop="returnedDriverId" label="还车司机" placeholder="请选择还车司机" v-model="model.returnedDriverId"
               :columns="driverOptions" filterable :show-confirm="false" />
 
-            <wd-input type="number" label="实际结束里程" label-width="100px" prop="returnedMileage"
+            <wd-input clearable type="number" label="实际结束里程" label-width="100px" prop="returnedMileage"
               v-model="model.returnedMileage" placeholder="请输入实际结束里程" />
-            <wd-datetime-picker label="还车时间" label-width="100px" placeholder="请选择还车时间" prop="returnedTime" v-model="model.returnedTime" />
+            <wd-datetime-picker clearable label="还车时间" label-width="100px" placeholder="请选择还车时间" prop="returnedTime" v-model="model.returnedTime" />
 
             <wd-cell title="实际结束里程照片" title-width="100px" prop="fileList">
                <BaseUpload :file-list="model.files3" @update:fileList="(...args) => changeUpload(...args, 'returnedMileagePictureId')" />
             </wd-cell>
 
-            <wd-picker label="工单状态" placeholder="请选择工单状态" value-key="dictValue" label-key="dictLabel" label-width="100px"
+            <wd-picker clearable label="工单状态" placeholder="请选择工单状态" value-key="dictValue" label-key="dictLabel" label-width="100px"
               prop="workOrdeStatusCode" v-model="model.workOrdeStatusCode" :columns="options" />
 
-            <wd-select-picker type="radio" value-key="userId" label-key="userName" label-width="100px"
+            <wd-select-picker clearable type="radio" value-key="userId" label-key="userName" label-width="100px"
               prop="applicantUserId" label="申请人" placeholder="请选择申请人" v-model="model.applicantUserId"
               :columns="userOptions" filterable :show-confirm="false" />
 
             <wd-input label="备注" label-width="100px" prop="remark" clearable v-model="model.remark" placeholder="请输入备注" />
           </wd-cell-group>
-          <view class="footer">
+          <view class="footer" v-if="type !== 'returned'">
             <wd-button type="primary" :loading="loading" @click="handleSubmit">保存</wd-button>
-            <view style="margin-left: 40rpx;" v-if="model.workOrdeStatusCode == 'waiting_collect'"></view>
+            <!-- <view style="margin-left: 40rpx;" v-if="model.workOrdeStatusCode == 'waiting_collect'"></view>
             <wd-button type="success" v-if="model.workOrdeStatusCode == 'waiting_collect'" :loading="loading" @click="handleSubmit('collect')">领车</wd-button>
             <view style="margin-left: 40rpx;" v-if="model.workOrdeStatusCode == 'collect'"></view>
-            <wd-button type="success" v-if="model.workOrdeStatusCode == 'collect'" :loading="loading" @click="handleSubmit('returned')">还车</wd-button>
+            <wd-button type="success" v-if="model.workOrdeStatusCode == 'collect'" :loading="loading" @click="handleSubmit('returned')">还车</wd-button> -->
           </view>
         </wd-form>
       </view>

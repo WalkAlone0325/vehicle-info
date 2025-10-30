@@ -26,6 +26,7 @@ const rules = ref({
   upkeepPlateNumber: [{ required: true, message: '请输入保养车牌号' }],
   upkeepUserId: [{ required: true, message: '请选择保养司机' }],
   upkeepDate: [{ required: true, message: '请选择保养日期' }],
+  upkeepMileage: [{ required: true, message: '请输入车辆公里数' }],
   upkeepFuelPrice: [{ required: true, message: '请输入保养单价' }],
   upkeepTotalPrice: [{ required: true, message: '请输入保养总价' }],
   paymentMethodCode: [{ required: true, message: '请选择保养支付方式' }],
@@ -179,19 +180,19 @@ const handleApprove = async (statusCode) => {
       <view class="form-con">
         <wd-form ref="form" :model="model" :rules="rules" errorType="toast">
           <wd-cell-group border>
-            <wd-select-picker :disabled="disabled" type="radio" value-key="vehicleId" label-key="label" label-width="100px"
+            <wd-select-picker clearable :disabled="disabled" type="radio" value-key="vehicleId" label-key="label" label-width="100px"
               prop="upkeepVehicleId" label="保养车辆" placeholder="请选择保养车辆"
               v-model="model.upkeepVehicleId" :columns="carOptions" filterable :show-confirm="false" />
-            <wd-select-picker :disabled="disabled" type="radio" value-key="userId" label-key="label" label-width="100px" prop="upkeepUserId"
+            <wd-select-picker clearable :disabled="disabled" type="radio" value-key="userId" label-key="label" label-width="100px" prop="upkeepUserId"
               label="保养用户" placeholder="请选择保养用户" v-model="model.upkeepUserId" :columns="userOptions" filterable
               :show-confirm="false" />
-            <wd-datetime-picker :disabled="disabled" label="保养时间" label-width="100px" placeholder="请选择保养时间" prop="upkeepDate"
+            <wd-datetime-picker clearable :disabled="disabled" label="保养时间" label-width="100px" placeholder="请选择保养时间" prop="upkeepDate"
               v-model="model.upkeepDate" @open="openDatePicker" />
-            <wd-input :disabled="disabled" type="number" label="车辆公里数" label-width="100px" prop="upkeepMileage"
+            <wd-input clearable :disabled="disabled" type="number" label="车辆公里数" label-width="100px" prop="upkeepMileage"
               v-model="model.upkeepMileage" placeholder="请输入车辆公里数" />
-            <wd-input :disabled="disabled" type="number" label="保养总价" label-width="100px" prop="upkeepTotalPrice"
+            <wd-input clearable :disabled="disabled" type="number" label="保养总价" label-width="100px" prop="upkeepTotalPrice"
               v-model="model.upkeepTotalPrice" placeholder="请输入保养总价（元）" />
-            <wd-picker :disabled="disabled" label="支付方式" placeholder="请选择支付方式" value-key="dictValue" label-key="dictLabel"
+            <wd-picker clearable :disabled="disabled" label="支付方式" placeholder="请选择支付方式" value-key="dictValue" label-key="dictLabel"
               label-width="100px" prop="paymentMethodCode" v-model="model.paymentMethodCode"
               :columns="options" />
             <wd-cell title="车辆车牌图片" title-width="100px" prop="fileList">

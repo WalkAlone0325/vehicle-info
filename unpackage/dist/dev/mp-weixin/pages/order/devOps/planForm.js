@@ -105,6 +105,7 @@ const _sfc_main = {
       return {
         a: common_vendor.o(($event) => model.value.plateNumber = $event),
         b: common_vendor.p({
+          clearable: true,
           label: "车辆车牌",
           ["label-width"]: "100px",
           prop: "plateNumber",
@@ -114,6 +115,7 @@ const _sfc_main = {
         }),
         c: common_vendor.o(($event) => model.value.lastMaintenance = $event),
         d: common_vendor.p({
+          clearable: true,
           label: "上次保养日期",
           type: "date",
           ["label-width"]: "100px",
@@ -123,6 +125,7 @@ const _sfc_main = {
         }),
         e: common_vendor.o(($event) => model.value.nextMaintenance = $event),
         f: common_vendor.p({
+          clearable: true,
           label: "下次保养日期",
           type: "date",
           ["label-width"]: "100px",
@@ -132,6 +135,7 @@ const _sfc_main = {
         }),
         g: common_vendor.o(($event) => model.value.lastInspection = $event),
         h: common_vendor.p({
+          clearable: true,
           label: "上次年检日期",
           type: "date",
           ["label-width"]: "100px",
@@ -141,6 +145,7 @@ const _sfc_main = {
         }),
         i: common_vendor.o(($event) => model.value.nextInspection = $event),
         j: common_vendor.p({
+          clearable: true,
           label: "下次年检日期",
           type: "date",
           ["label-width"]: "100px",
@@ -150,6 +155,7 @@ const _sfc_main = {
         }),
         k: common_vendor.o(($event) => model.value.lastInsurance = $event),
         l: common_vendor.p({
+          clearable: true,
           label: "上次保险日期",
           type: "date",
           ["label-width"]: "100px",
@@ -159,6 +165,7 @@ const _sfc_main = {
         }),
         m: common_vendor.o(($event) => model.value.nextInsurance = $event),
         n: common_vendor.p({
+          clearable: true,
           label: "下次保险日期",
           type: "date",
           ["label-width"]: "100px",

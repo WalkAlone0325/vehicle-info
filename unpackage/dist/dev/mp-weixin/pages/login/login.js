@@ -51,6 +51,7 @@ const _sfc_main = {
             common_vendor.index.setStorageSync("token", res.data.token);
             const info = await api_common.getInfoApi();
             common_vendor.index.setStorageSync("user", info.data.user);
+            common_vendor.index.setStorageSync("roles", info.data.permissions);
             common_vendor.index.switchTab({
               url: "/pages/index/index"
             });
@@ -58,7 +59,7 @@ const _sfc_main = {
           loading.value = false;
         }
       }).catch((error) => {
-        common_vendor.index.__f__("log", "at pages/login/login.vue:44", error, "error");
+        common_vendor.index.__f__("log", "at pages/login/login.vue:45", error, "error");
         loading.value = false;
       });
     }
@@ -69,15 +70,15 @@ const _sfc_main = {
           onlyAuthorize: true,
           success: (res) => {
             if (res.code) {
-              common_vendor.index.__f__("log", "at pages/login/login.vue:56", "🚀:>> code: ", res.code);
+              common_vendor.index.__f__("log", "at pages/login/login.vue:57", "🚀:>> code: ", res.code);
               resolve(res.code);
             } else {
-              common_vendor.index.__f__("log", "at pages/login/login.vue:59", "登录失败！" + res.errMsg);
+              common_vendor.index.__f__("log", "at pages/login/login.vue:60", "登录失败！" + res.errMsg);
               reject(res.errMsg);
             }
           },
           fail: (err) => {
-            common_vendor.index.__f__("log", "at pages/login/login.vue:64", err);
+            common_vendor.index.__f__("log", "at pages/login/login.vue:65", err);
             reject(err);
           }
         });

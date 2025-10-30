@@ -22,6 +22,7 @@ http.interceptors.response.use(
       flag = true;
       common_vendor.index.removeStorageSync("token");
       common_vendor.index.removeStorageSync("user");
+      common_vendor.index.removeStorageSync("roles");
       common_vendor.index.reLaunch({
         url: "/pages/login/login"
       });

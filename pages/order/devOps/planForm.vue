@@ -89,16 +89,16 @@ onLoad((param) => {
     <BaseForm>
       <wd-form ref="form" :model="model" :rules="rules" errorType="toast">
         <wd-cell-group border>
-          <wd-input label="车辆车牌" label-width="100px" prop="plateNumber" :disabled="true" v-model="model.plateNumber" placeholder="请输入备注" />
+          <wd-input clearable label="车辆车牌" label-width="100px" prop="plateNumber" :disabled="true" v-model="model.plateNumber" placeholder="请输入备注" />
 
-          <wd-datetime-picker label="上次保养日期" type="date" label-width="100px" placeholder="请选择日期" prop="lastMaintenance" v-model="model.lastMaintenance" />
-          <wd-datetime-picker label="下次保养日期" type="date" label-width="100px" placeholder="请选择日期" prop="nextMaintenance" v-model="model.nextMaintenance" />
+          <wd-datetime-picker clearable label="上次保养日期" type="date" label-width="100px" placeholder="请选择日期" prop="lastMaintenance" v-model="model.lastMaintenance" />
+          <wd-datetime-picker clearable label="下次保养日期" type="date" label-width="100px" placeholder="请选择日期" prop="nextMaintenance" v-model="model.nextMaintenance" />
 
-          <wd-datetime-picker label="上次年检日期" type="date" label-width="100px" placeholder="请选择日期" prop="lastInspection" v-model="model.lastInspection" />
-          <wd-datetime-picker label="下次年检日期" type="date" label-width="100px" placeholder="请选择日期" prop="nextInspection" v-model="model.nextInspection" />
+          <wd-datetime-picker clearable label="上次年检日期" type="date" label-width="100px" placeholder="请选择日期" prop="lastInspection" v-model="model.lastInspection" />
+          <wd-datetime-picker clearable label="下次年检日期" type="date" label-width="100px" placeholder="请选择日期" prop="nextInspection" v-model="model.nextInspection" />
 
-          <wd-datetime-picker label="上次保险日期" type="date" label-width="100px" placeholder="请选择日期" prop="lastInsurance" v-model="model.lastInsurance" />
-          <wd-datetime-picker label="下次保险日期" type="date" label-width="100px" placeholder="请选择日期" prop="nextInsurance" v-model="model.nextInsurance" />
+          <wd-datetime-picker clearable label="上次保险日期" type="date" label-width="100px" placeholder="请选择日期" prop="lastInsurance" v-model="model.lastInsurance" />
+          <wd-datetime-picker clearable label="下次保险日期" type="date" label-width="100px" placeholder="请选择日期" prop="nextInsurance" v-model="model.nextInsurance" />
 
           <wd-input label="备注" label-width="100px" prop="remark" clearable v-model="model.remark" placeholder="请输入备注" />
 

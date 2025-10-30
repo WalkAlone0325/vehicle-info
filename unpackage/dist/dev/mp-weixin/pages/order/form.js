@@ -103,26 +103,6 @@ const _sfc_main = {
     common_vendor.ref([]);
     const carOptions = common_vendor.ref([]);
     const driverOptions = common_vendor.ref([]);
-    const handleDraft = () => {
-      form.value.validate().then(async ({ valid, errors }) => {
-        if (valid) {
-          const res = await api_order.postOrderApplyApi({
-            ...model.value,
-            planStartTime: utils_index.formatDate(model.value.planStartTime),
-            planEndTime: utils_index.formatDate(model.value.planEndTime),
-            orderStatusCode: "draft"
-          });
-          if (res.code === 200) {
-            common_vendor.index.showToast({ title: "草稿保存成功", icon: "success" });
-            setTimeout(() => {
-              common_vendor.index.navigateBack();
-            }, 1e3);
-          }
-        }
-      }).catch((error) => {
-        common_vendor.index.__f__("log", "at pages/order/form.vue:89", error, "error");
-      });
-    };
     const handlePublish = () => {
       form.value.validate().then(async ({ valid, errors }) => {
         if (valid) {
@@ -406,6 +386,7 @@ const _sfc_main = {
         k: common_vendor.o(handleConfirm),
         l: common_vendor.o(($event) => model.value.code1 = $event),
         m: common_vendor.p({
+          clearable: true,
           ["auto-complete"]: true,
           ["label-width"]: "100px",
           label: "开始地点",
@@ -420,6 +401,7 @@ const _sfc_main = {
         n: common_vendor.o(handleConfirm2),
         o: common_vendor.o(($event) => model.value.code2 = $event),
         p: common_vendor.p({
+          clearable: true,
           ["auto-complete"]: true,
           ["label-width"]: "100px",
           label: "目标地点",
@@ -495,36 +477,29 @@ const _sfc_main = {
           border: true
         }),
         E: curType.value === "draft" || !curType.value
-      }, curType.value === "draft" || !curType.value ? common_vendor.e({
-        F: curType.value !== "draft"
-      }, curType.value !== "draft" ? {
-        G: common_vendor.o(handleDraft),
-        H: common_vendor.p({
-          type: "warning"
-        })
-      } : {}, {
-        I: common_vendor.o(handlePublish),
-        J: common_vendor.p({
+      }, curType.value === "draft" || !curType.value ? {
+        F: common_vendor.o(handlePublish),
+        G: common_vendor.p({
           type: "primary"
         })
-      }) : {}, {
-        K: common_vendor.sr(form, "efa79250-3,efa79250-2", {
+      } : {}, {
+        H: common_vendor.sr(form, "efa79250-3,efa79250-2", {
           "k": "form"
         }),
-        L: common_vendor.p({
+        I: common_vendor.p({
           model: model.value,
           rules: rules.value,
           errorType: "toast"
         }),
-        M: curType.value === "approve" || curType.value === "history"
+        J: curType.value === "approve" || curType.value === "history"
       }, curType.value === "approve" || curType.value === "history" ? common_vendor.e({
-        N: common_vendor.o(clickImg),
-        O: model.value.taskName
+        K: common_vendor.o(clickImg),
+        L: model.value.taskName
       }, model.value.taskName ? {
-        P: common_vendor.o(($event) => model.value.taskName = $event),
-        Q: common_vendor.p({
+        M: common_vendor.o(($event) => model.value.taskName = $event),
+        N: common_vendor.p({
           label: "任务节点",
-          ["label-width"]: "100px",
+          ["label-width"]: "80px",
           prop: "taskName",
           clearable: true,
           placeholder: "请输入任务节点",
@@ -532,14 +507,15 @@ const _sfc_main = {
           modelValue: model.value.taskName
         })
       } : {}, {
-        R: common_vendor.o(handleApproveCarChange),
-        S: common_vendor.o(($event) => approveModel.value.approveVehicleId = $event),
-        T: common_vendor.p({
+        O: common_vendor.o(handleApproveCarChange),
+        P: common_vendor.o(($event) => approveModel.value.approveVehicleId = $event),
+        Q: common_vendor.p({
+          clearable: true,
           readonly: curType.value === "history",
           type: "radio",
           ["value-key"]: "vehicleId",
           ["label-key"]: "label",
-          ["label-width"]: "100px",
+          ["label-width"]: "80px",
           prop: "approveVehicleId",
           label: "派发车辆",
           placeholder: "请选择派发车辆",
@@ -548,14 +524,15 @@ const _sfc_main = {
           ["show-confirm"]: false,
           modelValue: approveModel.value.approveVehicleId
         }),
-        U: common_vendor.o(handleApproveDriverChange),
-        V: common_vendor.o(($event) => approveModel.value.approveDriverId = $event),
-        W: common_vendor.p({
+        R: common_vendor.o(handleApproveDriverChange),
+        S: common_vendor.o(($event) => approveModel.value.approveDriverId = $event),
+        T: common_vendor.p({
+          clearable: true,
           readonly: curType.value === "history",
           type: "radio",
           ["value-key"]: "driverId",
           ["label-key"]: "label",
-          ["label-width"]: "100px",
+          ["label-width"]: "80px",
           prop: "approveDriverId",
           label: "车辆司机",
           placeholder: "请选择车辆司机",
@@ -564,24 +541,13 @@ const _sfc_main = {
           ["show-confirm"]: false,
           modelValue: approveModel.value.approveDriverId
         }),
-        X: common_vendor.o(($event) => approveModel.value.approveDriverMobile = $event),
-        Y: common_vendor.p({
-          label: "联系电话",
-          type: "tel",
-          ["label-width"]: "100px",
-          prop: "approveDriverMobile",
-          clearable: true,
-          placeholder: "请输入联系电话",
-          readonly: curType.value === "history",
-          modelValue: approveModel.value.approveDriverMobile
-        }),
-        Z: curType.value !== "history"
+        U: curType.value !== "history"
       }, curType.value !== "history" ? {
-        aa: common_vendor.o(($event) => approveModel.value.approvalCause = $event),
-        ab: common_vendor.p({
+        V: common_vendor.o(($event) => approveModel.value.approvalCause = $event),
+        W: common_vendor.p({
           readonly: curType.value === "history",
           label: "审批原因",
-          ["label-width"]: "100px",
+          ["label-width"]: "80px",
           prop: "approvalCause",
           clearable: true,
           placeholder: "请输入审批原因",
@@ -592,44 +558,44 @@ const _sfc_main = {
           modelValue: approveModel.value.approvalCause
         })
       } : {}, {
-        ac: curType.value === "history"
+        X: curType.value === "history"
       }, curType.value === "history" ? {
-        ad: common_vendor.o(($event) => model.value.orderStatusName = $event),
-        ae: common_vendor.p({
+        Y: common_vendor.o(($event) => model.value.orderStatusName = $event),
+        Z: common_vendor.p({
           label: "审核状态",
           readonly: true,
-          ["label-width"]: "100px",
+          ["label-width"]: "80px",
           prop: "orderStatusName",
           clearable: true,
           placeholder: "",
           modelValue: model.value.orderStatusName
         })
       } : {}, {
-        af: common_vendor.p({
+        aa: common_vendor.p({
           title: "审批信息",
           border: true,
           ["use-slot"]: true
         }),
-        ag: curType.value === "approve"
+        ab: curType.value === "approve"
       }, curType.value === "approve" ? {
-        ah: common_vendor.o(($event) => handleApprove("pass")),
-        ai: common_vendor.p({
+        ac: common_vendor.o(($event) => handleApprove("pass")),
+        ad: common_vendor.p({
           type: "warning"
         }),
-        aj: common_vendor.o(($event) => handleApprove("refuse")),
-        ak: common_vendor.p({
+        ae: common_vendor.o(($event) => handleApprove("refuse")),
+        af: common_vendor.p({
           type: "primary"
         })
       } : {}) : {}, {
-        al: common_vendor.sr(approveForm, "efa79250-19,efa79250-2", {
+        ag: common_vendor.sr(approveForm, "efa79250-18,efa79250-2", {
           "k": "approveForm"
         }),
-        am: common_vendor.p({
+        ah: common_vendor.p({
           model: approveModel.value,
           rules: approveRules.value,
           errorType: "toast"
         }),
-        an: common_vendor.p({
+        ai: common_vendor.p({
           group: true
         })
       });

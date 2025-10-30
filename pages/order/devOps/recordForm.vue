@@ -103,14 +103,14 @@ onLoad((param) => {
     <BaseForm>
       <wd-form ref="form" :model="model" :rules="rules" errorType="toast">
         <wd-cell-group border>
-          <wd-select-picker type="radio" value-key="vehicleId" label-key="plateNumber"
+          <wd-select-picker clearable type="radio" value-key="vehicleId" label-key="plateNumber"
             label-width="100px" prop="vehicleId" label="车辆车牌" placeholder="请选择车辆车牌"
             v-model="model.vehicleId" :columns="carOptions" @change="handleCarChange" filterable
             :show-confirm="false" />
-          <wd-picker label="保养类型" placeholder="请选择保养类型" value-key="dictValue" label-key="dictLabel" label-width="100px"
+          <wd-picker clearable label="保养类型" placeholder="请选择保养类型" value-key="dictValue" label-key="dictLabel" label-width="100px"
             prop="maintenanceRecordTypeCode" v-model="model.maintenanceRecordTypeCode" :columns="dict.vehicle_maintenance_record_type" />
-          <wd-datetime-picker label="保养日期" type="date" label-width="100px" placeholder="请选择日期" prop="maintenanceDate" v-model="model.maintenanceDate" />
-          <wd-input type="number" label-width="120px" label="有效日期（月）" v-model="model.maintenanceValidDate" placeholder="请输入有效日期（月）" prop="maintenanceValidDate" />
+          <wd-datetime-picker clearable label="保养日期" type="date" label-width="100px" placeholder="请选择日期" prop="maintenanceDate" v-model="model.maintenanceDate" />
+          <wd-input clearable type="number" label-width="120px" label="有效日期（月）" v-model="model.maintenanceValidDate" placeholder="请输入有效日期（月）" prop="maintenanceValidDate" />
           <wd-textarea label="保养内容" label-width="100px" type="textarea" v-model="model.maintenanceContent" :maxlength="300" show-word-limit placeholder="请输入保养内容" clearable prop="maintenanceContent" />
           <wd-input label="备注" label-width="100px" prop="remark" clearable v-model="model.remark" placeholder="请输入备注" />
 

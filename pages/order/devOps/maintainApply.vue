@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive } from 'vue'
-import { getMaintainListApi, deleteMaintain } from '@/api'
+import { getApproveMaintainListApi, deleteMaintain } from '@/api'
 import { onShow, onReachBottom } from '@dcloudio/uni-app'
 import { useMessage } from '@/uni_modules/wot-design-uni'
 const message = useMessage()
@@ -45,7 +45,7 @@ function loadmore() {
 
 const getData = async () => {
   loading.value = true
-  const res = await getMaintainListApi(queryParams)
+  const res = await getApproveMaintainListApi(queryParams)
   list.value = [...list.value, ...res.rows]
   total.value = res.total
   loading.value = false
@@ -58,8 +58,12 @@ const getData = async () => {
 
 // 详情
 const clickToDetail = (i) => {
-  const type = i.statusCode === 'pending' ? 'apply' : 'view'
-  const queryStr = i.upkeepWorkOrderId ? `?id=${i.upkeepWorkOrderId}&type=${type}&disabled=disabled` : ''
+  let queryStr = ''
+  if(i) {
+    const type = i.statusCode === 'pending' ? 'apply' : 'view'
+    queryStr = i.upkeepWorkOrderId ? `?id=${i.upkeepWorkOrderId}&type=${type}&disabled=disabled` : ''
+  }
+
   uni.navigateTo({
     url: `/pages/order/devOps/maintainForm${queryStr}`
   })

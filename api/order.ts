@@ -16,6 +16,9 @@ export const putOrderDraftApi = (params) => http.put('/car/vehicleUseCarApplicat
 // 审批列表
 export const getApproveListApi = (params) => http.get('/car/vehicleUseCarApplicationOrder/application/list/page', { params })
 
+// 已审批列表
+export const getDoneListApi = (params) => http.get('/car/vehicleUseCarApplicationOrder/application/end/list/page', { params })
+
 // 审批
 export const getApproveApi = (params) => http.get('/car/vehicleUseCarApplicationOrder/approver/list/page', { params })
 
@@ -112,7 +115,7 @@ export const getApproveRecordApi = (params) => http.get('/car/vehicleUseCarAppli
 
 // 加油记录
 // 列表
-export const getOilListApi = (params) => http.get('/car/vehicleRefuelWorkOrder/list/page', { params })
+export const getOilListApi = (params) => http.get('/car/vehicleRefuelWorkOrder/personal/list/page', { params })
 // 删除
 export const deleteOil = (params) => http.delete('/car/vehicleRefuelWorkOrder/' + params)
 // 详情
@@ -125,6 +128,8 @@ export const postOil = (params) => http.post('/car/vehicleRefuelWorkOrder', para
 
 // 加油审批
 export const approveOilApi = (params) => http.put('/car/vehicleRefuelWorkOrder/approve/', params)
+// 列表
+export const getApproveOilListApi = (params) => http.get('/car/vehicleRefuelWorkOrder/approve/list/page', { params })
 
 // 保养
 // 列表
@@ -138,4 +143,6 @@ export const putMaintain = (params) => http.put('/car/vehicleUpkeepWorkOrder', p
 // 新增
 export const postMaintain = (params) => http.post('/car/vehicleUpkeepWorkOrder', params)
 // 审批
-export const approveMaintainApi = (params) => http.put('/car/vehicleUpkeepWorkOrder/approve/', params)
+export const approveMaintainApi = (params) => http.put('/car/vehicleUpkeepWorkOrder/approve', params)
+// 列表
+export const getApproveMaintainListApi = (params) => http.get('/car/vehicleUpkeepWorkOrder/approve/list/page', { params })

@@ -39,21 +39,23 @@ const _sfc_main = {
       pageNum: 1,
       pageSize: 10,
       order: "asc",
-      plateNumber: ""
+      plateNumber: void 0,
+      offset: 0,
+      limit: 10
     });
     const state = common_vendor.ref("loading");
     common_vendor.onReachBottom(() => {
-      if (!list.value.length) {
+      if (list.value.length === total.value) {
+        state.value = "finished";
+      } else if (!list.value.length) {
         state.value = "error";
       } else if (list.value.length < total.value) {
         loadmore();
-      } else if (list.value.length === total.value) {
-        state.value = "finished";
       }
     });
     common_vendor.onShow(() => {
       state.value = "loading";
-      queryParams.plateNumber = "";
+      queryParams.plateNumber = void 0;
       queryParams.pageNum = 1;
       queryParams.order = "asc";
       list.value = [];
@@ -71,10 +73,10 @@ const _sfc_main = {
       list.value = [...list.value, ...res.rows];
       total.value = res.total;
       loading.value = false;
-      if (!list.value.length) {
-        state.value = "error";
-      } else if (list.value.length === total.value) {
+      if (list.value.length === total.value) {
         state.value = "finished";
+      } else if (!list.value.length) {
+        state.value = "error";
       }
     };
     const clickToDetail = (id) => {
@@ -96,7 +98,7 @@ const _sfc_main = {
             icon: "success"
           });
           state.value = "loading";
-          queryParams.plateNumber = "";
+          queryParams.plateNumber = void 0;
           queryParams.pageNum = 1;
           queryParams.order = "asc";
           list.value = [];
@@ -104,7 +106,7 @@ const _sfc_main = {
           getData();
         }
       }).catch(() => {
-        common_vendor.index.__f__("log", "at pages/order/devOps/record.vue:89", "点击了取消按钮");
+        common_vendor.index.__f__("log", "at pages/order/devOps/record.vue:91", "点击了取消按钮");
       });
     };
     const search = () => {
@@ -120,7 +122,7 @@ const _sfc_main = {
     const cancel = () => {
       if (queryParams.plateNumber) {
         state.value = "loading";
-        queryParams.plateNumber = "";
+        queryParams.plateNumber = void 0;
         queryParams.pageNum = 1;
         queryParams.order = "asc";
         list.value = [];

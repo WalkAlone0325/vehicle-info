@@ -25,6 +25,7 @@ http.interceptors.response.use(
       flag = true
       uni.removeStorageSync('token')
       uni.removeStorageSync('user')
+      uni.removeStorageSync('roles')
       uni.reLaunch({
         url: '/pages/login/login'
       })

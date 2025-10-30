@@ -128,6 +128,12 @@
     	}
     },
 		{
+    	"path": "pages/order/cars/formCollect",
+    	"style": {
+    		"navigationBarTitleText": "用车工单操作"
+    	}
+    },
+		{
     	"path": "pages/order/oil/list",
     	"style": {
     		"navigationBarTitleText": "加油记录"

@@ -124,6 +124,7 @@ const _sfc_main = {
         a: common_vendor.o(handleCarChange),
         b: common_vendor.o(($event) => model.value.vehicleId = $event),
         c: common_vendor.p({
+          clearable: true,
           type: "radio",
           ["value-key"]: "vehicleId",
           ["label-key"]: "plateNumber",
@@ -138,6 +139,7 @@ const _sfc_main = {
         }),
         d: common_vendor.o(($event) => model.value.maintenanceRecordTypeCode = $event),
         e: common_vendor.p({
+          clearable: true,
           label: "保养类型",
           placeholder: "请选择保养类型",
           ["value-key"]: "dictValue",
@@ -149,6 +151,7 @@ const _sfc_main = {
         }),
         f: common_vendor.o(($event) => model.value.maintenanceDate = $event),
         g: common_vendor.p({
+          clearable: true,
           label: "保养日期",
           type: "date",
           ["label-width"]: "100px",
@@ -158,6 +161,7 @@ const _sfc_main = {
         }),
         h: common_vendor.o(($event) => model.value.maintenanceValidDate = $event),
         i: common_vendor.p({
+          clearable: true,
           type: "number",
           ["label-width"]: "120px",
           label: "有效日期（月）",
