@@ -300,11 +300,6 @@ const handleApprove = (status) => {
           uni.showToast({ title: '请选择司机', icon: 'none' })
           return
         }
-        console.log(approveModel.value.approveDriverMobile)
-        if(!approveModel.value.approveDriverMobile) {
-          uni.showToast({ title: '请输入司机手机号', icon: 'none' })
-          return
-        }
       }
       const res = await postApprove({
         ...approveModel.value,

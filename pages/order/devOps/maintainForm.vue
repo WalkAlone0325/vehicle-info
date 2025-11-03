@@ -26,7 +26,7 @@ const rules = ref({
   upkeepPlateNumber: [{ required: true, message: '请输入保养车牌号' }],
   upkeepUserId: [{ required: true, message: '请选择保养司机' }],
   upkeepDate: [{ required: true, message: '请选择保养日期' }],
-  upkeepMileage: [{ required: true, message: '请输入车辆公里数' }],
+  upkeepMileage: [{ required: true, message: '请输入车辆公里数',  }],
   upkeepFuelPrice: [{ required: true, message: '请输入保养单价' }],
   upkeepTotalPrice: [{ required: true, message: '请输入保养总价' }],
   paymentMethodCode: [{ required: true, message: '请选择保养支付方式' }],
@@ -45,15 +45,15 @@ const getDetail = async (id) => {
 // 车辆
 const carOptions = ref([])
 const getCar = async () => {
-  const res = await getCarListApi({ vehicleStatusCode: 'NORMAL', order: 'asc' }) // vehicleTypeCode: model.value.vehicleTypeCode
-  carOptions.value = res.rows.map(i => ({ ...i, label: `${i.plateNumber} ${i.vehicleTypeName || ''} ${i.brandModel || ''} ${i.deptName || ''}` }))
+  const res = await getCarListApi({ order: 'asc' }) // vehicleTypeCode: model.value.vehicleTypeCode
+  carOptions.value = res.rows.map(i => ({ ...i, label: `${i.plateNumber} ${i.vehicleTypeName || ''} ${i.brandModel || ''}` }))
 }
 
 // 申请人
 const userOptions = ref([])
 const getUser = async () => {
   const res = await getUserListApi({ order: 'asc' })
-  userOptions.value = res.rows.map(i => ({ ...i, label: `${i.userName} (${i.nickName || ''}) ${i.phonenumber || ''}` }))
+  userOptions.value = res.rows.map(i => ({ ...i, label: `${i.userName} (${i.nickName || ''})` }))
 }
 
 const getDict = async (code) => {
@@ -183,24 +183,24 @@ const handleApprove = async (statusCode) => {
             <wd-select-picker clearable :disabled="disabled" type="radio" value-key="vehicleId" label-key="label" label-width="100px"
               prop="upkeepVehicleId" label="保养车辆" placeholder="请选择保养车辆"
               v-model="model.upkeepVehicleId" :columns="carOptions" filterable :show-confirm="false" />
-            <wd-select-picker clearable :disabled="disabled" type="radio" value-key="userId" label-key="label" label-width="100px" prop="upkeepUserId"
+            <wd-select-picker readonly :disabled="disabled" type="radio" value-key="userId" label-key="label" label-width="100px" prop="upkeepUserId"
               label="保养用户" placeholder="请选择保养用户" v-model="model.upkeepUserId" :columns="userOptions" filterable
               :show-confirm="false" />
             <wd-datetime-picker clearable :disabled="disabled" label="保养时间" label-width="100px" placeholder="请选择保养时间" prop="upkeepDate"
               v-model="model.upkeepDate" @open="openDatePicker" />
-            <wd-input clearable :disabled="disabled" type="number" label="车辆公里数" label-width="100px" prop="upkeepMileage"
+            <wd-input clearable :disabled="disabled" type="digit" label="车辆公里数" label-width="100px" prop="upkeepMileage"
               v-model="model.upkeepMileage" placeholder="请输入车辆公里数" />
-            <wd-input clearable :disabled="disabled" type="number" label="保养总价" label-width="100px" prop="upkeepTotalPrice"
+            <wd-input clearable :disabled="disabled" type="digit" label="保养总价" label-width="100px" prop="upkeepTotalPrice"
               v-model="model.upkeepTotalPrice" placeholder="请输入保养总价（元）" />
             <wd-picker clearable :disabled="disabled" label="支付方式" placeholder="请选择支付方式" value-key="dictValue" label-key="dictLabel"
               label-width="100px" prop="paymentMethodCode" v-model="model.paymentMethodCode"
               :columns="options" />
-            <wd-cell title="车辆车牌图片" title-width="100px" prop="fileList">
+            <wd-cell title="车辆车牌图片" title-width="100px" prop="upkeepPlateNumberPictureId">
               <BaseUpload :file-list="model.files1" :disabled="disabled"
                 @remove="removeUpload('upkeepPlateNumberPictureId')"
                 @update:fileList="(...args) => changeUpload(...args, 'upkeepPlateNumberPictureId')" />
             </wd-cell>
-            <wd-cell title="车辆公里数图片" title-width="100px" prop="fileList">
+            <wd-cell title="车辆公里数图片" title-width="100px" prop="upkeepMileagePictureId">
               <BaseUpload :file-list="model.files2" :disabled="disabled"
                 @remove="removeUpload('upkeepMileagePictureId')"
                 @update:fileList="(...args) => changeUpload(...args, 'upkeepMileagePictureId')" />

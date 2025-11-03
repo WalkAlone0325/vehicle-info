@@ -54,7 +54,7 @@ const getList = async () => {
 // 车辆
 const carOptions = ref([])
 const getCar = async () => {
-  const res = await getCarListApi({ vehicleStatusCode: 'NORMAL', vehicleTypeCode: model.value.vehicleTypeCode })
+  const res = await getCarListApi({ vehicleTypeCode: model.value.vehicleTypeCode })
   carOptions.value = res.rows
 }
 
@@ -164,7 +164,7 @@ onLoad((param) => {
       <view class="form-con">
         <wd-form ref="form" :model="model" :rules="rules" errorType="toast">
           <wd-cell-group border>
-            <wd-input clearable type="number" label="用车工单编号" label-width="100px" prop="useCarWorkOrderId"
+            <wd-input clearable type="digit"" label-width="100px" prop="useCarWorkOrderId"
               v-model="model.useCarWorkOrderId" placeholder="请输入用车工单编号" disabled />
 
             <wd-select-picker clearable :disabled="type === 'returned'" type="radio" value-key="vehicleId" label-key="plateNumber" label-width="100px"
@@ -174,16 +174,16 @@ onLoad((param) => {
             <wd-select-picker clearable :disabled="type === 'returned'" type="radio" value-key="driverId" label-key="driverName" label-width="100px"
               prop="collectDriverId" label="领车司机" placeholder="请选择领车司机" v-model="model.collectDriverId"
               :columns="driverOptions" filterable :show-confirm="false" />
-            <wd-input clearable :disabled="type === 'returned'" type="number" label="领车里程" label-width="100px" prop="collectMileage"
+            <wd-input clearable :disabled="type === 'returned'" type="digit" label="领车里程" label-width="100px" prop="collectMileage"
               v-model="model.collectMileage" placeholder="请输入领车里程" />
 
             <view v-if="type === 'collect'">
-              <wd-cell title="领取车辆照片" title-width="100px" prop="fileList">
+              <wd-cell title="领取车辆照片" title-width="100px" prop="collectPlateNumberPictureId">
                 <BaseUpload :file-list="model.files1"
                   @update:fileList="(...args) => changeUpload(...args, 'collectPlateNumberPictureId')" />
               </wd-cell>
 
-              <wd-cell title="领车里程图片" title-width="100px" prop="fileList">
+              <wd-cell title="领车里程图片" title-width="100px" prop="collectMileagePictureId">
                 <BaseUpload :file-list="model.files2"
                   @update:fileList="(...args) => changeUpload(...args, 'collectMileagePictureId')" />
               </wd-cell>
@@ -194,10 +194,10 @@ onLoad((param) => {
                 prop="returnedDriverId" label="还车司机" placeholder="请选择还车司机" v-model="model.returnedDriverId"
                 :columns="driverOptions" filterable :show-confirm="false" />
 
-              <wd-input clearable type="number" label="还车里程" label-width="100px" prop="returnedMileage"
+              <wd-input clearable type="digit" label="还车里程" label-width="100px" prop="returnedMileage"
                 v-model="model.returnedMileage" placeholder="请输入还车里程" />
 
-              <wd-cell title="还车里程图片" title-width="100px" prop="fileList">
+              <wd-cell title="还车里程图片" title-width="100px" prop="returnedMileagePictureId">
                 <BaseUpload :file-list="model.files3"
                   @update:fileList="(...args) => changeUpload(...args, 'returnedMileagePictureId')" />
               </wd-cell>

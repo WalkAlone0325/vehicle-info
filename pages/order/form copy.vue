@@ -118,7 +118,7 @@ const getDict = async () => {
 }
 // 车辆
 const getCar = async () => {
-  const res = await getCarListApi({ vehicleStatusCode: 'NORMAL', vehicleTypeCode: model.value.vehicleTypeCode })
+  const res = await getCarListApi({ order: 'asc', vehicleTypeCode: model.value.vehicleTypeCode })
   carOptions.value = res.rows
 }
 // 司机

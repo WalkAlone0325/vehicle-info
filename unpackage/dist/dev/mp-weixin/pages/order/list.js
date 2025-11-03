@@ -29,9 +29,12 @@ const _sfc_main = {
       history: "审批记录",
       approve: "审批"
     };
+    const btnText = common_vendor.ref("查看");
     const curType = common_vendor.ref("");
     common_vendor.onLoad((param) => {
       curType.value = param.type;
+      btnText.value = param.type == "approve" ? "审批" : "查看";
+      common_vendor.index.__f__("log", "at pages/order/list.vue:20", btnText.value, param.type);
       common_vendor.index.setNavigationBarTitle({ title: MAP_TITLE[param.type] + "列表" });
     });
     const list = common_vendor.ref([
@@ -129,18 +132,19 @@ const _sfc_main = {
           });
         }),
         c: curType.value === "pass",
-        d: common_vendor.p({
+        d: common_vendor.t(btnText.value),
+        e: common_vendor.p({
           size: "small",
           plain: true
         }),
-        e: common_vendor.p({
+        f: common_vendor.p({
           size: "small",
           plain: true
         })
       }, {
-        f: !loading.value && total.value == 0
+        g: !loading.value && total.value == 0
       }, !loading.value && total.value == 0 ? {
-        g: common_vendor.p({
+        h: common_vendor.p({
           image: "/static/content.png",
           tip: "暂无列表"
         })

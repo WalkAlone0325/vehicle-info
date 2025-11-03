@@ -285,11 +285,6 @@ const _sfc_main = {
               common_vendor.index.showToast({ title: "请选择司机", icon: "none" });
               return;
             }
-            common_vendor.index.__f__("log", "at pages/order/form.vue:303", approveModel.value.approveDriverMobile);
-            if (!approveModel.value.approveDriverMobile) {
-              common_vendor.index.showToast({ title: "请输入司机手机号", icon: "none" });
-              return;
-            }
           }
           const res = await api_order.postApprove({
             ...approveModel.value,
@@ -306,7 +301,7 @@ const _sfc_main = {
           }
         }
       }).catch((error) => {
-        common_vendor.index.__f__("log", "at pages/order/form.vue:325", error, "error");
+        common_vendor.index.__f__("log", "at pages/order/form.vue:320", error, "error");
       });
     };
     const getCar = async () => {

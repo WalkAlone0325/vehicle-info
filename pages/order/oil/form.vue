@@ -25,12 +25,19 @@ const model = ref({
   files2: [],
   files3: [],
 })
+// , pattern: /^(0|[1-9]\d*)(\.\d{1,2})?$/, validator: (value) => {
+// 	  if(value) {
+// 		  return Promise.resolve()
+// 	  } else {
+// 		  return Promise.reject('请输入正数或者两位小数')
+// 	  }
+//   }
 const rules = ref({
   refuelVehicleId: [{ required: true, message: '请选择加油车辆' }],
   refuelPlateNumber: [{ required: true, message: '请输入加油车牌号' }],
   refuelUserId: [{ required: true, message: '请选择加油司机' }],
   refuelDate: [{ required: true, message: '请选择加油日期' }],
-  vehicleMileage: [{ required: true, message: '请输入加油里程' }],
+  vehicleMileage: [{  required: true, message: '请输入车辆公里数' }],
   refuelFuelQuantity: [{ required: true, message: '请输入加油量' }],
   refuelFuelPrice: [{ required: true, message: '请输入加油单价' }],
   refuelTotalPrice: [{ required: true, message: '请输入加油总价' }],
@@ -52,15 +59,15 @@ const getDetail = async (id) => {
 // 车辆
 const carOptions = ref([])
 const getCar = async () => {
-  const res = await getCarListApi({ vehicleStatusCode: 'NORMAL', order: 'asc' }) // vehicleTypeCode: model.value.vehicleTypeCode
-  carOptions.value = res.rows.map(i => ({ ...i, label: `${i.plateNumber} ${i.vehicleTypeName || ''} ${i.brandModel || ''} ${i.deptName || ''}` }))
+  const res = await getCarListApi({ order: 'asc' }) // vehicleTypeCode: model.value.vehicleTypeCode
+  carOptions.value = res.rows.map(i => ({ ...i, label: `${i.plateNumber} ${i.vehicleTypeName || ''} ${i.brandModel || ''}` }))
 }
 
 // 申请人
 const userOptions = ref([])
 const getUser = async () => {
   const res = await getUserListApi({ order: 'asc' })
-  userOptions.value = res.rows.map(i => ({ ...i, label: `${i.userName} (${i.nickName || ''}) ${i.phonenumber || ''}` }))
+  userOptions.value = res.rows.map(i => ({ ...i, label: `${i.userName} (${i.nickName || ''})` }))
 }
 
 const getDict = async (code) => {
@@ -190,33 +197,33 @@ const handleApprove = async (statusCode) => {
             <wd-select-picker clearable :disabled="type == 'apply'" type="radio" value-key="vehicleId" label-key="label" label-width="100px"
               prop="refuelVehicleId" label="加油车辆" placeholder="请选择加油车辆"
               v-model="model.refuelVehicleId" :columns="carOptions" filterable :show-confirm="false" />
-            <wd-select-picker clearable :disabled="type == 'apply'" type="radio" value-key="userId" label-key="label" label-width="100px" prop="refuelUserId"
+            <wd-select-picker readonly :disabled="type == 'apply'" type="radio" value-key="userId" label-key="label" label-width="100px" prop="refuelUserId"
               label="加油用户" placeholder="请选择加油用户" v-model="model.refuelUserId" :columns="userOptions" filterable
               :show-confirm="false" />
             <wd-datetime-picker clearable :disabled="type == 'apply'" label="加油时间" label-width="100px" placeholder="请选择加油时间" prop="refuelDate"
               v-model="model.refuelDate" @open="openDatePicker" />
-            <wd-input clearable :disabled="type == 'apply'" type="number" label="车辆公里数" label-width="100px" prop="vehicleMileage"
+            <wd-input clearable :disabled="type == 'apply'" type="digit" label="车辆公里数" label-width="100px" prop="vehicleMileage"
               v-model="model.vehicleMileage" placeholder="请输入车辆公里数" />
-            <wd-input clearable :disabled="type == 'apply'" type="number" label="车辆加油量（升）" label-width="100px" prop="refuelFuelQuantity"
+            <wd-input clearable :disabled="type == 'apply'" type="digit" label="车辆加油量（升）" label-width="100px" prop="refuelFuelQuantity"
               v-model="model.refuelFuelQuantity" placeholder="请输入车辆加油量（升）" />
-            <wd-input clearable :disabled="type == 'apply'" type="number" label="油站单价（元）" label-width="100px" prop="refuelFuelPrice"
+            <wd-input clearable :disabled="type == 'apply'" type="digit" label="油站单价（元）" label-width="100px" prop="refuelFuelPrice"
               v-model="model.refuelFuelPrice" placeholder="请输入油站单价（元）" />
-            <wd-input clearable :disabled="type == 'apply'" type="number" label="加油总价（元）" label-width="100px" prop="refuelTotalPrice"
+            <wd-input clearable :disabled="type == 'apply'" type="digit" label="加油总价（元）" label-width="100px" prop="refuelTotalPrice"
               v-model="model.refuelTotalPrice" placeholder="请输入加油总价（元）" />
             <wd-picker clearable :disabled="type == 'apply'" label="支付方式" placeholder="请选择支付方式" value-key="dictValue" label-key="dictLabel"
               label-width="100px" prop="refuelPaymentMethodCode" v-model="model.refuelPaymentMethodCode"
               :columns="options" />
-            <wd-cell title="加油车辆图片" title-width="100px" prop="fileList">
+            <wd-cell title="加油车辆图片" title-width="100px" prop="refuelPlateNumberPictureId">
               <BaseUpload :file-list="model.files1" :disabled="type == 'apply'"
                 @remove="removeUpload('refuelPlateNumberPictureId')"
                 @update:fileList="(...args) => changeUpload(...args, 'refuelPlateNumberPictureId')" />
             </wd-cell>
-            <wd-cell title="车辆公里数图片" title-width="100px" prop="fileList">
+            <wd-cell title="车辆公里数图片" title-width="100px" prop="vehicleMileagePictureId">
               <BaseUpload :file-list="model.files2" :disabled="type == 'apply'"
                 @remove="removeUpload('vehicleMileagePictureId')"
                 @update:fileList="(...args) => changeUpload(...args, 'vehicleMileagePictureId')" />
             </wd-cell>
-            <wd-cell title="加油机图片" title-width="100px" prop="fileList">
+            <wd-cell title="加油机图片" title-width="100px" prop="refuelMachinePictureId">
               <BaseUpload :file-list="model.files3" :disabled="type == 'apply'"
                 @remove="removeUpload('refuelMachinePictureId')"
                 @update:fileList="(...args) => changeUpload(...args, 'refuelMachinePictureId')" />

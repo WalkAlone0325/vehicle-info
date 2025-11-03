@@ -35,7 +35,7 @@ const rules = ref({
 })
 
 const getCar = async () => {
-  const res = await getCarListApi({ vehicleStatusCode: 'NORMAL' })
+  const res = await getCarListApi({ order: 'asc' })
   carOptions.value = res.rows
 }
 const handleCarChange = ({ value }) => {

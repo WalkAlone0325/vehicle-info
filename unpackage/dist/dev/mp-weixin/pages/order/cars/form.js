@@ -5,22 +5,22 @@ const api_order = require("../../../api/order.js");
 const api_common = require("../../../api/common.js");
 require("../../../utils/request.js");
 if (!Array) {
+  const _easycom_wd_input2 = common_vendor.resolveComponent("wd-input");
   const _easycom_wd_select_picker2 = common_vendor.resolveComponent("wd-select-picker");
   const _easycom_BaseUpload2 = common_vendor.resolveComponent("BaseUpload");
   const _easycom_wd_cell2 = common_vendor.resolveComponent("wd-cell");
-  const _easycom_wd_input2 = common_vendor.resolveComponent("wd-input");
   const _easycom_wd_datetime_picker2 = common_vendor.resolveComponent("wd-datetime-picker");
   const _easycom_wd_picker2 = common_vendor.resolveComponent("wd-picker");
   const _easycom_wd_cell_group2 = common_vendor.resolveComponent("wd-cell-group");
   const _easycom_wd_button2 = common_vendor.resolveComponent("wd-button");
   const _easycom_wd_form2 = common_vendor.resolveComponent("wd-form");
   const _easycom_BaseForm2 = common_vendor.resolveComponent("BaseForm");
-  (_easycom_wd_select_picker2 + _easycom_BaseUpload2 + _easycom_wd_cell2 + _easycom_wd_input2 + _easycom_wd_datetime_picker2 + _easycom_wd_picker2 + _easycom_wd_cell_group2 + _easycom_wd_button2 + _easycom_wd_form2 + _easycom_BaseForm2)();
+  (_easycom_wd_input2 + _easycom_wd_select_picker2 + _easycom_BaseUpload2 + _easycom_wd_cell2 + _easycom_wd_datetime_picker2 + _easycom_wd_picker2 + _easycom_wd_cell_group2 + _easycom_wd_button2 + _easycom_wd_form2 + _easycom_BaseForm2)();
 }
+const _easycom_wd_input = () => "../../../uni_modules/wot-design-uni/components/wd-input/wd-input.js";
 const _easycom_wd_select_picker = () => "../../../uni_modules/wot-design-uni/components/wd-select-picker/wd-select-picker.js";
 const _easycom_BaseUpload = () => "../../../components/BaseUpload.js";
 const _easycom_wd_cell = () => "../../../uni_modules/wot-design-uni/components/wd-cell/wd-cell.js";
-const _easycom_wd_input = () => "../../../uni_modules/wot-design-uni/components/wd-input/wd-input.js";
 const _easycom_wd_datetime_picker = () => "../../../uni_modules/wot-design-uni/components/wd-datetime-picker/wd-datetime-picker.js";
 const _easycom_wd_picker = () => "../../../uni_modules/wot-design-uni/components/wd-picker/wd-picker.js";
 const _easycom_wd_cell_group = () => "../../../uni_modules/wot-design-uni/components/wd-cell-group/wd-cell-group.js";
@@ -28,7 +28,7 @@ const _easycom_wd_button = () => "../../../uni_modules/wot-design-uni/components
 const _easycom_wd_form = () => "../../../uni_modules/wot-design-uni/components/wd-form/wd-form.js";
 const _easycom_BaseForm = () => "../../../components/BaseForm.js";
 if (!Math) {
-  (_easycom_wd_select_picker + _easycom_BaseUpload + _easycom_wd_cell + _easycom_wd_input + _easycom_wd_datetime_picker + _easycom_wd_picker + _easycom_wd_cell_group + _easycom_wd_button + _easycom_wd_form + _easycom_BaseForm)();
+  (_easycom_wd_input + _easycom_wd_select_picker + _easycom_BaseUpload + _easycom_wd_cell + _easycom_wd_datetime_picker + _easycom_wd_picker + _easycom_wd_cell_group + _easycom_wd_button + _easycom_wd_form + _easycom_BaseForm)();
 }
 const _sfc_main = {
   __name: "form",
@@ -59,7 +59,9 @@ const _sfc_main = {
       files3: []
     });
     const rules = common_vendor.ref({
-      useCarApplicationOrderId: [{ required: true, message: "请选择用车申请工单" }]
+      // useCarApplicationOrderId: [{ required: true, message: '请选择用车申请工单' }],
+      collectVehicleId: [{ required: true, message: "请选择领取车辆" }],
+      collectDriverId: [{ required: true, message: "请选择领车司机" }]
     });
     const getDetail = async (id) => {
       const res = await api_order.getOrderDetail(id);
@@ -78,7 +80,7 @@ const _sfc_main = {
     };
     const handleCode = ({ value }) => {
       const find = list.value.find((item) => item.useCarApplicationOrderId == value);
-      common_vendor.index.__f__("log", "at pages/order/cars/form.vue:54", "🚀:>> ", list.value, find);
+      common_vendor.index.__f__("log", "at pages/order/cars/form.vue:56", "🚀:>> ", list.value, find);
       model.value.collectDriverId = find.expectedDriverId;
       model.value.collectDriverName = find.expectedDriverName;
       model.value.collectVehicleId = find.expectedVehicleId;
@@ -90,7 +92,7 @@ const _sfc_main = {
     };
     const carOptions = common_vendor.ref([]);
     const getCar = async () => {
-      const res = await api_home.getCarListApi({ vehicleStatusCode: "NORMAL", vehicleTypeCode: model.value.vehicleTypeCode });
+      const res = await api_home.getCarListApi({ vehicleTypeCode: model.value.vehicleTypeCode });
       carOptions.value = res.rows;
     };
     const driverOptions = common_vendor.ref([]);
@@ -158,7 +160,7 @@ const _sfc_main = {
           loading.value = false;
         }
       }).catch((error) => {
-        common_vendor.index.__f__("log", "at pages/order/cars/form.vue:147", error, "error");
+        common_vendor.index.__f__("log", "at pages/order/cars/form.vue:149", error, "error");
       });
     };
     const changeUpload = (fileList, key) => {
@@ -178,9 +180,31 @@ const _sfc_main = {
     });
     return (_ctx, _cache) => {
       return common_vendor.e({
-        a: common_vendor.o(handleCode),
-        b: common_vendor.o(($event) => model.value.useCarApplicationOrderId = $event),
+        a: model.value.useCarWorkOrderId
+      }, model.value.useCarWorkOrderId ? {
+        b: common_vendor.o(($event) => model.value.useCarWorkOrderId = $event),
         c: common_vendor.p({
+          label: "用车工单编号",
+          ["label-width"]: "100px",
+          readonly: true,
+          modelValue: model.value.useCarWorkOrderId
+        })
+      } : {}, {
+        d: model.value.useCarWorkOrderId
+      }, model.value.useCarWorkOrderId ? {
+        e: common_vendor.o(($event) => model.value.useCarApplicationOrderId = $event),
+        f: common_vendor.p({
+          label: "申请工单编号",
+          ["label-width"]: "100px",
+          readonly: true,
+          modelValue: model.value.useCarApplicationOrderId
+        })
+      } : {}, {
+        g: !model.value.useCarWorkOrderId
+      }, !model.value.useCarWorkOrderId ? {
+        h: common_vendor.o(handleCode),
+        i: common_vendor.o(($event) => model.value.useCarApplicationOrderId = $event),
+        j: common_vendor.p({
           clearable: true,
           type: "radio",
           ["value-key"]: "useCarApplicationOrderId",
@@ -193,9 +217,10 @@ const _sfc_main = {
           filterable: true,
           ["show-confirm"]: false,
           modelValue: model.value.useCarApplicationOrderId
-        }),
-        d: common_vendor.o(($event) => model.value.collectVehicleId = $event),
-        e: common_vendor.p({
+        })
+      } : {}, {
+        k: common_vendor.o(($event) => model.value.collectVehicleId = $event),
+        l: common_vendor.p({
           clearable: true,
           type: "radio",
           ["value-key"]: "vehicleId",
@@ -209,17 +234,17 @@ const _sfc_main = {
           ["show-confirm"]: false,
           modelValue: model.value.collectVehicleId
         }),
-        f: common_vendor.o((...args) => changeUpload(...args, "collectPlateNumberPictureId")),
-        g: common_vendor.p({
+        m: common_vendor.o((...args) => changeUpload(...args, "collectPlateNumberPictureId")),
+        n: common_vendor.p({
           ["file-list"]: model.value.files1
         }),
-        h: common_vendor.p({
+        o: common_vendor.p({
           title: "领取车辆照片",
           ["title-width"]: "100px",
-          prop: "fileList"
+          prop: "collectPlateNumberPictureId"
         }),
-        i: common_vendor.o(($event) => model.value.collectDriverId = $event),
-        j: common_vendor.p({
+        p: common_vendor.o(($event) => model.value.collectDriverId = $event),
+        q: common_vendor.p({
           clearable: true,
           type: "radio",
           ["value-key"]: "driverId",
@@ -233,27 +258,27 @@ const _sfc_main = {
           ["show-confirm"]: false,
           modelValue: model.value.collectDriverId
         }),
-        k: common_vendor.o(($event) => model.value.collectMileage = $event),
-        l: common_vendor.p({
+        r: common_vendor.o(($event) => model.value.collectMileage = $event),
+        s: common_vendor.p({
           clearable: true,
-          type: "number",
+          type: "digit",
           label: "实际起始里程",
           ["label-width"]: "100px",
           prop: "collectMileage",
           placeholder: "请输入实际起始里程",
           modelValue: model.value.collectMileage
         }),
-        m: common_vendor.o((...args) => changeUpload(...args, "collectMileagePictureId")),
-        n: common_vendor.p({
+        t: common_vendor.o((...args) => changeUpload(...args, "collectMileagePictureId")),
+        v: common_vendor.p({
           ["file-list"]: model.value.files2
         }),
-        o: common_vendor.p({
+        w: common_vendor.p({
           title: "实际起始里程照片",
           ["title-width"]: "100px",
-          prop: "fileList"
+          prop: "collectMileagePictureId"
         }),
-        p: common_vendor.o(($event) => model.value.returnedDriverId = $event),
-        q: common_vendor.p({
+        x: common_vendor.o(($event) => model.value.returnedDriverId = $event),
+        y: common_vendor.p({
           clearable: true,
           type: "radio",
           ["value-key"]: "driverId",
@@ -267,18 +292,18 @@ const _sfc_main = {
           ["show-confirm"]: false,
           modelValue: model.value.returnedDriverId
         }),
-        r: common_vendor.o(($event) => model.value.returnedMileage = $event),
-        s: common_vendor.p({
+        z: common_vendor.o(($event) => model.value.returnedMileage = $event),
+        A: common_vendor.p({
           clearable: true,
-          type: "number",
+          type: "digit",
           label: "实际结束里程",
           ["label-width"]: "100px",
           prop: "returnedMileage",
           placeholder: "请输入实际结束里程",
           modelValue: model.value.returnedMileage
         }),
-        t: common_vendor.o(($event) => model.value.returnedTime = $event),
-        v: common_vendor.p({
+        B: common_vendor.o(($event) => model.value.returnedTime = $event),
+        C: common_vendor.p({
           clearable: true,
           label: "还车时间",
           ["label-width"]: "100px",
@@ -286,17 +311,17 @@ const _sfc_main = {
           prop: "returnedTime",
           modelValue: model.value.returnedTime
         }),
-        w: common_vendor.o((...args) => changeUpload(...args, "returnedMileagePictureId")),
-        x: common_vendor.p({
+        D: common_vendor.o((...args) => changeUpload(...args, "returnedMileagePictureId")),
+        E: common_vendor.p({
           ["file-list"]: model.value.files3
         }),
-        y: common_vendor.p({
+        F: common_vendor.p({
           title: "实际结束里程照片",
           ["title-width"]: "100px",
-          prop: "fileList"
+          prop: "returnedMileagePictureId"
         }),
-        z: common_vendor.o(($event) => model.value.workOrdeStatusCode = $event),
-        A: common_vendor.p({
+        G: common_vendor.o(($event) => model.value.workOrdeStatusCode = $event),
+        H: common_vendor.p({
           clearable: true,
           label: "工单状态",
           placeholder: "请选择工单状态",
@@ -307,8 +332,8 @@ const _sfc_main = {
           columns: options.value,
           modelValue: model.value.workOrdeStatusCode
         }),
-        B: common_vendor.o(($event) => model.value.applicantUserId = $event),
-        C: common_vendor.p({
+        I: common_vendor.o(($event) => model.value.applicantUserId = $event),
+        J: common_vendor.p({
           clearable: true,
           type: "radio",
           ["value-key"]: "userId",
@@ -322,8 +347,8 @@ const _sfc_main = {
           ["show-confirm"]: false,
           modelValue: model.value.applicantUserId
         }),
-        D: common_vendor.o(($event) => model.value.remark = $event),
-        E: common_vendor.p({
+        K: common_vendor.o(($event) => model.value.remark = $event),
+        L: common_vendor.p({
           label: "备注",
           ["label-width"]: "100px",
           prop: "remark",
@@ -331,21 +356,21 @@ const _sfc_main = {
           placeholder: "请输入备注",
           modelValue: model.value.remark
         }),
-        F: common_vendor.p({
+        M: common_vendor.p({
           border: true
         }),
-        G: type.value !== "returned"
+        N: type.value !== "returned"
       }, type.value !== "returned" ? {
-        H: common_vendor.o(handleSubmit),
-        I: common_vendor.p({
+        O: common_vendor.o(handleSubmit),
+        P: common_vendor.p({
           type: "primary",
           loading: loading.value
         })
       } : {}, {
-        J: common_vendor.sr(form, "1260d45c-1,1260d45c-0", {
+        Q: common_vendor.sr(form, "1260d45c-1,1260d45c-0", {
           "k": "form"
         }),
-        K: common_vendor.p({
+        R: common_vendor.p({
           model: model.value,
           rules: rules.value,
           errorType: "toast"

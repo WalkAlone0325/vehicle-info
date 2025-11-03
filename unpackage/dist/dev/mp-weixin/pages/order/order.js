@@ -35,7 +35,7 @@ const _sfc_main = {
         { id: 3, text: "运维记录", icon: "record", url: "/pages/order/devOps/record", role: "car:vehicleMaintenanceRecord:list" },
         { id: 4, text: "运维告警", icon: "gaojin", url: "/pages/order/devOps/warning", role: "car:vehicleMaintenanceWarningCycle:list" },
         { id: 5, text: "保养申报", icon: "maintain", url: "/pages/order/devOps/maintain" },
-        { id: 5, text: "保养审批", icon: "pending", url: "/pages/order/devOps/maintainApply", role: "car:vehicleUpkeepWorkOrder:approve" }
+        { id: 6, text: "保养审批", icon: "pending", url: "/pages/order/devOps/maintainApply", role: "car:vehicleUpkeepWorkOrder:approve" }
       ];
       const v3 = [
         { id: 1, text: "用车工单", icon: "apply", url: "/pages/order/cars/list" },

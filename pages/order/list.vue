@@ -11,10 +11,13 @@ const MAP_TITLE = {
   history: '审批记录',
   approve: '审批'
 }
+const btnText = ref('查看')
 const curType = ref('')
 // 加载
 onLoad((param) => {
   curType.value = param.type
+  btnText.value = param.type == 'approve' ? '审批' : '查看'
+  console.log(btnText.value, param.type)
   uni.setNavigationBarTitle({ title: MAP_TITLE[param.type] + '列表' })
 })
 
@@ -137,7 +140,7 @@ const getColor = ({orderStatusCode}) => {
               <view style="margin-right: 20rpx;"></view>
               <!-- <wd-button size="small" plain @click="clickImg(i)">流程图</wd-button>
               <view style="margin-right: 20rpx;"></view> -->
-              <wd-button size="small" plain @click="clickDetail(i)">审批</wd-button>
+              <wd-button size="small" plain @click="clickDetail(i)">{{btnText}}</wd-button>
               <view style="margin-right: 20rpx;"></view>
               <wd-button size="small" plain @click="clickRecord(i)">审批记录</wd-button>
             </view>

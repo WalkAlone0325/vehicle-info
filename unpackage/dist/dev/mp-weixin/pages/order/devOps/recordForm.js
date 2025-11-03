@@ -66,7 +66,7 @@ const _sfc_main = {
       ]
     });
     const getCar = async () => {
-      const res = await api_home.getCarListApi({ vehicleStatusCode: "NORMAL" });
+      const res = await api_home.getCarListApi({ order: "asc" });
       carOptions.value = res.rows;
     };
     const handleCarChange = ({ value }) => {

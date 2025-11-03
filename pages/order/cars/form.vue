@@ -31,7 +31,9 @@ const model = ref({
   files3: [],
 })
 const rules = ref({
-  useCarApplicationOrderId: [{ required: true, message: '请选择用车申请工单' }],
+  // useCarApplicationOrderId: [{ required: true, message: '请选择用车申请工单' }],
+  collectVehicleId: [{required: true, message: '请选择领取车辆'}],
+  collectDriverId: [{required: true, message: '请选择领车司机'}],
 })
 const getDetail = async (id) => {
   const res = await getOrderDetail(id)
@@ -64,7 +66,7 @@ const handleCode = ({ value }) => {
 // 车辆
 const carOptions = ref([])
 const getCar = async () => {
-  const res = await getCarListApi({ vehicleStatusCode: 'NORMAL', vehicleTypeCode: model.value.vehicleTypeCode })
+  const res = await getCarListApi({ vehicleTypeCode: model.value.vehicleTypeCode })
   carOptions.value = res.rows
 }
 
@@ -210,7 +212,10 @@ onLoad(async (param) => {
       <view class="form-con">
         <wd-form ref="form" :model="model" :rules="rules" errorType="toast">
           <wd-cell-group border>
-            <wd-select-picker clearable type="radio" value-key="useCarApplicationOrderId" label-key="str"
+			<wd-input v-if="model.useCarWorkOrderId" v-model="model.useCarWorkOrderId" label="用车工单编号" label-width="100px" readonly />
+			<wd-input v-if="model.useCarWorkOrderId" v-model="model.useCarApplicationOrderId" label="申请工单编号" label-width="100px" readonly />
+			  
+            <wd-select-picker v-if="!model.useCarWorkOrderId" clearable type="radio" value-key="useCarApplicationOrderId" label-key="str"
               label-width="100px" prop="useCarApplicationOrderId" label="申请工单编号" placeholder="请选择用车申请工单编号"
               v-model="model.useCarApplicationOrderId" :columns="list" filterable @change="handleCode" :show-confirm="false" />
 
@@ -218,17 +223,17 @@ onLoad(async (param) => {
               label-width="100px" prop="collectVehicleId" label="领取车辆" placeholder="请选择领取车辆"
               v-model="model.collectVehicleId" :columns="carOptions" filterable :show-confirm="false" />
 
-            <wd-cell title="领取车辆照片" title-width="100px" prop="fileList">
+            <wd-cell title="领取车辆照片" title-width="100px" prop="collectPlateNumberPictureId">
                <BaseUpload :file-list="model.files1" @update:fileList="(...args) => changeUpload(...args, 'collectPlateNumberPictureId')" />
             </wd-cell>
 
             <wd-select-picker clearable type="radio" value-key="driverId" label-key="driverName" label-width="100px"
               prop="collectDriverId" label="领车司机" placeholder="请选择领车司机" v-model="model.collectDriverId"
               :columns="driverOptions" filterable :show-confirm="false" />
-            <wd-input clearable type="number" label="实际起始里程" label-width="100px" prop="collectMileage"
+            <wd-input clearable type="digit" label="实际起始里程" label-width="100px" prop="collectMileage"
               v-model="model.collectMileage" placeholder="请输入实际起始里程" />
 
-            <wd-cell title="实际起始里程照片" title-width="100px" prop="fileList">
+            <wd-cell title="实际起始里程照片" title-width="100px" prop="collectMileagePictureId">
                <BaseUpload :file-list="model.files2" @update:fileList="(...args) => changeUpload(...args, 'collectMileagePictureId')" />
             </wd-cell>
 
@@ -236,11 +241,11 @@ onLoad(async (param) => {
               prop="returnedDriverId" label="还车司机" placeholder="请选择还车司机" v-model="model.returnedDriverId"
               :columns="driverOptions" filterable :show-confirm="false" />
 
-            <wd-input clearable type="number" label="实际结束里程" label-width="100px" prop="returnedMileage"
+            <wd-input clearable type="digit" label="实际结束里程" label-width="100px" prop="returnedMileage"
               v-model="model.returnedMileage" placeholder="请输入实际结束里程" />
             <wd-datetime-picker clearable label="还车时间" label-width="100px" placeholder="请选择还车时间" prop="returnedTime" v-model="model.returnedTime" />
 
-            <wd-cell title="实际结束里程照片" title-width="100px" prop="fileList">
+            <wd-cell title="实际结束里程照片" title-width="100px" prop="returnedMileagePictureId">
                <BaseUpload :file-list="model.files3" @update:fileList="(...args) => changeUpload(...args, 'returnedMileagePictureId')" />
             </wd-cell>
 
