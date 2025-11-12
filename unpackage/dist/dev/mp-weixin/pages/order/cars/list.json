@@ -7,7 +7,6 @@
     "wd-sticky": "../../../uni_modules/wot-design-uni/components/wd-sticky/wd-sticky",
     "wd-button": "../../../uni_modules/wot-design-uni/components/wd-button/wd-button",
     "wd-card": "../../../uni_modules/wot-design-uni/components/wd-card/wd-card",
-    "wd-loadmore": "../../../uni_modules/wot-design-uni/components/wd-loadmore/wd-loadmore",
-    "wd-fab": "../../../uni_modules/wot-design-uni/components/wd-fab/wd-fab"
+    "wd-loadmore": "../../../uni_modules/wot-design-uni/components/wd-loadmore/wd-loadmore"
   }
 }

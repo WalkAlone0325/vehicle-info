@@ -60,27 +60,53 @@ const _sfc_main = {
     });
     const rules = common_vendor.ref({
       // useCarApplicationOrderId: [{ required: true, message: '请选择用车申请工单' }],
-      collectVehicleId: [{ required: true, message: "请选择领取车辆" }],
-      collectDriverId: [{ required: true, message: "请选择领车司机" }]
+      collectVehicleId: [{
+        required: true,
+        message: "请选择领取车辆"
+      }],
+      collectDriverId: [{
+        required: true,
+        message: "请选择领车司机"
+      }]
     });
     const getDetail = async (id) => {
       const res = await api_order.getOrderDetail(id);
       model.value = {
         ...res.data,
-        files1: res.data.collectPlateNumberPictureId ? [{ ossId: res.data.collectPlateNumberPictureId, url: res.data.collectPlateNumberPictureUrl }] : [],
-        files2: res.data.collectMileagePictureId ? [{ ossId: res.data.collectMileagePictureId, url: res.data.collectMileagePictureUrl }] : [],
-        files3: res.data.returnedMileagePictureId ? [{ ossId: res.data.returnedMileagePictureId, url: res.data.returnedMileagePictureUrl }] : []
+        files1: res.data.collectPlateNumberPictureId ? [{
+          ossId: res.data.collectPlateNumberPictureId,
+          url: res.data.collectPlateNumberPictureUrl
+        }] : [],
+        files2: res.data.collectMileagePictureId ? [{
+          ossId: res.data.collectMileagePictureId,
+          url: res.data.collectMileagePictureUrl
+        }] : [],
+        files3: res.data.returnedMileagePictureId ? [{
+          ossId: res.data.returnedMileagePictureId,
+          url: res.data.returnedMileagePictureUrl
+        }] : []
       };
-      handleCode({ value: model.value.useCarApplicationOrderId });
+      handleCode({
+        value: model.value.useCarApplicationOrderId
+      });
     };
     const list = common_vendor.ref([]);
     const getList = async () => {
-      const res = await api_order.getEndOrderList({ pageNum: 1, pageSize: 9999, order: "asc" });
-      list.value = res.rows.map((i) => ({ ...i, str: `${i.expectedPlateNumber} ${i.expectedDriverName} / ${i.approvePlateNumber || ""} ${i.approveDriverName || ""}` }));
+      const res = await api_order.getEndOrderList({
+        pageNum: 1,
+        pageSize: 9999,
+        order: "asc"
+      });
+      list.value = res.rows.map((i) => ({
+        ...i,
+        str: `${i.expectedPlateNumber} ${i.expectedDriverName} / ${i.approvePlateNumber || ""} ${i.approveDriverName || ""}`
+      }));
     };
-    const handleCode = ({ value }) => {
+    const handleCode = ({
+      value
+    }) => {
       const find = list.value.find((item) => item.useCarApplicationOrderId == value);
-      common_vendor.index.__f__("log", "at pages/order/cars/form.vue:56", "🚀:>> ", list.value, find);
+      common_vendor.index.__f__("log", "at pages/order/cars/form.vue:97", "🚀:>> ", list.value, find);
       model.value.collectDriverId = find.expectedDriverId;
       model.value.collectDriverName = find.expectedDriverName;
       model.value.collectVehicleId = find.expectedVehicleId;
@@ -92,7 +118,9 @@ const _sfc_main = {
     };
     const carOptions = common_vendor.ref([]);
     const getCar = async () => {
-      const res = await api_home.getCarListApi({ vehicleTypeCode: model.value.vehicleTypeCode });
+      const res = await api_home.getCarListApi({
+        vehicleTypeCode: model.value.vehicleTypeCode
+      });
       carOptions.value = res.rows;
     };
     const driverOptions = common_vendor.ref([]);
@@ -110,7 +138,10 @@ const _sfc_main = {
       options.value = res.data;
     };
     const handleSubmit = (type2) => {
-      form.value.validate().then(async ({ valid, errors }) => {
+      form.value.validate().then(async ({
+        valid,
+        errors
+      }) => {
         if (valid) {
           loading.value = true;
           let res;
@@ -160,7 +191,7 @@ const _sfc_main = {
           loading.value = false;
         }
       }).catch((error) => {
-        common_vendor.index.__f__("log", "at pages/order/cars/form.vue:149", error, "error");
+        common_vendor.index.__f__("log", "at pages/order/cars/form.vue:195", error, "error");
       });
     };
     const changeUpload = (fileList, key) => {
@@ -168,15 +199,21 @@ const _sfc_main = {
     };
     const type = common_vendor.ref("");
     common_vendor.onLoad(async (param) => {
-      await getList();
-      type.value = param.type;
-      if (param.id) {
-        getDetail(param.id);
+      try {
+        common_vendor.index.showLoading({ title: "加载中..." });
+        await getList();
+        type.value = param.type;
+        if (param.id) {
+          getDetail(param.id);
+        }
+        await getDict("work_orde_status");
+        await getCar();
+        await getDriver();
+        await getUser();
+        common_vendor.index.hideLoading();
+      } catch (e) {
+        common_vendor.index.hideLoading();
       }
-      getDict("work_orde_status");
-      getCar();
-      getDriver();
-      getUser();
     });
     return (_ctx, _cache) => {
       return common_vendor.e({
@@ -262,10 +299,10 @@ const _sfc_main = {
         s: common_vendor.p({
           clearable: true,
           type: "digit",
-          label: "实际起始里程",
+          label: "领车里程",
           ["label-width"]: "100px",
           prop: "collectMileage",
-          placeholder: "请输入实际起始里程",
+          placeholder: "请输入领车里程",
           modelValue: model.value.collectMileage
         }),
         t: common_vendor.o((...args) => changeUpload(...args, "collectMileagePictureId")),
@@ -273,7 +310,7 @@ const _sfc_main = {
           ["file-list"]: model.value.files2
         }),
         w: common_vendor.p({
-          title: "实际起始里程照片",
+          title: "领车里程照片",
           ["title-width"]: "100px",
           prop: "collectMileagePictureId"
         }),
@@ -296,10 +333,10 @@ const _sfc_main = {
         A: common_vendor.p({
           clearable: true,
           type: "digit",
-          label: "实际结束里程",
+          label: "还车里程",
           ["label-width"]: "100px",
           prop: "returnedMileage",
-          placeholder: "请输入实际结束里程",
+          placeholder: "请输入还车里程",
           modelValue: model.value.returnedMileage
         }),
         B: common_vendor.o(($event) => model.value.returnedTime = $event),
@@ -316,7 +353,7 @@ const _sfc_main = {
           ["file-list"]: model.value.files3
         }),
         F: common_vendor.p({
-          title: "实际结束里程照片",
+          title: "还车里程照片",
           ["title-width"]: "100px",
           prop: "returnedMileagePictureId"
         }),

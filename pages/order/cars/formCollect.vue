@@ -145,16 +145,22 @@ const changeUpload = (fileList, key) => {
 }
 
 const type = ref('')
-onLoad((param) => {
-  type.value = param.type
-  if (param.id) {
-    getDetail(param.id)
+onLoad(async (param) => {
+  try {
+    uni.showLoading({ title: '加载中...' })
+    type.value = param.type
+    if (param.id) {
+      getDetail(param.id)
+    }
+    await getDict('work_orde_status')
+    await getList()
+    await getCar()
+    await getDriver()
+    await getUser()
+    uni.hideLoading() 
+  } catch (e) {
+    uni.hideLoading()
   }
-  getDict('work_orde_status')
-  getList()
-  getCar()
-  getDriver()
-  getUser()
 })
 </script>
 

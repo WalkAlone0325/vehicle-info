@@ -127,14 +127,20 @@ const openDatePicker = () => {
 const disabled = ref(false)
 const type = ref('')
 onLoad(async (param) => {
-  disabled.value = param.disabled || false
-  type.value = param.type || ''
-  if (param.id) {
-    getDetail(param.id)
+  try {
+    uni.showLoading({ title: '加载中...' })
+    disabled.value = param.disabled || false
+    type.value = param.type || ''
+    if (param.id) {
+      getDetail(param.id)
+    }
+    await getDict('upkeep_payment_method')
+    await getCar()
+    await getUser()
+    uni.hideLoading()
+  } catch (e) {
+    uni.hideLoading()
   }
-  await getDict('refuel_payment_method')
-  getCar()
-  getUser()
 })
 
 const approveForm = ref(null)

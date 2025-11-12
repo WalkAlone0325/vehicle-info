@@ -251,16 +251,21 @@ const _sfc_main = {
       getDict("sys_yes_no", ynOptions);
     });
     common_vendor.onLoad(async (param) => {
-      common_vendor.index.__f__("log", "at pages/order/form.vue:265", param);
-      curType.value = param.type;
-      curId.value = param.id;
-      await getRegion();
-      if (curId.value) {
-        await getOrderDetail(curId.value);
-        if (curType.value === "approve" || curType.value === "history") {
-          await getCar();
-          await getDriver();
+      try {
+        common_vendor.index.showLoading({ title: "加载中..." });
+        curType.value = param.type;
+        curId.value = param.id;
+        await getRegion();
+        if (curId.value) {
+          await getOrderDetail(curId.value);
+          if (curType.value === "approve" || curType.value === "history") {
+            await getCar();
+            await getDriver();
+          }
         }
+        common_vendor.index.hideLoading();
+      } catch (e) {
+        common_vendor.index.hideLoading();
       }
     });
     const handleApproveDriverChange = ({ value }) => {
@@ -301,7 +306,7 @@ const _sfc_main = {
           }
         }
       }).catch((error) => {
-        common_vendor.index.__f__("log", "at pages/order/form.vue:320", error, "error");
+        common_vendor.index.__f__("log", "at pages/order/form.vue:325", error, "error");
       });
     };
     const getCar = async () => {

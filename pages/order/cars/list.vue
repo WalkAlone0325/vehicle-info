@@ -176,7 +176,7 @@ const cancel = () => {
       <wd-loadmore :state="state" @reload="loadmore" />
     </view>
 
-    <wd-fab activeIcon="add" draggable :gap="{right: 30, bottom: 30}" :expandable="false" @click="clickToDetail" />
+    <!-- <wd-fab activeIcon="add" draggable :gap="{right: 30, bottom: 30}" :expandable="false" @click="clickToDetail" /> -->
   </view>
 </template>
 

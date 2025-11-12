@@ -12,8 +12,7 @@ if (!Array) {
   const _easycom_wd_button2 = common_vendor.resolveComponent("wd-button");
   const _easycom_wd_card2 = common_vendor.resolveComponent("wd-card");
   const _easycom_wd_loadmore2 = common_vendor.resolveComponent("wd-loadmore");
-  const _easycom_wd_fab2 = common_vendor.resolveComponent("wd-fab");
-  (_easycom_wd_message_box2 + _easycom_BaseLoading2 + _easycom_wd_search2 + _easycom_wd_sticky2 + _easycom_wd_button2 + _easycom_wd_card2 + _easycom_wd_loadmore2 + _easycom_wd_fab2)();
+  (_easycom_wd_message_box2 + _easycom_BaseLoading2 + _easycom_wd_search2 + _easycom_wd_sticky2 + _easycom_wd_button2 + _easycom_wd_card2 + _easycom_wd_loadmore2)();
 }
 const _easycom_wd_message_box = () => "../../../uni_modules/wot-design-uni/components/wd-message-box/wd-message-box.js";
 const _easycom_BaseLoading = () => "../../../components/BaseLoading.js";
@@ -22,9 +21,8 @@ const _easycom_wd_sticky = () => "../../../uni_modules/wot-design-uni/components
 const _easycom_wd_button = () => "../../../uni_modules/wot-design-uni/components/wd-button/wd-button.js";
 const _easycom_wd_card = () => "../../../uni_modules/wot-design-uni/components/wd-card/wd-card.js";
 const _easycom_wd_loadmore = () => "../../../uni_modules/wot-design-uni/components/wd-loadmore/wd-loadmore.js";
-const _easycom_wd_fab = () => "../../../uni_modules/wot-design-uni/components/wd-fab/wd-fab.js";
 if (!Math) {
-  (_easycom_wd_message_box + _easycom_BaseLoading + _easycom_wd_search + _easycom_wd_sticky + _easycom_wd_button + _easycom_wd_card + _easycom_wd_loadmore + _easycom_wd_fab)();
+  (_easycom_wd_message_box + _easycom_BaseLoading + _easycom_wd_search + _easycom_wd_sticky + _easycom_wd_button + _easycom_wd_card + _easycom_wd_loadmore)();
 }
 const _sfc_main = {
   __name: "list",
@@ -157,17 +155,6 @@ const _sfc_main = {
         h: common_vendor.o(loadmore),
         i: common_vendor.p({
           state: state.value
-        })
-      }, {
-        j: common_vendor.o(clickToDetail),
-        k: common_vendor.p({
-          activeIcon: "add",
-          draggable: true,
-          gap: {
-            right: 30,
-            bottom: 30
-          },
-          expandable: false
         })
       });
     };

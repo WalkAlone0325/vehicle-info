@@ -46,7 +46,6 @@ const postOil = (params) => utils_request.http.post("/car/vehicleRefuelWorkOrder
 const approveOilApi = (params) => utils_request.http.put("/car/vehicleRefuelWorkOrder/approve/", params);
 const getApproveOilListApi = (params) => utils_request.http.get("/car/vehicleRefuelWorkOrder/approve/list/page", { params });
 const getMaintainListApi = (params) => utils_request.http.get("/car/vehicleUpkeepWorkOrder/personal/list/page", { params });
-const deleteMaintain = (params) => utils_request.http.delete("/car/vehicleUpkeepWorkOrder/" + params);
 const getMaintainDetail = (params) => utils_request.http.get("/car/vehicleUpkeepWorkOrder/" + params);
 const putMaintain = (params) => utils_request.http.put("/car/vehicleUpkeepWorkOrder", params);
 const postMaintain = (params) => utils_request.http.post("/car/vehicleUpkeepWorkOrder", params);
@@ -54,7 +53,6 @@ const approveMaintainApi = (params) => utils_request.http.put("/car/vehicleUpkee
 const getApproveMaintainListApi = (params) => utils_request.http.get("/car/vehicleUpkeepWorkOrder/approve/list/page", { params });
 exports.approveMaintainApi = approveMaintainApi;
 exports.approveOilApi = approveOilApi;
-exports.deleteMaintain = deleteMaintain;
 exports.deleteOil = deleteOil;
 exports.deleteRecord = deleteRecord;
 exports.getApplyInfoApi = getApplyInfoApi;

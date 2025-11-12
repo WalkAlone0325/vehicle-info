@@ -141,14 +141,19 @@ const openDatePicker = () => {
 
 const type = ref('')
 onLoad(async (param) => {
-  type.value = param.type || ''
-  console.log(type.value, 'type.value')
-  if (param.id) {
-    getDetail(param.id)
+  try {
+    type.value = param.type || ''
+    uni.showLoading({ title: '加载中...' })
+    if (param.id) {
+      getDetail(param.id)
+    }
+    await getDict('refuel_payment_method')
+    await getCar()
+    await getUser()
+    uni.hideLoading()
+  } catch (e) {
+    uni.hideLoading()
   }
-  await getDict('refuel_payment_method')
-  getCar()
-  getUser()
 })
 
 const approveForm = ref(null)

@@ -262,17 +262,22 @@ onMounted(() => {
 
 // 加载
 onLoad(async (param) => {
-  console.log(param)
-  curType.value = param.type
-  curId.value = param.id
-  await getRegion()
-  if (curId.value) {
-    await getOrderDetail(curId.value)
-    if(curType.value === 'approve' || curType.value === 'history') {
-      await getCar()
-      await getDriver()
+  try {
+      uni.showLoading({ title: '加载中...' })
+      curType.value = param.type
+      curId.value = param.id
+      await getRegion()
+      if (curId.value) {
+        await getOrderDetail(curId.value)
+        if(curType.value === 'approve' || curType.value === 'history') {
+          await getCar()
+          await getDriver()
+        }
+      }
+      uni.hideLoading()
+    } catch (e) {
+      uni.hideLoading()
     }
-  }
 })
 
 

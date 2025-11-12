@@ -194,9 +194,9 @@ const cancel = () => {
             </view>
 
             <view style="display: flex; align-items: center; margin-bottom: 4rpx;">
-              <view @click.stop="resetPlan(i)" v-if="i.statusCode == 'refuse'">
+              <!-- <view @click.stop="resetPlan(i)" v-if="i.statusCode == 'refuse'">
                 <wd-button size="small" type="error">删除</wd-button>
-              </view>
+              </view> -->
             </view>
           </view>
         </wd-card>
