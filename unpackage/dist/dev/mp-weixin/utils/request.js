@@ -3,7 +3,8 @@ const common_vendor = require("../common/vendor.js");
 const uni_modules_luchRequest_core_Request = require("../uni_modules/luch-request/core/Request.js");
 const utils_index = require("./index.js");
 const http = new uni_modules_luchRequest_core_Request.Request({
-  baseURL: "http://220.194.140.28:8086/oilenginemonitoringservice/"
+  // baseURL: 'http://220.194.140.28:8086/oilenginemonitoringservice/',
+  baseURL: "https://gps.sxtdwb.com:4043/oilenginemonitoringservice/"
 });
 http.interceptors.request.use(
   (config) => {
