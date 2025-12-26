@@ -1,25 +1,2 @@
-"use strict";
-function InterceptorManager() {
-  this.handlers = [];
-}
-InterceptorManager.prototype.use = function use(fulfilled, rejected) {
-  this.handlers.push({
-    fulfilled,
-    rejected
-  });
-  return this.handlers.length - 1;
-};
-InterceptorManager.prototype.eject = function eject(id) {
-  if (this.handlers[id]) {
-    this.handlers[id] = null;
-  }
-};
-InterceptorManager.prototype.forEach = function forEach(fn) {
-  this.handlers.forEach((h) => {
-    if (h !== null) {
-      fn(h);
-    }
-  });
-};
-exports.InterceptorManager = InterceptorManager;
+"use strict";function n(){this.handlers=[]}n.prototype.use=function(e,t){return this.handlers.push({fulfilled:e,rejected:t}),this.handlers.length-1};n.prototype.eject=function(e){this.handlers[e]&&(this.handlers[e]=null)};n.prototype.forEach=function(e){this.handlers.forEach(t=>{t!==null&&e(t)})};exports.InterceptorManager=n;
 //# sourceMappingURL=../../../../.sourcemap/mp-weixin/uni_modules/luch-request/core/InterceptorManager.js.map

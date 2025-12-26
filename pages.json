@@ -32,6 +32,12 @@
     	}
     },
     {
+    	"path": "pages/index/localMap",
+    	"style": {
+    		"navigationBarTitleText": "车辆定位"
+    	}
+    },
+    {
     	"path": "pages/index/driver",
     	"style": {
     		"navigationBarTitleText": "司机信息"
@@ -154,19 +160,19 @@
     {
     	"path": "pages/order/devOps/maintain",
     	"style": {
-    		"navigationBarTitleText": "保养记录"
+    		"navigationBarTitleText": ""
     	}
     },
     {
     	"path": "pages/order/devOps/maintainForm",
     	"style": {
-    		"navigationBarTitleText": "保养记录信息"
+    		"navigationBarTitleText": ""
     	}
     },
     {
     	"path": "pages/order/devOps/maintainApply",
     	"style": {
-    		"navigationBarTitleText": "保养审批"
+    		"navigationBarTitleText": ""
     	}
     },
     {

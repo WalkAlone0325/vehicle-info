@@ -1,10 +1,12 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { getMaintainListApi, deleteMaintain } from '@/api'
-import { onShow, onReachBottom } from '@dcloudio/uni-app'
+import { onShow, onReachBottom, onLoad } from '@dcloudio/uni-app'
 import { useMessage } from '@/uni_modules/wot-design-uni'
 const message = useMessage()
 
+const preTitle = ref('')
+const type = ref('')
 const loading = ref(false)
 const list = ref([])
 const total = ref(0)
@@ -12,7 +14,8 @@ const queryParams = reactive({
   pageNum: 1,
   pageSize: 10,
   order: 'asc',
-  upkeepPlateNumber: ''
+  upkeepPlateNumber: '',
+  upkeepTypeCode: ''
 })
 
 const state = ref('loading')
@@ -32,9 +35,19 @@ onShow(() => {
   queryParams.upkeepPlateNumber = ''
   queryParams.pageNum = 1
   queryParams.order = 'asc'
+  queryParams.upkeepTypeCode = type.value == 'maintenance' ? 'maintenance' : 'repairing'
   list.value = []
   total.value = 0
   getData()
+})
+
+onLoad(param => {
+  type.value = param.type
+  queryParams.upkeepTypeCode = type.value == 'maintenance' ? 'maintenance' : 'repairing'
+  preTitle.value = type.value == 'maintenance' ? '保养' : '维修'
+  uni.setNavigationBarTitle({
+    title: preTitle.value
+  })
 })
 
 function loadmore() {
@@ -61,8 +74,10 @@ const clickToDetail = (i) => {
   let queryStr = ''
   if(i) {
     const disabled = i.statusCode == 'pass' ? 'disabled' : ''
-    queryStr = i.upkeepWorkOrderId ? `?id=${i.upkeepWorkOrderId}&disabled=${disabled}` : ''
+    const types = type.value == 'maintenance' ? 'maintenance' : 'repairing'
+    queryStr = i.upkeepWorkOrderId ? `?type=${types}&id=${i.upkeepWorkOrderId}&disabled=${disabled}` : ''
   }
+  console.log(queryStr);
   uni.navigateTo({
     url: `/pages/order/devOps/maintainForm${queryStr}`
   })
@@ -147,7 +162,7 @@ const cancel = () => {
             <view class="content">
                <view style="display: flex; justify-content: space-between; align-items: center;">
                 <view class="content-item">
-                  <view class="label">保养用户：</view>
+                  <view class="label">{{ preTitle }}用户：</view>
                   <view class="value">{{ i.upkeepNickName }}</view>
                 </view>
                 <view class="content-item">
@@ -156,12 +171,12 @@ const cancel = () => {
                 </view>
               </view>
               <view class="content-item pd">
-                <view class="label">保养时间：</view>
+                <view class="label">时间：</view>
                 <view class="value">{{ i.upkeepDate}}</view>
               </view>
               <view style="display: flex; justify-content: space-between; align-items: center;">
                 <view class="content-item">
-                  <view class="label">保养总价：</view>
+                  <view class="label">总价：</view>
                   <view class="value">{{i.upkeepTotalPrice}}</view>
                 </view>
                 <view class="content-item">

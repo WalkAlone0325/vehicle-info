@@ -1,15 +1,2 @@
-"use strict";
-const uni_modules_wotDesignUni_components_common_props = require("../common/props.js");
-const stickyProps = {
-  ...uni_modules_wotDesignUni_components_common_props.baseProps,
-  /**
-   * 层级
-   */
-  zIndex: uni_modules_wotDesignUni_components_common_props.makeNumberProp(1),
-  /**
-   * 吸顶距离
-   */
-  offsetTop: uni_modules_wotDesignUni_components_common_props.makeNumberProp(0)
-};
-exports.stickyProps = stickyProps;
+"use strict";const o=require("../common/props.js"),s={...o.baseProps,zIndex:o.makeNumberProp(1),offsetTop:o.makeNumberProp(0)};exports.stickyProps=s;
 //# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-sticky/types.js.map

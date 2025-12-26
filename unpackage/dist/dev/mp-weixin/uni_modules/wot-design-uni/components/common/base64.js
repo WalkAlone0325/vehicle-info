@@ -1,28 +1,2 @@
-"use strict";
-const _b64chars = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"];
-const _mkUriSafe = (src) => src.replace(/[+/]/g, (m0) => m0 === "+" ? "-" : "_").replace(/=+\$/m, "");
-const fromUint8Array = (src, rfc4648 = false) => {
-  let b64 = "";
-  for (let i = 0, l = src.length; i < l; i += 3) {
-    const [a0, a1, a2] = [src[i], src[i + 1], src[i + 2]];
-    const ord = a0 << 16 | a1 << 8 | a2;
-    b64 += _b64chars[ord >>> 18];
-    b64 += _b64chars[ord >>> 12 & 63];
-    b64 += typeof a1 !== "undefined" ? _b64chars[ord >>> 6 & 63] : "=";
-    b64 += typeof a2 !== "undefined" ? _b64chars[ord & 63] : "=";
-  }
-  return rfc4648 ? _mkUriSafe(b64) : b64;
-};
-const _btoa = typeof btoa === "function" ? (s) => btoa(s) : (s) => {
-  if (s.charCodeAt(0) > 255) {
-    throw new RangeError("The string contains invalid characters.");
-  }
-  return fromUint8Array(Uint8Array.from(s, (c) => c.charCodeAt(0)));
-};
-const utob = (src) => unescape(encodeURIComponent(src));
-function encode(src, rfc4648 = false) {
-  const b64 = _btoa(utob(src));
-  return rfc4648 ? _mkUriSafe(b64) : b64;
-}
-exports.encode = encode;
+"use strict";const a=[..."ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"],i=e=>e.replace(/[+/]/g,t=>t==="+"?"-":"_").replace(/=+\$/m,""),u=(e,t=!1)=>{let n="";for(let o=0,s=e.length;o<s;o+=3){const[d,c,f]=[e[o],e[o+1],e[o+2]],r=d<<16|c<<8|f;n+=a[r>>>18],n+=a[r>>>12&63],n+=typeof c<"u"?a[r>>>6&63]:"=",n+=typeof f<"u"?a[r&63]:"="}return t?i(n):n},l=typeof btoa=="function"?e=>btoa(e):e=>{if(e.charCodeAt(0)>255)throw new RangeError("The string contains invalid characters.");return u(Uint8Array.from(e,t=>t.charCodeAt(0)))},b=e=>unescape(encodeURIComponent(e));function h(e,t=!1){const n=l(b(e));return t?i(n):n}exports.encode=h;
 //# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/common/base64.js.map

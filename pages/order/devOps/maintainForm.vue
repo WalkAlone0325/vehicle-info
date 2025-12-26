@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { getMaintainDetail, getDictApi, putMaintain, postMaintain, approveMaintainApi, getCarListApi, getUserListApi } from '@/api'
 import { onLoad } from '@dcloudio/uni-app'
 
+const type = ref('')
 const info = uni.getStorageSync('user')
 const options = ref([])
 const loading = ref(false)
@@ -62,7 +63,7 @@ const getDict = async (code) => {
   model.value.refuelPaymentMethodCode = model.value.refuelPaymentMethodCode || options.value[0].dictValue
 }
 
-const handleSubmit = (type) => {
+const handleSubmit = () => {
   form.value
     .validate()
     .then(async ({ valid, errors }) => {
@@ -85,9 +86,13 @@ const handleSubmit = (type) => {
             upkeepPlateNumberPictureId: model.value.upkeepPlateNumberPictureId,
             upkeepMileagePictureId: model.value.upkeepMileagePictureId,
             upkeepWorkOrderId: model.value.upkeepWorkOrderId,
+            upkeepTypeCode: type.value == 'maintenance' ? 'maintenance' : 'repairing'
           })
         } else {
-          res = await postMaintain(model.value)
+          res = await postMaintain({
+            ...model.value,
+            upkeepTypeCode: type.value == 'maintenance' ? 'maintenance' : 'repairing'
+          })
         }
         if (res.code == 200) {
           uni.showToast({
@@ -125,12 +130,18 @@ const openDatePicker = () => {
 }
 
 const disabled = ref(false)
-const type = ref('')
+const status = ref('')
+const preTitle = ref('')
 onLoad(async (param) => {
+  type.value = param.type
+  preTitle.value = type.value == 'maintenance' ? '保养' : '维修'
+  uni.setNavigationBarTitle({
+    title: type.value == 'maintenance' ? '保养信息' : '维修信息'
+  })
   try {
     uni.showLoading({ title: '加载中...' })
     disabled.value = param.disabled || false
-    type.value = param.type || ''
+    status.value = param.status || ''
     if (param.id) {
       getDetail(param.id)
     }
@@ -158,6 +169,7 @@ const handleApprove = async (statusCode) => {
         upkeepWorkOrderId: model.value.upkeepWorkOrderId,
         statusCode,
         ...approveModel.value,
+        upkeepTypeCode: type.value == 'maintenance' ? 'maintenance' : 'repairing'
       })
       if (res.code == 200) {
         uni.showToast({
@@ -187,18 +199,18 @@ const handleApprove = async (statusCode) => {
         <wd-form ref="form" :model="model" :rules="rules" errorType="toast">
           <wd-cell-group border>
             <wd-select-picker clearable :disabled="disabled" type="radio" value-key="vehicleId" label-key="label" label-width="100px"
-              prop="upkeepVehicleId" label="保养车辆" placeholder="请选择保养车辆"
+              prop="upkeepVehicleId" :label="`${preTitle}车辆`" :placeholder="`请选择${preTitle}车辆`"
               v-model="model.upkeepVehicleId" :columns="carOptions" filterable :show-confirm="false" />
             <wd-select-picker readonly :disabled="disabled" type="radio" value-key="userId" label-key="label" label-width="100px" prop="upkeepUserId"
-              label="保养用户" placeholder="请选择保养用户" v-model="model.upkeepUserId" :columns="userOptions" filterable
+              :label="`${preTitle}用户`" :placeholder="`请选择${preTitle}用户`" v-model="model.upkeepUserId" :columns="userOptions" filterable
               :show-confirm="false" />
-            <wd-datetime-picker clearable :disabled="disabled" label="保养时间" label-width="100px" placeholder="请选择保养时间" prop="upkeepDate"
+            <wd-datetime-picker clearable :disabled="disabled" :label="`${preTitle}时间`" label-width="100px" placeholder="请选择保养时间" prop="upkeepDate"
               v-model="model.upkeepDate" @open="openDatePicker" />
-            <wd-input clearable :disabled="disabled" type="digit" label="车辆公里数" label-width="100px" prop="upkeepMileage"
-              v-model="model.upkeepMileage" placeholder="请输入车辆公里数" />
-            <wd-input clearable :disabled="disabled" type="digit" label="保养总价" label-width="100px" prop="upkeepTotalPrice"
-              v-model="model.upkeepTotalPrice" placeholder="请输入保养总价（元）" />
-            <wd-picker clearable :disabled="disabled" label="支付方式" placeholder="请选择支付方式" value-key="dictValue" label-key="dictLabel"
+            <wd-input clearable :disabled="disabled" type="digit" :label="`${preTitle}公里数`" label-width="100px" prop="upkeepMileage"
+              v-model="model.upkeepMileage" :placeholder="`请输入${preTitle}公里数`" />
+            <wd-input clearable :disabled="disabled" type="digit" :label="`${preTitle}总价`" label-width="100px" prop="upkeepTotalPrice"
+              v-model="model.upkeepTotalPrice" :placeholder="`请输入${preTitle}总价（元）`" />
+            <wd-picker clearable :disabled="disabled" :label="`${preTitle}方式`" :placeholder="`${preTitle}方式选择支付方式`" value-key="dictValue" label-key="dictLabel"
               label-width="100px" prop="paymentMethodCode" v-model="model.paymentMethodCode"
               :columns="options" />
             <wd-cell title="车辆车牌图片" title-width="100px" prop="upkeepPlateNumberPictureId">
@@ -217,12 +229,12 @@ const handleApprove = async (statusCode) => {
           </view>
         </wd-form>
 
-        <wd-form v-if="type == 'apply'" ref="approveForm" :model="approveModel" :rules="approveRules" errorType="toast">
+        <wd-form v-if="status == 'apply'" ref="approveForm" :model="approveModel" :rules="approveRules" errorType="toast">
           <view class="group-con">
             <wd-cell-group title="审批信息" border use-slot>
               <wd-textarea label="审批原因" label-width="100px" prop="approveCause"
                 clearable v-model="approveModel.approveCause" placeholder="请输入审批原因" :maxlength="200" auto-height
-                show-word-limit type="textarea" :disabled="type == 'view'" />
+                show-word-limit type="textarea" :disabled="status == 'view'" />
             </wd-cell-group>
 
             <view class="footer">

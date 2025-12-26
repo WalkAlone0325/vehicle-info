@@ -1,14 +1,2 @@
-"use strict";
-const uni_modules_wotDesignUni_components_common_util = require("../common/util.js");
-const uni_modules_wotDesignUni_locale_index = require("../../locale/index.js");
-const useTranslate = (name) => {
-  const prefix = name ? uni_modules_wotDesignUni_components_common_util.camelCase(name) + "." : "";
-  const translate = (key, ...args) => {
-    const currentMessages = uni_modules_wotDesignUni_locale_index.Locale.messages();
-    const message = uni_modules_wotDesignUni_components_common_util.getPropByPath(currentMessages, prefix + key);
-    return uni_modules_wotDesignUni_components_common_util.isFunction(message) ? message(...args) : uni_modules_wotDesignUni_components_common_util.isDef(message) ? message : `${prefix}${key}`;
-  };
-  return { translate };
-};
-exports.useTranslate = useTranslate;
+"use strict";const s=require("../common/util.js"),c=require("../../locale/index.js"),i=n=>{const t=n?s.camelCase(n)+".":"";return{translate:(o,...r)=>{const a=c.Locale.messages(),e=s.getPropByPath(a,t+o);return s.isFunction(e)?e(...r):s.isDef(e)?e:`${t}${o}`}}};exports.useTranslate=i;
 //# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/composables/useTranslate.js.map

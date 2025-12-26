@@ -1,22 +1,2 @@
-"use strict";
-const common_vendor = require("../../../../common/vendor.js");
-function useParent(key) {
-  const parent = common_vendor.inject(key, null);
-  if (parent) {
-    const instance = common_vendor.getCurrentInstance();
-    const { link, unlink, internalChildren } = parent;
-    link(instance);
-    common_vendor.onUnmounted(() => unlink(instance));
-    const index = common_vendor.computed(() => internalChildren.indexOf(instance));
-    return {
-      parent,
-      index
-    };
-  }
-  return {
-    parent: null,
-    index: common_vendor.ref(-1)
-  };
-}
-exports.useParent = useParent;
+"use strict";const n=require("../../../../common/vendor.js");function s(r){const e=n.inject(r,null);if(e){const t=n.getCurrentInstance(),{link:i,unlink:u,internalChildren:c}=e;i(t),n.onUnmounted(()=>u(t));const o=n.computed(()=>c.indexOf(t));return{parent:e,index:o}}return{parent:null,index:n.ref(-1)}}exports.useParent=s;
 //# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/composables/useParent.js.map

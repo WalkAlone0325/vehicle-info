@@ -1,21 +1,2 @@
-"use strict";
-let queue = [];
-function pushToQueue(comp) {
-  queue.push(comp);
-}
-function removeFromQueue(comp) {
-  queue = queue.filter((item) => {
-    return item.$.uid !== comp.$.uid;
-  });
-}
-function closeOther(comp) {
-  queue.forEach((item) => {
-    if (item.$.uid !== comp.$.uid) {
-      item.$.exposed.close();
-    }
-  });
-}
-exports.closeOther = closeOther;
-exports.pushToQueue = pushToQueue;
-exports.removeFromQueue = removeFromQueue;
+"use strict";let o=[];function r(e){o.push(e)}function i(e){o=o.filter(u=>u.$.uid!==e.$.uid)}function s(e){o.forEach(u=>{u.$.uid!==e.$.uid&&u.$.exposed.close()})}exports.closeOther=s;exports.pushToQueue=r;exports.removeFromQueue=i;
 //# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/common/clickoutside.js.map

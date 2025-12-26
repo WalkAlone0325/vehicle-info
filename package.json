@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@uni-helper/uni-network": "^0.21.1",
-        "@vant/area-data": "^2.1.0"
+        "@vant/area-data": "^2.1.0",
+        "decimal.js": "^10.6.0"
     }
 }

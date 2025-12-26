@@ -1,3 +1,9 @@
+import { Decimal } from 'decimal.js'
+
+export const times = (num1: number, num2: number) => {
+  return new Decimal(num1).times(new Decimal(num2))
+}
+
 export const getToken = () => uni.getStorageSync('token')
 
 export const parseTime = (time: number, cFormat: string) => {

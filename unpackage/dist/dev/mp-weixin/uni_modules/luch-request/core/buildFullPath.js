@@ -1,11 +1,2 @@
-"use strict";
-const uni_modules_luchRequest_helpers_isAbsoluteURL = require("../helpers/isAbsoluteURL.js");
-const uni_modules_luchRequest_helpers_combineURLs = require("../helpers/combineURLs.js");
-function buildFullPath(baseURL, requestedURL) {
-  if (baseURL && !uni_modules_luchRequest_helpers_isAbsoluteURL.isAbsoluteURL(requestedURL)) {
-    return uni_modules_luchRequest_helpers_combineURLs.combineURLs(baseURL, requestedURL);
-  }
-  return requestedURL;
-}
-exports.buildFullPath = buildFullPath;
+"use strict";const l=require("../helpers/isAbsoluteURL.js"),i=require("../helpers/combineURLs.js");function s(e,u){return e&&!l.isAbsoluteURL(u)?i.combineURLs(e,u):u}exports.buildFullPath=s;
 //# sourceMappingURL=../../../../.sourcemap/mp-weixin/uni_modules/luch-request/core/buildFullPath.js.map

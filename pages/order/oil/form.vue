@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { getOilDetail, getDictApi, putOil, postOil, approveOilApi, getCarListApi, getUserListApi } from '@/api'
 import { onLoad } from '@dcloudio/uni-app'
+import { times } from '@/utils'
 
 const info = uni.getStorageSync('user')
 const options = ref([])
@@ -153,6 +154,13 @@ onLoad(async (param) => {
     uni.hideLoading()
   } catch (e) {
     uni.hideLoading()
+  }
+})
+
+watchEffect(() => {
+  if(model.value.refuelFuelQuantity && model.value.refuelFuelPrice) {
+    const all = times(model.value.refuelFuelQuantity, model.value.refuelFuelPrice)
+    model.value.refuelTotalPrice = isNaN(all) ? 0 : all
   }
 })
 

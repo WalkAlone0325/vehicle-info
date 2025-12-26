@@ -1,23 +1,2 @@
-"use strict";
-const utils_request = require("../utils/request.js");
-const getDictApi = (params) => utils_request.http.get(`/system/dict/data/type/${params}`);
-const getDeptApi = (params) => utils_request.http.get("/system/dept/list/tree", { params });
-const getLocationApi = (params) => utils_request.http.get("/car/vehicleInfo/map/location", { params });
-const getTraceApi = (params) => utils_request.http.get("/car/jt808RecordLocationInfo/map/locus", { params });
-const oneLoginApi = (params) => utils_request.http.post("/xcxLogin?xcxCode=" + params);
-const loginApi = (params) => utils_request.http.post("/login", params);
-const getInfoApi = () => utils_request.http.get("/getInfo");
-const logoutApi = () => utils_request.http.post("/unbind/logout");
-const updatePwd = (params) => utils_request.http.put("/system/user/profile/updatePwd", params);
-const getNoticeApi = (params) => utils_request.http.get("/car/vehicleMaintenanceWarning/list/page", { params });
-exports.getDeptApi = getDeptApi;
-exports.getDictApi = getDictApi;
-exports.getInfoApi = getInfoApi;
-exports.getLocationApi = getLocationApi;
-exports.getNoticeApi = getNoticeApi;
-exports.getTraceApi = getTraceApi;
-exports.loginApi = loginApi;
-exports.logoutApi = logoutApi;
-exports.oneLoginApi = oneLoginApi;
-exports.updatePwd = updatePwd;
+"use strict";const e=require("../utils/request.js"),o=t=>e.http.get(`/system/dict/data/type/${t}`),i=t=>e.http.get("/system/dept/list/tree",{params:t}),p=t=>e.http.get("/car/vehicleInfo/map/location",{params:t}),n=t=>e.http.get("/car/jt808RecordLocationInfo/map/locus",{params:t}),c=t=>e.http.post("/xcxLogin?xcxCode="+t),g=t=>e.http.post("/login",t),s=()=>e.http.get("/getInfo"),a=()=>e.http.post("/unbind/logout"),A=t=>e.http.put("/system/user/profile/updatePwd",t),l=t=>e.http.get("/car/vehicleMaintenanceWarning/list/page",{params:t});exports.getDeptApi=i;exports.getDictApi=o;exports.getInfoApi=s;exports.getLocationApi=p;exports.getNoticeApi=l;exports.getTraceApi=n;exports.loginApi=g;exports.logoutApi=a;exports.oneLoginApi=c;exports.updatePwd=A;
 //# sourceMappingURL=../../.sourcemap/mp-weixin/api/common.js.map

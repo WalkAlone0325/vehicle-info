@@ -1,13 +1,2 @@
-"use strict";
-const common_vendor = require("../../../../common/vendor.js");
-const uni_modules_wotDesignUni_components_composables_useParent = require("./useParent.js");
-const uni_modules_wotDesignUni_components_wdCellGroup_types = require("../wd-cell-group/types.js");
-function useCell() {
-  const { parent: cellGroup, index } = uni_modules_wotDesignUni_components_composables_useParent.useParent(uni_modules_wotDesignUni_components_wdCellGroup_types.CELL_GROUP_KEY);
-  const border = common_vendor.computed(() => {
-    return cellGroup && cellGroup.props.border && index.value;
-  });
-  return { border };
-}
-exports.useCell = useCell;
+"use strict";const n=require("../../../../common/vendor.js"),r=require("./useParent.js"),s=require("../wd-cell-group/types.js");function t(){const{parent:e,index:o}=r.useParent(s.CELL_GROUP_KEY);return{border:n.computed(()=>e&&e.props.border&&o.value)}}exports.useCell=t;
 //# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/composables/useCell.js.map

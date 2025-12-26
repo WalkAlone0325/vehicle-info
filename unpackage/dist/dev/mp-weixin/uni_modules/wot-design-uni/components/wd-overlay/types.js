@@ -1,26 +1,2 @@
-"use strict";
-const uni_modules_wotDesignUni_components_common_props = require("../common/props.js");
-const overlayProps = {
-  ...uni_modules_wotDesignUni_components_common_props.baseProps,
-  /**
-   * 是否展示遮罩层
-   */
-  show: uni_modules_wotDesignUni_components_common_props.makeBooleanProp(false),
-  /**
-   * 动画时长，单位毫秒
-   */
-  duration: {
-    type: [Object, Number, Boolean],
-    default: 300
-  },
-  /**
-   * 是否锁定滚动
-   */
-  lockScroll: uni_modules_wotDesignUni_components_common_props.makeBooleanProp(true),
-  /**
-   * 层级
-   */
-  zIndex: uni_modules_wotDesignUni_components_common_props.makeNumberProp(10)
-};
-exports.overlayProps = overlayProps;
+"use strict";const o=require("../common/props.js"),e={...o.baseProps,show:o.makeBooleanProp(!1),duration:{type:[Object,Number,Boolean],default:300},lockScroll:o.makeBooleanProp(!0),zIndex:o.makeNumberProp(10)};exports.overlayProps=e;
 //# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-overlay/types.js.map

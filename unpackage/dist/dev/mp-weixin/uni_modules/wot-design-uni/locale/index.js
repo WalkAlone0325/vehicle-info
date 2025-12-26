@@ -1,24 +1,2 @@
-"use strict";
-const common_vendor = require("../../../common/vendor.js");
-const uni_modules_wotDesignUni_locale_lang_zhCN = require("./lang/zh-CN.js");
-const uni_modules_wotDesignUni_components_common_util = require("../components/common/util.js");
-const lang = common_vendor.ref("zh-CN");
-const messages = common_vendor.reactive({
-  "zh-CN": uni_modules_wotDesignUni_locale_lang_zhCN.zhCN
-});
-const Locale = {
-  messages() {
-    return messages[lang.value];
-  },
-  use(newLang, newMessage) {
-    lang.value = newLang;
-    if (newMessage) {
-      this.add({ [newLang]: newMessage });
-    }
-  },
-  add(newMessages = {}) {
-    uni_modules_wotDesignUni_components_common_util.deepAssign(messages, newMessages);
-  }
-};
-exports.Locale = Locale;
+"use strict";const i=require("../../../common/vendor.js"),t=require("./lang/zh-CN.js"),c=require("../components/common/util.js"),o=i.ref("zh-CN"),n=i.reactive({"zh-CN":t.zhCN}),u={messages(){return n[o.value]},use(e,s){o.value=e,s&&this.add({[e]:s})},add(e={}){c.deepAssign(n,e)}};exports.Locale=u;
 //# sourceMappingURL=../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/locale/index.js.map

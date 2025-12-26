@@ -1,26 +1,2 @@
-"use strict";
-const common_vendor = require("../common/vendor.js");
-if (!Array) {
-  const _easycom_wd_loading2 = common_vendor.resolveComponent("wd-loading");
-  _easycom_wd_loading2();
-}
-const _easycom_wd_loading = () => "../uni_modules/wot-design-uni/components/wd-loading/wd-loading.js";
-if (!Math) {
-  _easycom_wd_loading();
-}
-const _sfc_main = {
-  __name: "BaseLoading",
-  props: {
-    loading: Boolean
-  },
-  setup(__props) {
-    return (_ctx, _cache) => {
-      return common_vendor.e({
-        a: __props.loading
-      }, __props.loading ? {} : {});
-    };
-  }
-};
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-137c9918"]]);
-wx.createComponent(Component);
+"use strict";const n=require("../common/vendor.js");Array||n.resolveComponent("wd-loading")();const e=()=>"../uni_modules/wot-design-uni/components/wd-loading/wd-loading.js";Math||e();const a={__name:"BaseLoading",props:{loading:Boolean},setup(o){return(s,t)=>n.e({a:o.loading},o.loading?{}:{})}},d=n._export_sfc(a,[["__scopeId","data-v-137c9918"]]);wx.createComponent(d);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/components/BaseLoading.js.map

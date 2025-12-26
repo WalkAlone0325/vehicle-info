@@ -1,23 +1,2 @@
-"use strict";
-const uni_modules_wotDesignUni_components_common_props = require("../common/props.js");
-const iconProps = {
-  ...uni_modules_wotDesignUni_components_common_props.baseProps,
-  /**
-   * 使用的图标名字，可以使用链接图片
-   */
-  name: uni_modules_wotDesignUni_components_common_props.makeRequiredProp(String),
-  /**
-   * 图标的颜色
-   */
-  color: String,
-  /**
-   * 图标的字体大小
-   */
-  size: uni_modules_wotDesignUni_components_common_props.numericProp,
-  /**
-   * 类名前缀，用于使用自定义图标
-   */
-  classPrefix: uni_modules_wotDesignUni_components_common_props.makeStringProp("wd-icon")
-};
-exports.iconProps = iconProps;
+"use strict";const o=require("../common/props.js"),r={...o.baseProps,name:o.makeRequiredProp(String),color:String,size:o.numericProp,classPrefix:o.makeStringProp("wd-icon")};exports.iconProps=r;
 //# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-icon/types.js.map
