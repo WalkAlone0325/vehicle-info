@@ -9,7 +9,7 @@ export const getDeptApi = (params) => http.get('/system/dept/list/tree', { param
 export const getLocationApi = (params) => http.get('/car/vehicleInfo/map/location', { params })
 
 // 轨迹
-export const getTraceApi = (params) => http.get('/car/jt808RecordLocationInfo/map/locus', { params })
+export const getTraceApi = (params) => http.get('/car/jt808RecordLocationInfo/map/locus/verify/simpleness', { params })
 
 // 一键登录
 export const oneLoginApi = (params) => http.post('/xcxLogin?xcxCode=' + params)

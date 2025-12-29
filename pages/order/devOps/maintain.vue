@@ -72,14 +72,13 @@ const getData = async () => {
 // 详情
 const clickToDetail = (i) => {
   let queryStr = ''
+  const types = type.value == 'maintenance' ? 'maintenance' : 'repairing'
   if(i) {
     const disabled = i.statusCode == 'pass' ? 'disabled' : ''
-    const types = type.value == 'maintenance' ? 'maintenance' : 'repairing'
     queryStr = i.upkeepWorkOrderId ? `?type=${types}&id=${i.upkeepWorkOrderId}&disabled=${disabled}` : ''
   }
-  console.log(queryStr);
   uni.navigateTo({
-    url: `/pages/order/devOps/maintainForm${queryStr}`
+    url: `/pages/order/devOps/maintainForm${queryStr ? queryStr : `?type=${types}`}`
   })
 }
 
