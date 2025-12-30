@@ -5,6 +5,7 @@
     "wd-tag": "../../../uni_modules/wot-design-uni/components/wd-tag/wd-tag",
     "wd-card": "../../../uni_modules/wot-design-uni/components/wd-card/wd-card",
     "wd-loadmore": "../../../uni_modules/wot-design-uni/components/wd-loadmore/wd-loadmore",
+    "wd-status-tip": "../../../uni_modules/wot-design-uni/components/wd-status-tip/wd-status-tip",
     "wd-fab": "../../../uni_modules/wot-design-uni/components/wd-fab/wd-fab"
   }
 }

@@ -3,9 +3,10 @@
   "usingComponents": {
     "wd-search": "../../uni_modules/wot-design-uni/components/wd-search/wd-search",
     "wd-sticky": "../../uni_modules/wot-design-uni/components/wd-sticky/wd-sticky",
-    "wd-loading": "../../uni_modules/wot-design-uni/components/wd-loading/wd-loading",
+    "base-loading": "../../components/BaseLoading",
     "wd-tag": "../../uni_modules/wot-design-uni/components/wd-tag/wd-tag",
     "wd-card": "../../uni_modules/wot-design-uni/components/wd-card/wd-card",
-    "wd-loadmore": "../../uni_modules/wot-design-uni/components/wd-loadmore/wd-loadmore"
+    "wd-loadmore": "../../uni_modules/wot-design-uni/components/wd-loadmore/wd-loadmore",
+    "wd-status-tip": "../../uni_modules/wot-design-uni/components/wd-status-tip/wd-status-tip"
   }
 }

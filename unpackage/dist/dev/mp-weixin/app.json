@@ -27,6 +27,8 @@
     "pages/order/devOps/maintain",
     "pages/order/devOps/maintainForm",
     "pages/order/devOps/maintainApply",
+    "pages/order/mileReport/form",
+    "pages/order/mileReport/list",
     "pages/trace/trace",
     "pages/mine/mine",
     "pages/mine/notice",
