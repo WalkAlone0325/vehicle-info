@@ -20,10 +20,10 @@ const state = ref('loading')
 onReachBottom(() => {
   if (!list.value.length) {
     state.value = 'error'
-  } else if (list.value.length < total.value) {
-    loadmore()
   } else if (list.value.length === total.value) {
     state.value = 'finished'
+  } else if (list.value.length < total.value) {
+    loadmore()
   }
 })
 
@@ -117,13 +117,13 @@ const cancel = () => {
   <view class="warning-page">
     <wd-message-box />
     <BaseLoading :loading="loading" v-if="loading && !list.length" />
-    <view class="list-con" v-else>
+    <view class="list-con" style="padding-top: 20rpx;" v-else>
 
-      <wd-sticky>
+      <!-- <wd-sticky>
         <view style="margin-bottom: 30rpx; width: 100vw;">
-          <wd-search v-model.trim="queryParams.plateNumber" @search="search" @cancel="cancel" />
+          <wd-search v-model.trim="queryParams.plateNumber" @search="getData" @cancel="cancel" />
         </view>
-      </wd-sticky>
+      </wd-sticky> -->
 
       <view class="list-item" v-for="i in list" :key="i.useCarWorkOrderId" @click.stop="clickToDetail(i.useCarWorkOrderId, i.workOrdeStatusCode)">
         <wd-card>

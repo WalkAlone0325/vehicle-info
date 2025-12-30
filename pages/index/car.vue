@@ -3,26 +3,24 @@ import { onLoad, onReachBottom } from '@dcloudio/uni-app'
 import { reactive, ref } from 'vue'
 import { getCarListApi } from '@/api'
 
-const val = ref('')
 const list = ref([])
 const total = ref(0)
 const queryParams = reactive({
   pageNum: 1,
   pageSize: 10,
   order: 'asc',
-  val: ''
+  plateNumber: ''
 })
-
+const loading = ref(false)
 const state = ref('loading')
 
 onReachBottom(() => {
-  // if (!list.value.length) {
-  //   state.value = 'error'
-  // } else
-  if (list.value.length < total.value) {
-    loadmore()
-  } else if (list.value.length === total.value) {
+  if (list.value.length === total.value) {
     state.value = 'finished'
+  } else if (!list.value.length) {
+    state.value = 'error'
+  } else if (list.value.length < total.value) {
+    loadmore()
   }
 })
 
@@ -37,22 +35,37 @@ function loadmore() {
 }
 
 const getData = async () => {
+  loading.value = true
   const res = await getCarListApi(queryParams)
   list.value = [...list.value, ...res.rows]
   total.value = res.total
+  loading.value = false
+
+  if (list.value.length === total.value) {
+    state.value = 'finished'
+  } else if (!list.value.length) {
+    state.value = 'error'
+  }
 }
 const search = ({ value }) => {
-  queryParams.val = value
+  queryParams.plateNumber = value
   queryParams.pageNum = 1
+  list.value = []
+  total.value = 0
+  state.value = 'loading'
   getData()
 }
 const clear = () => {
-  val.value = ''
+  state.value = 'loading'
+  queryParams.plateNumber = ''
   queryParams.pageNum = 1
+  queryParams.order = 'asc'
+  list.value = []
+  total.value = 0
   getData()
 }
 const cancel = () => {
-  val.value = ''
+  clear()
 }
 
 const clickToLocal = (i) => {
@@ -66,13 +79,11 @@ const clickToLocal = (i) => {
   <view class="driver-page">
     <wd-sticky>
       <view style="width: 100vw;">
-        <wd-search placeholder-left v-model="queryParams.val" @search="search" @clear="clear" @cancel="cancel"
-          :maxlength="10" />
+        <wd-search placeholder-left placeholder="请输入车牌号码搜索" v-model="queryParams.plateNumber" @search="search"
+          @clear="clear" @cancel="cancel" :maxlength="10" />
       </view>
     </wd-sticky>
-    <view class="flex-cc" v-if="!list.length">
-      <wd-loading type="outline" />
-    </view>
+    <BaseLoading :loading="loading" v-if="loading && !list.length" />
     <view class="container" v-else>
       <view v-for="i in list" :key="i.driverId">
         <wd-card>
@@ -127,6 +138,8 @@ const clickToLocal = (i) => {
       </view>
       <wd-loadmore :state="state" @reload="loadmore" />
     </view>
+
+    <wd-status-tip v-if="!loading && total == 0" image="/static/content.png" tip="暂无列表" />
   </view>
 </template>
 

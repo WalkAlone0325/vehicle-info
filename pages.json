@@ -176,6 +176,18 @@
     	}
     },
     {
+      "path": "pages/order/mileReport/form",
+      "style": {
+        "navigationBarTitleText": "里程上报信息"
+      }
+    },
+    {
+      "path": "pages/order/mileReport/list",
+      "style": {
+        "navigationBarTitleText": "里程上报列表"
+      }
+    },
+    {
     	"path": "pages/trace/trace",
     	"style": {
     		"navigationBarTitleText": "轨迹"

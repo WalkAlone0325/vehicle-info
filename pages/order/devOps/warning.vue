@@ -90,6 +90,8 @@ const clickToDetail = (id) => {
       <wd-loadmore :state="state" @reload="loadmore" />
     </view>
 
+    <wd-status-tip v-if="!loading && total == 0" image="/static/content.png" tip="暂无列表" />
+
     <wd-fab activeIcon="add" :expandable="false" @click="clickToDetail" />
   </view>
 </template>

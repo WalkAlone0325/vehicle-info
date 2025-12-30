@@ -1,1 +1,4 @@
-unpackage/**
+# Editor directories and files
+.hbuilderx
+unpackage
+node_modules

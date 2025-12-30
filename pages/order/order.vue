@@ -33,6 +33,7 @@ onShow(() => {
     { id: 1, text: '用车工单', icon: 'apply', url: '/pages/order/cars/list' },
     { id: 2, text: '加油申报', icon: 'oil', max: true, url: '/pages/order/oil/list' },
     { id: 3, text: '加油审批', icon: 'pending', url: '/pages/order/oil/listApply', role: 'car:vehicleRefuelWorkOrder:approve' },
+    { id: 4, text: '里程上报', icon: 'mile', max: true, url: '/pages/order/mileReport/list' }
   ]
   carOrder.value = checkRole(v1)
   carVehicle.value = checkRole(v2)
@@ -90,6 +91,11 @@ const clickItem = (item) => {
   .slot-img {
     height: 50rpx;
     width: 50rpx;
+  }
+  
+  .mile-icon {
+    width: 80rpx !important;
+    height: 80rpx !important;
   }
 }
 </style>

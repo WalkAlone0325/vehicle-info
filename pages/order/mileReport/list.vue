@@ -1,10 +1,11 @@
 <script setup>
 import { ref, reactive } from 'vue'
-import { getPlanList, putPlan } from '@/api'
+import { getMileReportApi, deleteMileReport } from '@/api'
 import { onShow, onReachBottom } from '@dcloudio/uni-app'
 import { useMessage } from '@/uni_modules/wot-design-uni'
 const message = useMessage()
 
+const roles = ref([])
 const loading = ref(false)
 const list = ref([])
 const total = ref(0)
@@ -35,6 +36,9 @@ onShow(() => {
   list.value = []
   total.value = 0
   getData()
+
+  const user = uni.getStorageSync('user')
+  roles.value = user?.roles?.map(i => i.roleKey) || []
 })
 
 function loadmore() {
@@ -45,11 +49,10 @@ function loadmore() {
 
 const getData = async () => {
   loading.value = true
-  const res = await getPlanList(queryParams)
+  const res = await getMileReportApi(queryParams)
   list.value = [...list.value, ...res.rows]
   total.value = res.total
   loading.value = false
-
   if (list.value.length === total.value) {
     state.value = 'finished'
   } else if (!list.value.length) {
@@ -58,33 +61,25 @@ const getData = async () => {
 }
 
 // 详情
-const clickToDetail = (id) => {
+const clickToDetail = (id, type) => {
+  const queryStr = `?id=${id}&disabled=${type || ''}`
   uni.navigateTo({
-    url: `/pages/order/devOps/planForm${id ? `?id=${id}` : ''}`
+    url: `/pages/order/mileReport/form${id ? queryStr : ''}`
   })
 }
 
 // 重置
 const resetPlan = (i) => {
-  const canReset = i.lastMaintenance || i.nextMaintenance || i.lastInspection || i.nextInspection || i.lastInsurance || i.nextInsurance
-
-  if(!canReset) {
-    uni.showToast({
-      title: '请先完善保养信息',
-      icon: 'none'
-    })
-    return
-  }
   message.confirm({
     title: '提示信息',
-    msg: '是否确认重置车辆保养信息？'
+    msg: '是否确认删除此项记录信息？'
   }).then(async () => {
-    const res = await putPlan(i.maintenancePlanId)
+    const res = await deleteMileReport(i.useCarWorkOrderId)
     if(res.code == 200) {
       queryParams.pageNum = 1
       getData()
       uni.showToast({
-        title: '重置成功',
+        title: '删除成功',
         icon: 'success'
       })
       state.value = 'loading'
@@ -102,15 +97,13 @@ const resetPlan = (i) => {
 
 // 搜索
 const search = () => {
-  if(queryParams.plateNumber) {
-    state.value = 'loading'
-    queryParams.pageNum = 1
-    queryParams.order = 'asc'
-    list.value = []
-    total.value = 0
-    getData()
-  }
+  state.value = 'loading'
+  queryParams.pageNum = 1
+  list.value = []
+  total.value = 0
+  getData()
 }
+
 // 取消搜索
 const cancel = () => {
   if(queryParams.plateNumber) {
@@ -138,58 +131,70 @@ const cancel = () => {
         </view>
       </wd-sticky>
 
-      <view class="list-item" v-for="i in list" :key="i.vehicleId" @click.stop="clickToDetail(i.vehicleId)">
+      <view class="list-item" v-for="i in list" :key="i.reimbursementMileageId" @click.stop="clickToDetail(i.reimbursementMileageId, 'view')">
         <wd-card>
           <template #title>
             <view style="display: flex; justify-content: space-between; align-items: center">
               <view class="flex-col-c">
                 <view class="plate-number" v-if="i.plateNumber">{{ i.plateNumber }}</view>
               </view>
-              <view class="right">
-                <view class="label">单位：</view>
-                <view class="value">{{ i.deptName }}</view>
-              </view>
+              <view class="right"></view>
             </view>
           </template>
           <view class="main">
             <view class="content">
-              <view class="content-item pd">
-                <view class="label">上次保养日期：</view>
-                <view class="value">{{ i.lastMaintenance }}</view>
+              <view style="display: flex; justify-content: space-between; align-items: center">
+                <view class="content-item">
+                  <view class="label">归属部门：</view>
+                  <view class="value">{{ i.deptName }}</view>
+                </view>
+                <view class="content-item">
+                  <view class="label">车辆类型：</view>
+                  <view class="value">{{ i.vehicleTypeName}}</view>
+                </view>
               </view>
-              <view class="content-item pd">
-                <view class="label">下次保养日期：</view>
-                <view class="value">{{ i.nextMaintenance }}</view>
+              <view style="display: flex; justify-content: space-between; align-items: center">
+                <view class="content-item">
+                  <view class="label">起始里程：</view>
+                  <view class="value">{{i.startMileage}}</view>
+                </view>
+                <view class="content-item">
+                  <view class="label">终止里程：</view>
+                  <view class="value">{{i.endMileage}}</view>
+                </view>
               </view>
-              <view class="content-item pd">
-                <view class="label">上次年检日期：</view>
-                <view class="value">{{ i.lastInspection }}</view>
-              </view>
-              <view class="content-item pd">
-                <view class="label">下次年检日期：</view>
-                <view class="value">{{ i.nextInspection }}</view>
-              </view>
-              <view class="content-item pd">
-                <view class="label">上次保险日期：</view>
-                <view class="value">{{ i.lastInsurance }}</view>
-              </view>
-              <view class="content-item pd">
-                <view class="label">下次保险日期：</view>
-                <view class="value">{{ i.nextInsurance }}</view>
+              <view style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 8rpx;">
+                <view>
+                  <view class="content-item">
+                    <view class="label">里程：</view>
+                    <view class="value">{{i.mileage}}</view>
+                  </view>
+                  <view class="content-item pd">
+                    <view class="label">上报月份：</view>
+                    <view class="value">{{i.reimbursementMonth}}</view>
+                  </view>
+                </view>
+
+                <view @click.stop="clickToDetail(i.reimbursementMileageId)" v-if="i.isUpdate === 'Y' || roles.includes('admin')">
+                  <wd-button size="small" type="success">编辑</wd-button>
+                </view>
               </view>
             </view>
 
-            <view style="display: flex; align-items: center; margin-top: 100rpx;">
-              <view @click.stop="resetPlan(i)">
-                <wd-button size="small" type="warning">重置</wd-button>
+            <!-- <view style="display: flex; align-items: flex-end;">
+              <view @click.stop="handleSubmit(i.reimbursementMileageId)" v-if="i.isUpdate === 'Y' || roles.includes('admin')">
+                <wd-button size="small" type="success">编辑</wd-button>
               </view>
-            </view>
+            </view> -->
           </view>
         </wd-card>
       </view>
       <wd-loadmore :state="state" @reload="loadmore" />
     </view>
+
     <wd-status-tip v-if="!loading && total == 0" image="/static/content.png" tip="暂无列表" />
+
+    <wd-fab activeIcon="add" draggable :gap="{right: 30, bottom: 30}" :expandable="false" @click="clickToDetail" />
   </view>
 </template>
 
@@ -221,10 +226,6 @@ const cancel = () => {
       .content-item {
         display: flex;
         margin-bottom: 8rpx;
-
-        &:last-child {
-          padding-bottom: 12rpx;
-        }
 
         .value {
           color: #333;

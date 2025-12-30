@@ -146,3 +146,17 @@ export const postMaintain = (params) => http.post('/car/vehicleUpkeepWorkOrder',
 export const approveMaintainApi = (params) => http.put('/car/vehicleUpkeepWorkOrder/approve', params)
 // 列表
 export const getApproveMaintainListApi = (params) => http.get('/car/vehicleUpkeepWorkOrder/approve/list/page', { params })
+
+// 里程上报
+export const getMileReportApi = (params) => http.get('/reportforms/vehicleReportformsReimbursementMileageInfo/list/page', { params })
+
+export const deleteMileReport = (params) => http.delete('/reportforms/vehicleReportformsReimbursementMileageInfo/' + params)
+
+export const putMileReport = (params) => http.put('/reportforms/vehicleReportformsReimbursementMileageInfo', params)
+
+export const postMileReport = (params) => http.post('/reportforms/vehicleReportformsReimbursementMileageInfo', params)
+
+export const getMileReportDetail = (params) => http.get('/reportforms/vehicleReportformsReimbursementMileageInfo/' + params)
+
+// 信息
+export const postMileReportInfoApi = (params) => http.post('/reportforms/vehicleReportformsReimbursementMileageInfo/lase/month/info', params)

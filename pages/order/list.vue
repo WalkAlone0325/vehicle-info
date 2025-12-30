@@ -57,7 +57,7 @@ const getList = async () => {
   loading.value = true
   const res = await MAP_TYPE[curType.value]({
     pageNum: 1,
-    pageSize: 10
+    pageSize: 99
   })
   list.value = res.rows
   total.value = res.total
