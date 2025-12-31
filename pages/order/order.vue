@@ -23,17 +23,17 @@ onShow(() => {
     { id: 2, text: '运维计划', icon: 'plan', url: '/pages/order/devOps/plan', role: 'car:vehicleMaintenancePlan:list' },
     { id: 3, text: '运维记录', icon: 'record', url: '/pages/order/devOps/record', role: 'car:vehicleMaintenanceRecord:list' },
     { id: 4, text: '运维告警', icon: 'gaojin', url: '/pages/order/devOps/warning', role: 'car:vehicleMaintenanceWarningCycle:list' },
-    { id: 5, text: '保养申报', icon: 'maintain', url: '/pages/order/devOps/maintain?type=maintenance' },
-    { id: 6, text: '维修申报', icon: '维修', url: '/pages/order/devOps/maintain?type=repairing' },
-    { id: 7, text: '保养审批', icon: 'pending', url: '/pages/order/devOps/maintainApply?type=maintenance', roles: 'car:vehicleUpkeepWorkOrder:approve' },
-    { id: 8, text: '维修审批', icon: '待审批', url: '/pages/order/devOps/maintainApply?type=repairing', roles: 'car:vehicleUpkeepWorkOrder:approve' },
+    { id: 5, text: '保养申报', icon: 'maintain', url: '/pages/order/devOps/maintain?type=maintenance', role: 'car:vehicleUpkeepWorkOrder:list' },
+    { id: 6, text: '维修申报', icon: '维修', url: '/pages/order/devOps/maintain?type=repairing', role: 'car:vehicleUpkeepWorkOrder:list' },
+    { id: 7, text: '保养审批', icon: 'pending', url: '/pages/order/devOps/maintainApply?type=maintenance', role: 'car:vehicleUpkeepWorkOrder:approve' },
+    { id: 8, text: '维修审批', icon: '待审批', url: '/pages/order/devOps/maintainApply?type=repairing', role: 'car:vehicleUpkeepWorkOrder:approve' },
   ]
 
   const v3 = [
     { id: 1, text: '用车工单', icon: 'apply', url: '/pages/order/cars/list' },
-    { id: 2, text: '加油申报', icon: 'oil', max: true, url: '/pages/order/oil/list' },
+    { id: 2, text: '加油申报', icon: 'oil', max: true, url: '/pages/order/oil/list', role: 'car:vehicleRefuelWorkOrder:list' },
     { id: 3, text: '加油审批', icon: 'pending', url: '/pages/order/oil/listApply', role: 'car:vehicleRefuelWorkOrder:approve' },
-    { id: 4, text: '里程上报', icon: 'mile', max: true, url: '/pages/order/mileReport/list' }
+    { id: 4, text: '里程上报', icon: 'mile', max: true, url: '/pages/order/mileReport/list', role: 'reportforms:vehicleReportformsReimbursementMileageInfo:list' }
   ]
   carOrder.value = checkRole(v1)
   carVehicle.value = checkRole(v2)
