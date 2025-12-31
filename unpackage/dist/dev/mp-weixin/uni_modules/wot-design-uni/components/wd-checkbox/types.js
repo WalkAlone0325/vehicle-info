@@ -1,2 +1,0 @@
-"use strict";const e=require("../common/props.js"),t={...e.baseProps,customLabelClass:e.makeStringProp(""),customShapeClass:e.makeStringProp(""),modelValue:{type:[String,Number,Boolean],required:!0,default:!1},shape:{type:String},checkedColor:String,disabled:{type:[Boolean,null],default:null},trueValue:{type:[String,Number,Boolean],default:!0},falseValue:{type:[String,Number,Boolean],default:!1},size:String,maxWidth:String};exports.checkboxProps=t;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-checkbox/types.js.map

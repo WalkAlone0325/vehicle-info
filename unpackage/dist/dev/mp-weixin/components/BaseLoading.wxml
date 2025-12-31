@@ -1,1 +1,0 @@
-<view class="loading-con data-v-137c9918"><wd-loading wx:if="{{a}}" class="data-v-137c9918" u-i="137c9918-0" bind:__l="__l"/><text class="data-v-137c9918">加载中...</text></view>

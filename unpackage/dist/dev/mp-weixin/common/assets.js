@@ -1,2 +1,0 @@
-"use strict";const t="/static/car.png",s="/static/driver.png",_="/static/mark.png",i="/static/local.png",o="/static/login.jpg",p="/static/log-header.jpg",r="/static/apply-bg.png";exports._imports_0=t;exports._imports_0$1=_;exports._imports_0$2=o;exports._imports_0$3=r;exports._imports_1=s;exports._imports_1$1=i;exports._imports_1$2=p;
-//# sourceMappingURL=../../.sourcemap/mp-weixin/common/assets.js.map

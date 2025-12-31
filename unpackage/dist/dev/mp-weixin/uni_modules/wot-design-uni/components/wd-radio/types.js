@@ -1,2 +1,0 @@
-"use strict";const e=require("../common/props.js"),n={...e.baseProps,value:e.makeRequiredProp([String,Number,Boolean]),shape:String,checkedColor:String,disabled:{type:[Boolean,null],default:null},cell:{type:[Boolean,null],default:null},size:String,inline:{type:[Boolean,null],default:null},maxWidth:String,iconPlacement:{type:String}};exports.radioProps=n;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-radio/types.js.map

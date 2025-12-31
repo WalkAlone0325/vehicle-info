@@ -1,2 +1,0 @@
-"use strict";const o=require("../common/props.js"),e=Symbol("wd-grid"),r={...o.baseProps,clickable:o.makeBooleanProp(!1),square:o.makeBooleanProp(!1),column:Number,border:o.makeBooleanProp(!1),bgColor:o.makeStringProp(""),gutter:Number,hoverClass:String};exports.GRID_KEY=e;exports.gridProps=r;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-grid/types.js.map

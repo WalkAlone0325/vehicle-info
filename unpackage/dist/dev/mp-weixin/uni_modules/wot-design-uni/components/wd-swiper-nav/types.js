@@ -1,2 +1,0 @@
-"use strict";const o=require("../common/props.js"),r={...o.baseProps,current:o.makeNumberProp(0),direction:o.makeStringProp("horizontal"),minShowNum:o.makeNumberProp(2),indicatorPosition:o.makeStringProp("bottom"),showControls:o.makeBooleanProp(!1),total:o.makeNumberProp(0),type:o.makeStringProp("dots")};exports.swiperNavprops=r;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-swiper-nav/types.js.map

@@ -1,1 +1,0 @@
-<view class="base-title data-v-a73c7c22"><view class="title-con data-v-a73c7c22"><view class="title data-v-a73c7c22">{{a}}</view></view><view class="main-con data-v-a73c7c22"><slot></slot></view></view>

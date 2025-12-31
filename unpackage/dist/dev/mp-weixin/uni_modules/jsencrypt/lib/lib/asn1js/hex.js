@@ -1,3 +1,0 @@
-"use strict";var t,c={decode:function(f){var r;if(t===void 0){var a="0123456789ABCDEF",u=` \f
-\r	 \u2028\u2029`;for(t={},r=0;r<16;++r)t[a.charAt(r)]=r;for(a=a.toLowerCase(),r=10;r<16;++r)t[a.charAt(r)]=r;for(r=0;r<u.length;++r)t[u.charAt(r)]=-1}var o=[],n=0,i=0;for(r=0;r<f.length;++r){var e=f.charAt(r);if(e=="=")break;if(e=t[e],e!=-1){if(e===void 0)throw new Error("Illegal character at offset "+r);n|=e,++i>=2?(o[o.length]=n,n=0,i=0):n<<=4}}if(i)throw new Error("Hex encoding incomplete: 4 bits missing");return o}};exports.Hex=c;
-//# sourceMappingURL=../../../../../../.sourcemap/mp-weixin/uni_modules/jsencrypt/lib/lib/asn1js/hex.js.map

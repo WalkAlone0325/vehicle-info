@@ -1,2 +1,0 @@
-"use strict";const e=require("../common/vendor.js"),r=require("../common/assets.js"),t={name:"BaseForm",props:{group:{type:Boolean,default:!1}},data(){return{}}};function n(a,c,o,_,p,m){return{a:r._imports_0$3,b:e.n(o.group?"base-card":"form-card")}}const s=e._export_sfc(t,[["render",n],["__scopeId","data-v-91002948"]]);wx.createComponent(s);
-//# sourceMappingURL=../../.sourcemap/mp-weixin/components/BaseForm.js.map

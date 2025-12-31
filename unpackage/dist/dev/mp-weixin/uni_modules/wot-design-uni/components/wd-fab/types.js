@@ -1,2 +1,0 @@
-"use strict";const e=require("../common/props.js"),o={...e.baseProps,active:e.makeBooleanProp(!1),type:e.makeStringProp("primary"),position:e.makeStringProp("right-bottom"),direction:e.makeStringProp("top"),disabled:e.makeBooleanProp(!1),inactiveIcon:e.makeStringProp("add"),activeIcon:e.makeStringProp("close"),zIndex:e.makeNumberProp(99),draggable:e.makeBooleanProp(!1),gap:{type:Object,default:()=>({})},expandable:e.makeBooleanProp(!0)};exports.fabProps=o;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-fab/types.js.map

@@ -1,8 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "wd-divider": "../wd-divider/wd-divider",
-    "wd-loading": "../wd-loading/wd-loading",
-    "wd-icon": "../wd-icon/wd-icon"
-  }
-}

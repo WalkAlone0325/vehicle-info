@@ -1,2 +1,0 @@
-"use strict";const o=[Number,String],t=e=>({type:e,required:!0}),a=()=>({type:Array,default:()=>[]}),m=e=>({type:Boolean,default:e}),p=e=>({type:Number,default:e}),u=e=>({type:o,default:e}),r=e=>({type:String,default:e}),s={customStyle:r(""),customClass:r("")};exports.baseProps=s;exports.makeArrayProp=a;exports.makeBooleanProp=m;exports.makeNumberProp=p;exports.makeNumericProp=u;exports.makeRequiredProp=t;exports.makeStringProp=r;exports.numericProp=o;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/common/props.js.map

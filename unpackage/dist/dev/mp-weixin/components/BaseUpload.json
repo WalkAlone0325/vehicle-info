@@ -1,6 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "wd-upload": "../uni_modules/wot-design-uni/components/wd-upload/wd-upload"
-  }
-}

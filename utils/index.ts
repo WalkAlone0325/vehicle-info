@@ -54,7 +54,7 @@ export function checkRole(data: []) {
   if (!token) return
   const roles = uni.getStorageSync('roles')
   data.forEach(i => {
-    if(i.role) {
+    if(i.role && roles[0] !== '*:*:*') {
       if(roles.includes(i.role)){
         result.push(i)
       }

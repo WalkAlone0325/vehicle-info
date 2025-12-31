@@ -1,2 +1,0 @@
-"use strict";const e=require("../common/props.js"),o={...e.baseProps,data:e.makeRequiredProp(Array),border:e.makeBooleanProp(!0),stripe:e.makeBooleanProp(!0),height:e.numericProp,rowHeight:e.makeNumericProp(50),showHeader:e.makeBooleanProp(!0),ellipsis:e.makeBooleanProp(!0),index:{type:[Object,Boolean],default:!1},fixedHeader:e.makeBooleanProp(!0)},r=Symbol("wd-table");exports.TABLE_KEY=r;exports.tableProps=o;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-table/types.js.map

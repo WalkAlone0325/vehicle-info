@@ -1,2 +1,0 @@
-"use strict";const e=require("../common/props.js"),o={...e.baseProps,title:String,leftText:String,rightText:String,leftArrow:e.makeBooleanProp(!1),bordered:e.makeBooleanProp(!0),fixed:e.makeBooleanProp(!1),placeholder:e.makeBooleanProp(!1),zIndex:e.makeNumberProp(500),safeAreaInsetTop:e.makeBooleanProp(!1),leftDisabled:e.makeBooleanProp(!1),rightDisabled:e.makeBooleanProp(!1)};exports.navbarProps=o;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-navbar/types.js.map

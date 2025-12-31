@@ -1,2 +1,0 @@
-"use strict";function n(){this.handlers=[]}n.prototype.use=function(e,t){return this.handlers.push({fulfilled:e,rejected:t}),this.handlers.length-1};n.prototype.eject=function(e){this.handlers[e]&&(this.handlers[e]=null)};n.prototype.forEach=function(e){this.handlers.forEach(t=>{t!==null&&e(t)})};exports.InterceptorManager=n;
-//# sourceMappingURL=../../../../.sourcemap/mp-weixin/uni_modules/luch-request/core/InterceptorManager.js.map

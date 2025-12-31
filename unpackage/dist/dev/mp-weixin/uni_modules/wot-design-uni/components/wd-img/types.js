@@ -1,2 +1,0 @@
-"use strict";const e=require("../common/props.js"),o={...e.baseProps,customImage:e.makeStringProp(""),src:String,previewSrc:String,round:e.makeBooleanProp(!1),mode:e.makeStringProp("scaleToFill"),lazyLoad:e.makeBooleanProp(!1),width:e.numericProp,height:e.numericProp,radius:e.numericProp,enablePreview:e.makeBooleanProp(!1),showMenuByLongpress:e.makeBooleanProp(!1)};exports.imgProps=o;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-img/types.js.map

@@ -1,2 +1,0 @@
-"use strict";const i=require("../utils/request.js"),e=t=>i.http.get("/car/driverInfo/list/page",{params:t}),s=t=>i.http.get("/car/vehicleInfo/list/page",{params:t}),a=t=>i.http.get("/pc/main/countData",{params:t}),c=t=>i.http.get("/op/statistics/car/vehicle/cityCount/line ",{params:t}),p=t=>i.http.get("/op/statistics/car/vehicle/cityCount/list ",{params:t});exports.getCarCountApi=c;exports.getCarListApi=s;exports.getCarTableApi=p;exports.getDriverListApi=e;exports.getOilTankApi=a;
-//# sourceMappingURL=../../.sourcemap/mp-weixin/api/home.js.map

@@ -1,2 +1,0 @@
-"use strict";const r=require("../../../../common/vendor.js"),n={name:"qiun-error",props:{errorMessage:{type:String,default:null}},data(){return{}}};function t(s,a,e,c,u,_){return{a:r.t(e.errorMessage==null?"请点击重试":e.errorMessage)}}const o=r._export_sfc(n,[["render",t]]);wx.createComponent(o);
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/qiun-data-charts/components/qiun-error/qiun-error.js.map

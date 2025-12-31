@@ -1,1 +1,0 @@
-<view class="base-form data-v-91002948"><image src="{{a}}" mode="widthFix" class="apply-bg-con data-v-91002948" style="width:100%;height:600rpx"></image><view class="form-con data-v-91002948"><view class="{{['data-v-91002948', b]}}"><slot></slot></view></view></view>

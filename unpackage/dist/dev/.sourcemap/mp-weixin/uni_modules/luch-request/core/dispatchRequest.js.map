@@ -1,1 +1,0 @@
-{"version":3,"file":"dispatchRequest.js","sources":["uni_modules/luch-request/core/dispatchRequest.js"],"sourcesContent":["import adapter from '../adapters/index'\r\n\r\n\r\nexport default (config) => {\r\n  return adapter(config)\r\n}\r\n"],"names":["dispatchRequest","config","adapter"],"mappings":"qDAGeA,EAACC,GACPC,EAAAA,QAAQD,CAAM"}

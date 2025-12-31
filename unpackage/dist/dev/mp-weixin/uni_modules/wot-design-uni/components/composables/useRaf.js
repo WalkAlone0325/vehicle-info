@@ -1,2 +1,0 @@
-"use strict";const s=require("../../../../common/vendor.js"),n=require("../common/util.js");function c(u){const e=s.ref(null),i=()=>{const o=a=>{u(a)};n.isH5?e.value=requestAnimationFrame(o):e.value=setTimeout(()=>o(Date.now()),1e3/30)},t=()=>{n.isH5&&n.isNumber(e.value)?cancelAnimationFrame(e.value):n.isDef(e.value)&&clearTimeout(e.value)};return s.onUnmounted(()=>{t()}),{start:i,cancel:t}}exports.useRaf=c;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/composables/useRaf.js.map

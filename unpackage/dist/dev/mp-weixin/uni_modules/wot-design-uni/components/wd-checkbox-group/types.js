@@ -1,2 +1,0 @@
-"use strict";const e=require("../common/props.js"),o=Symbol("wd-checkbox-group"),r={...e.baseProps,modelValue:{type:Array,default:()=>[]},cell:e.makeBooleanProp(!1),shape:e.makeStringProp("circle"),checkedColor:String,disabled:e.makeBooleanProp(!1),min:e.makeNumberProp(0),max:e.makeNumberProp(0),inline:e.makeBooleanProp(!1),size:String};exports.CHECKBOX_GROUP_KEY=o;exports.checkboxGroupProps=r;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-checkbox-group/types.js.map

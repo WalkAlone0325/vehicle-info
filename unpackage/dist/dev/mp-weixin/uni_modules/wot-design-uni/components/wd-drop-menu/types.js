@@ -1,2 +1,0 @@
-"use strict";const o=require("../common/props.js"),e=Symbol("wd-drop-menu"),r={...o.baseProps,zIndex:o.makeNumberProp(12),direction:o.makeStringProp("down"),modal:o.makeBooleanProp(!0),closeOnClickModal:o.makeBooleanProp(!0),duration:o.makeNumberProp(200)};exports.DROP_MENU_KEY=e;exports.dropMenuProps=r;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-drop-menu/types.js.map

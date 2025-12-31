@@ -1,2 +1,0 @@
-"use strict";const s=require("../common/util.js"),c=require("../../locale/index.js"),i=n=>{const t=n?s.camelCase(n)+".":"";return{translate:(o,...r)=>{const a=c.Locale.messages(),e=s.getPropByPath(a,t+o);return s.isFunction(e)?e(...r):s.isDef(e)?e:`${t}${o}`}}};exports.useTranslate=i;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/composables/useTranslate.js.map

@@ -1,2 +1,0 @@
-"use strict";const o=require("../common/props.js"),e=Symbol("wd-cell-group"),r={...o.baseProps,title:String,value:String,useSlot:o.makeBooleanProp(!1),border:o.makeBooleanProp(!1)};exports.CELL_GROUP_KEY=e;exports.cellGroupProps=r;
-//# sourceMappingURL=../../../../../.sourcemap/mp-weixin/uni_modules/wot-design-uni/components/wd-cell-group/types.js.map

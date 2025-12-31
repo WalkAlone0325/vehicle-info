@@ -1,6 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "wd-loading": "../uni_modules/wot-design-uni/components/wd-loading/wd-loading"
-  }
-}
