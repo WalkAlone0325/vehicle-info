@@ -95,6 +95,7 @@
   }) => {
     const find = list.value.find(item => item.useCarApplicationOrderId == value)
     console.log('🚀:>> ', list.value, find)
+    if(find) {
     model.value.collectDriverId = find.expectedDriverId
     model.value.collectDriverName = find.expectedDriverName
     model.value.collectVehicleId = find.expectedVehicleId
@@ -103,6 +104,7 @@
     model.value.returnedDriverName = find.approveDriverName
     model.value.applicantUserId = find.applicantUserId
     model.value.applicantUserName = find.applicantUserName
+    }
   }
   // 车辆
   const carOptions = ref([])

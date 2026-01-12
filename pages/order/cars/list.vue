@@ -49,11 +49,11 @@ const getData = async () => {
   list.value = [...list.value, ...res.rows]
   total.value = res.total
   loading.value = false
-  if (!list.value.length) {
-    state.value = 'error'
-  } else if (list.value.length === total.value) {
+  if (list.value.length === total.value) {
     state.value = 'finished'
-  }
+  } else if (!list.value.length) {
+    state.value = 'error'
+  }  
 }
 
 // 详情
@@ -175,6 +175,7 @@ const cancel = () => {
       </view>
       <wd-loadmore :state="state" @reload="loadmore" />
     </view>
+    <wd-status-tip v-if="!loading && total == 0" image="/static/content.png" tip="暂无列表" />
 
     <!-- <wd-fab activeIcon="add" draggable :gap="{right: 30, bottom: 30}" :expandable="false" @click="clickToDetail" /> -->
   </view>
