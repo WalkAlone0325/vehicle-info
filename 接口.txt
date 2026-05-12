@@ -1,0 +1,16 @@
+用车工单  没有权限                                /car/vehicleUseCarWorkOrder/list/page  
+加油申报  car:vehicleRefuelWorkOrder:list       /car/vehicleRefuelWorkOrder/personal/list/page
+加油审批  car:vehicleRefuelWorkOrder:approve    /car/vehicleRefuelWorkOrder/approve/list/page
+里程上报  reportforms:vehicleReportformsReimbursementMileageInfo:list   /reportforms/vehicleReportformsReimbursementMileageInfo/list/page
+
+
+告警配置  car:vehicleMaintenanceWarningCycle:list   /car/vehicleMaintenanceWarningCycle/list/page
+运维计划  car:vehicleMaintenancePlan:list           /car/vehicleMaintenancePlan/list/page
+运维记录  car:vehicleMaintenanceRecord:list         /car/vehicleMaintenanceRecord/list/page
+运维告警  car:vehicleMaintenanceWarningCycle:list   /car/vehicleMaintenanceWarning/list/page
+保养申报  car:vehicleUpkeepWorkOrder:list           /car/vehicleUpkeepWorkOrder/personal/list/page     upkeepTypeCode=maintenance
+维修申报  car:vehicleUpkeepWorkOrder:list           /car/vehicleUpkeepWorkOrder/personal/list/page     upkeepTypeCode=repairing
+保养审批  car:vehicleUpkeepWorkOrder:approve        /car/vehicleUpkeepWorkOrder/approve/list/page      upkeepTypeCode=maintenance
+维修审批  car:vehicleUpkeepWorkOrder:approve        /car/vehicleUpkeepWorkOrder/approve/list/page      upkeepTypeCode=repairing
+
+
